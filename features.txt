@@ -1,0 +1,10 @@
+1-copy
+2-past
+3-cut
+4-move
+5-rename
+6-open in new window
+7- change attributes
+8- back
+9-forward
+10-write click menu
