@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>2</width>
+      <height>2</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout"/>
+   </widget>
+   <widget class="QTreeWidget" name="treeWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>256</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>PC</string>
+     </property>
+    </column>
+    <item>
+     <property name="text">
+      <string>New Item</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>New Subitem</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>New Subitem</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>New Subitem</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>New Item</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>New Subitem</string>
+      </property>
+     </item>
+    </item>
+   </widget>
+   <widget class="QScrollBar" name="verticalScrollBar">
+    <property name="geometry">
+     <rect>
+      <x>235</x>
+      <y>27</y>
+      <width>20</width>
+      <height>521</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QScrollBar" name="horizontalScrollBar">
+    <property name="geometry">
+     <rect>
+      <x>3</x>
+      <y>531</y>
+      <width>230</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>0</y>
+      <width>531</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QColumnView" name="columnView">
+     <property name="geometry">
+      <rect>
+       <x>-5</x>
+       <y>0</y>
+       <width>541</width>
+       <height>551</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background : rgb(f,f,f)</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew_directory"/>
+    <addaction name="actionNewFile"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionCopy"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionPaste"/>
+    <addaction name="actionDelete"/>
+    <addaction name="actionUndo"/>
+    <addaction name="actionFind"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuView_mode">
+     <property name="title">
+      <string>View mode</string>
+     </property>
+     <addaction name="actionExtra_large_icon"/>
+     <addaction name="actionLarge_icons"/>
+     <addaction name="actionMedium_icons"/>
+     <addaction name="actionSmall_icons"/>
+     <addaction name="actionList"/>
+    </widget>
+    <addaction name="menuView_mode"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionTutorial"/>
+    <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuVirtual">
+    <property name="title">
+     <string>Virtual</string>
+    </property>
+    <addaction name="actionNew_directory_2"/>
+    <addaction name="actionVirtual_drive"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuShell">
+    <property name="title">
+     <string>Shell</string>
+    </property>
+    <addaction name="actionOpen_shell"/>
+    <addaction name="actionRestart_shell"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+   <addaction name="menuShell"/>
+   <addaction name="menuVirtual"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew_directory">
+   <property name="text">
+    <string>New directory</string>
+   </property>
+  </action>
+  <action name="actionNewFile">
+   <property name="text">
+    <string>NewFile</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="text">
+    <string>Copy</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="text">
+    <string>Cut</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="text">
+    <string>Paste</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionFind">
+   <property name="text">
+    <string>Find</string>
+   </property>
+  </action>
+  <action name="actionTutorial">
+   <property name="text">
+    <string>Tutorial</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionExtra_large_icons">
+   <property name="text">
+    <string>Extra large icons</string>
+   </property>
+  </action>
+  <action name="actionExtra_large_icon">
+   <property name="text">
+    <string>Extra large icons</string>
+   </property>
+  </action>
+  <action name="actionLarge_icons">
+   <property name="text">
+    <string>Large icons</string>
+   </property>
+  </action>
+  <action name="actionMedium_icons">
+   <property name="text">
+    <string>Medium icons</string>
+   </property>
+  </action>
+  <action name="actionSmall_icons">
+   <property name="text">
+    <string>Small icons</string>
+   </property>
+  </action>
+  <action name="actionList">
+   <property name="text">
+    <string>List</string>
+   </property>
+  </action>
+  <action name="actionNew_directory_2">
+   <property name="text">
+    <string>New directory</string>
+   </property>
+  </action>
+  <action name="actionVirtual_drive">
+   <property name="text">
+    <string>Virtual drive</string>
+   </property>
+  </action>
+  <action name="actionOpen_shell">
+   <property name="text">
+    <string>Open shell</string>
+   </property>
+  </action>
+  <action name="actionRestart_shell">
+   <property name="text">
+    <string>Restart shell</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
