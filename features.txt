@@ -1,11 +1,11 @@
-1-copy
-2-past
-3-cut
-4-move
-5-rename
-6-open in new window
-7- change attributes
-8- back
-9-forward
-10-write click menu
-11- search 
+1-copy (shutil::copyfile,copytree)
+2-past (shutil::copyfile,copytree)
+3-cut (os::rename)
+4-rename (os::rename)
+5-open in new window (threading - GUI (PyQt))
+6- change attributes 
+7- back (oo)
+8-forward (oo)
+9-history (database)
+9-right click menu (threading - GUI (pyQt))
+10- search (oo - database)
