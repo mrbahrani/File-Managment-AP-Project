@@ -6,140 +6,96 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>756</width>
+    <height>590</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="gridLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>2</width>
-      <height>2</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout"/>
-   </widget>
-   <widget class="QTreeWidget" name="treeWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>256</width>
-      <height>551</height>
-     </rect>
-    </property>
-    <column>
-     <property name="text">
-      <string>PC</string>
-     </property>
-    </column>
-    <item>
-     <property name="text">
-      <string>New Item</string>
-     </property>
-     <item>
-      <property name="text">
-       <string>New Subitem</string>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="2" column="0">
+     <widget class="QTreeWidget" name="treeWidget">
+      <property name="autoFillBackground">
+       <bool>true</bool>
       </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>New Subitem</string>
+      <property name="styleSheet">
+       <string notr="true">background:#fff;</string>
       </property>
-      <item>
-       <property name="text">
-        <string>New Subitem</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>New Item</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>New Item</string>
-       </property>
-      </item>
-     </item>
-     <item>
-      <property name="text">
-       <string>New Subitem</string>
+      <property name="locale">
+       <locale language="Persian" country="Iran"/>
       </property>
-     </item>
+      <column>
+       <property name="text">
+        <string notr="true">1</string>
+       </property>
+      </column>
+     </widget>
     </item>
-   </widget>
-   <widget class="QScrollBar" name="verticalScrollBar">
-    <property name="geometry">
-     <rect>
-      <x>235</x>
-      <y>27</y>
-      <width>20</width>
-      <height>521</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-   </widget>
-   <widget class="QScrollBar" name="horizontalScrollBar">
-    <property name="geometry">
-     <rect>
-      <x>3</x>
-      <y>531</y>
-      <width>230</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QFrame" name="frame">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>0</y>
-      <width>531</width>
-      <height>551</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QColumnView" name="columnView">
-     <property name="geometry">
-      <rect>
-       <x>-5</x>
-       <y>0</y>
-       <width>541</width>
-       <height>551</height>
-      </rect>
-     </property>
-     <property name="autoFillBackground">
-      <bool>true</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background : rgb(f,f,f)</string>
-     </property>
-    </widget>
-   </widget>
+    <item row="2" column="1">
+     <widget class="QColumnView" name="columnView"/>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="maximumSize">
+       <size>
+        <width>738</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <widget class="QLineEdit" name="lineEdit"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="5">
+        <widget class="QLineEdit" name="lineEdit_2"/>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="6">
+        <widget class="QLabel" name="label">
+         <property name="locale">
+          <locale language="Persian" country="Iran"/>
+         </property>
+         <property name="text">
+          <string>جست و جو</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>756</width>
      <height>21</height>
     </rect>
    </property>

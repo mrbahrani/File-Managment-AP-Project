@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'DefaultUI.ui'
+# Form implementation generated from reading ui file 'defaultUI4.ui'
 #
 # Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
+import sys
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -25,45 +26,51 @@ except AttributeError:
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(800, 600)
+        MainWindow.resize(756, 590)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
-        self.gridLayoutWidget = QtGui.QWidget(self.centralwidget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(0, 0, 2, 2))
-        self.gridLayoutWidget.setObjectName(_fromUtf8("gridLayoutWidget"))
-        self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
+        self.gridLayout_3 = QtGui.QGridLayout(self.centralwidget)
+        self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
+        self.groupBox = QtGui.QGroupBox(self.centralwidget)
+        # self.groupBox.setMaximumSize(QtCore.QSize(738, 16777215))
+        self.groupBox.setTitle(_fromUtf8(""))
+        self.groupBox.setObjectName(_fromUtf8("groupBox"))
+        self.gridLayout = QtGui.QGridLayout(self.groupBox)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
+        self.pushButton_2 = QtGui.QPushButton(self.groupBox)
+        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
+        self.gridLayout.addWidget(self.pushButton_2, 0, 0, 1, 1)
+        self.lineEdit = QtGui.QLineEdit(self.groupBox)
+        self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
+        self.gridLayout.addWidget(self.lineEdit, 0, 4, 1, 1)
+        self.pushButton = QtGui.QPushButton(self.groupBox)
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.gridLayout.addWidget(self.pushButton, 0, 1, 1, 1)
+        self.lineEdit_2 = QtGui.QLineEdit(self.groupBox)
+        self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
+        self.gridLayout.addWidget(self.lineEdit_2, 0, 6, 1, 2)
+        self.pushButton_3 = QtGui.QPushButton(self.groupBox)
+        self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
+        self.gridLayout.addWidget(self.pushButton_3, 0, 2, 1, 1)
+        self.label = QtGui.QLabel(self.groupBox)
+        self.label.setLocale(QtCore.QLocale(QtCore.QLocale.Persian, QtCore.QLocale.Iran))
+        self.label.setObjectName(_fromUtf8("label"))
+        self.gridLayout.addWidget(self.label, 0, 8, 1, 1)
+        self.gridLayout_3.addWidget(self.groupBox, 0, 0, 1, 12)
         self.treeWidget = QtGui.QTreeWidget(self.centralwidget)
-        self.treeWidget.setGeometry(QtCore.QRect(0, 0, 256, 551))
+        self.treeWidget.setAutoFillBackground(True)
+        self.treeWidget.setStyleSheet(_fromUtf8("background:#fff;"))
+        self.treeWidget.setLocale(QtCore.QLocale(QtCore.QLocale.Persian, QtCore.QLocale.Iran))
         self.treeWidget.setObjectName(_fromUtf8("treeWidget"))
-        item_0 = QtGui.QTreeWidgetItem(self.treeWidget)
-        item_1 = QtGui.QTreeWidgetItem(item_0)
-        item_1 = QtGui.QTreeWidgetItem(item_0)
-        item_2 = QtGui.QTreeWidgetItem(item_1)
-        item_2 = QtGui.QTreeWidgetItem(item_1)
-        item_2 = QtGui.QTreeWidgetItem(item_1)
-        item_1 = QtGui.QTreeWidgetItem(item_0)
-        self.verticalScrollBar = QtGui.QScrollBar(self.centralwidget)
-        self.verticalScrollBar.setGeometry(QtCore.QRect(235, 27, 20, 521))
-        self.verticalScrollBar.setOrientation(QtCore.Qt.Vertical)
-        self.verticalScrollBar.setObjectName(_fromUtf8("verticalScrollBar"))
-        self.horizontalScrollBar = QtGui.QScrollBar(self.centralwidget)
-        self.horizontalScrollBar.setGeometry(QtCore.QRect(3, 531, 230, 20))
-        self.horizontalScrollBar.setOrientation(QtCore.Qt.Horizontal)
-        self.horizontalScrollBar.setObjectName(_fromUtf8("horizontalScrollBar"))
-        self.frame = QtGui.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(260, 0, 531, 551))
-        self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtGui.QFrame.Raised)
-        self.frame.setObjectName(_fromUtf8("frame"))
-        self.columnView = QtGui.QColumnView(self.frame)
-        self.columnView.setGeometry(QtCore.QRect(-5, 0, 541, 551))
-        self.columnView.setAutoFillBackground(True)
-        self.columnView.setStyleSheet(_fromUtf8("background : rgb(f,f,f)"))
+        self.treeWidget.headerItem().setText(0, _fromUtf8("1"))
+        self.gridLayout_3.addWidget(self.treeWidget, 2, 0, 1, 11)
+        self.columnView = QtGui.QColumnView(self.centralwidget)
         self.columnView.setObjectName(_fromUtf8("columnView"))
+        self.gridLayout_3.addWidget(self.columnView, 2, 11, 1, 1)
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 756, 21))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuFile = QtGui.QMenu(self.menubar)
         self.menuFile.setObjectName(_fromUtf8("menuFile"))
@@ -150,23 +157,16 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuShell.menuAction())
         self.menubar.addAction(self.menuVirtual.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
-
+        
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
-        self.treeWidget.headerItem().setText(0, _translate("MainWindow", "PC", None))
-        __sortingEnabled = self.treeWidget.isSortingEnabled()
-        self.treeWidget.setSortingEnabled(False)
-        self.treeWidget.topLevelItem(0).setText(0, _translate("MainWindow", "New Item", None))
-        self.treeWidget.topLevelItem(0).child(0).setText(0, _translate("MainWindow", "New Subitem", None))
-        self.treeWidget.topLevelItem(0).child(1).setText(0, _translate("MainWindow", "New Subitem", None))
-        self.treeWidget.topLevelItem(0).child(1).child(0).setText(0, _translate("MainWindow", "New Subitem", None))
-        self.treeWidget.topLevelItem(0).child(1).child(1).setText(0, _translate("MainWindow", "New Item", None))
-        self.treeWidget.topLevelItem(0).child(1).child(2).setText(0, _translate("MainWindow", "New Item", None))
-        self.treeWidget.topLevelItem(0).child(2).setText(0, _translate("MainWindow", "New Subitem", None))
-        self.treeWidget.setSortingEnabled(__sortingEnabled)
+        self.pushButton_2.setText(_translate("MainWindow", "PushButton", None))
+        self.pushButton.setText(_translate("MainWindow", "PushButton", None))
+        self.pushButton_3.setText(_translate("MainWindow", "PushButton", None))
+        self.label.setText(_translate("MainWindow", "جست و جو", None))
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit", None))
         self.menuView.setTitle(_translate("MainWindow", "View", None))
@@ -195,3 +195,25 @@ class Ui_MainWindow(object):
         self.actionOpen_shell.setText(_translate("MainWindow", "Open shell", None))
         self.actionRestart_shell.setText(_translate("MainWindow", "Restart shell", None))
 
+
+class ExampleApp(QtGui.QMainWindow, Ui_MainWindow):
+    def __init__(self):
+        # Explaining super is out of the scope of this article
+        # So please google it if you're not familar with it
+        # Simple reason why we use it here is that it allows us to
+        # access variables, methods etc in the design.py file
+        super(self.__class__, self).__init__()
+        self.setupUi(self)  # This is defined in design.py file automatically
+                            # It sets up layout and widgets that are defined
+
+
+
+def main():
+    app = QtGui.QApplication(sys.argv)  # A new instance of QApplication
+    form = ExampleApp()                 # We set the form to be our ExampleApp (design)
+    form.show()                         # Show the form
+    app.exec_()                         # and execute the app
+
+
+if __name__ == '__main__':              # if we're running file directly and not importing it
+    main()
