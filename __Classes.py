@@ -1,6 +1,7 @@
 from os import rename, access, remove, R_OK, F_OK
 from ErrorHandler import error_show
 from exceptions import FileNotExist, NoPermission
+from shutil import rmtree
 
 
 class File(object):
@@ -52,7 +53,7 @@ class File(object):
         try:
             remove(self.fullPath)
         except WindowsError:
-            error_show('The second directory path is invalid', 'listener must add')
+            error_show('The path is invalid', 'listener must add')
         except Exception:
             error_show("An Error happened, please restart the app.", 'listener must add')
 
@@ -87,7 +88,16 @@ class Directory(object):
         pass
 
     def delete(self):
-        pass
+        """
+        | This method deletes current directory and all it's contents.
+        :param self: Obj
+        """
+        try:
+            rmtree(self.fullAddress)
+        except WindowsError:
+            error_show('The path is invalid', 'listener must add')
+        except Exception:
+            error_show("An Error happened, please restart the app.", 'listener must add')
 
     def rename(self, newName):
         pass
