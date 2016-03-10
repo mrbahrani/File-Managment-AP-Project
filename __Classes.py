@@ -99,5 +99,15 @@ class Directory(object):
         except Exception:
             error_show("An Error happened, please restart the app.", 'listener must add')
 
-    def rename(self, newName):
-        pass
+    def rename(self, new_name):
+        """
+        | This method renames current directory
+        :param self: Obj
+        :param new_name:str
+        """
+        try:
+            rename(self.fullAddress, ''.join(self.fullAddress[:len(self.fullAddress) - 1]) + new_name)
+        except WindowsError:
+            error_show('The second directory path is invalid', 'listener must add')
+        except Exception:
+            error_show("An Error happened, please restart the app.", 'listener must add')
