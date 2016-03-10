@@ -1,4 +1,4 @@
-from os import rename, access, R_OK, F_OK
+from os import rename, access, remove, R_OK, F_OK
 from ErrorHandler import error_show
 from exceptions import FileNotExist, NoPermission
 
@@ -12,7 +12,6 @@ class File(object):
         self.name = strAdrs.split("\\")[-1]
         self.Jname = strAdrs.name.split(".")[0]
         self.parent = strAdrs.split("\\")[-2]
-
 
     def __existence(self):
         """
@@ -46,7 +45,16 @@ class File(object):
             error_show("An Error happened, please restart the app.", 'listener must add')
 
     def delete(self):
-        pass
+        """
+        | This method deletes current file.
+        :param self: Obj
+        """
+        try:
+            remove(self.fullPath)
+        except WindowsError:
+            error_show('The second directory path is invalid', 'listener must add')
+        except Exception:
+            error_show("An Error happened, please restart the app.", 'listener must add')
 
     def rename(self, new_name):
         """
