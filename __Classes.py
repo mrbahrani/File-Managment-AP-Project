@@ -65,7 +65,7 @@ class File(object):
         :param new_name:str
         """
         try:
-            rename(self.fullPath, ''.join(self.fullPath[:len(self.fullPath) - 1]) + new_name)
+            rename(self.fullPath, ''.join(self.fullPath.split('\\')[:len(self.fullPath) - len(self.type) - len(self.name)]) + new_name)
         except WindowsError:
             error_show('The second directory path is invalid', 'listener must add')
         except Exception:
@@ -107,7 +107,7 @@ class Directory(object):
         :param new_name:str
         """
         try:
-            rename(self.fullAddress, ''.join(self.fullAddress[:len(self.fullAddress) - 1]) + new_name)
+            rename(self.fullAddress, ''.join(self.fullAddress[:len(self.fullAddress) - len(self.name)]) + new_name)
         except WindowsError:
             error_show('The second directory path is invalid', 'listener must add')
         except Exception:
