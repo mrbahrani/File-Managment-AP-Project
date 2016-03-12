@@ -11,13 +11,14 @@ class FileNotExist(Exception):
     | The __str__ method of The Exception class has been overridden.
     """
     def __init__(self):
-        super(FileNotExist).__init__(self)
+        self.massage = "File not exist"
+        super(FileNotExist, self).__init__(self.massage)
 
     def __str__(self):
         """
         :return "File not exist" : str
         """
-        return "File not exist"
+        return self.massage
 
 
 class NoPermission(Exception):
@@ -26,7 +27,7 @@ class NoPermission(Exception):
     | The __str__ method of The Exception class has been overridden.
     """
     def __init__(self):
-        super(NoPermission).__init__(self)
+        super(NoPermission, self).__init__()
 
     def __str__(self):
         """

@@ -1,18 +1,19 @@
 from os import rename, access, remove, R_OK, F_OK
-from ErrorHandler import error_show
-from exceptions import FileNotExist, NoPermission
+from __ErrorHandler import error_show
+from __exceptions import FileNotExist,NoPermission
 from shutil import rmtree
+
 
 
 class File(object):
     def __init__(self, strAdrs):
         self.fullPath = strAdrs
         self.__existence()
-        self.__reachable()
+        # self.__reachable()
         self.type = strAdrs.split(".")[-1]
         self.name = strAdrs.split("\\")[-1]
-        self.Jname = strAdrs.name.split(".")[0]
-        self.parent = strAdrs.split("\\")[-2]
+        # self.Jname = strAdrs.name.split(".")[0]
+        # self.parent = strAdrs.split("\\")[-2]
 
     def __existence(self):
         """
