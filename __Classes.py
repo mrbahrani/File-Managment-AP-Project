@@ -81,7 +81,10 @@ class Directory(object):
         self.children = list()
 
     def openf(self):
-        pass
+        filelist=[]
+        for filename in os.listdir(self.fullAddress):
+            filelist.append(filename)
+        return filelist
         
     def copy(self,dest):
         copytree(self.fullAddress,dest)
