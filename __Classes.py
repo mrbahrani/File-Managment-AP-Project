@@ -1,4 +1,4 @@
-from os import rename, access, remove, R_OK, F_OK, startfile
+from os import rename, access, remove, R_OK, F_OK, startfile, listdir
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
 from shutil import rmtree, copyfile, copytree
@@ -95,10 +95,10 @@ class Directory(object):
         self.children = list()
 
     def openf(self):
-        filelist=[]
-        for filename in os.listdir(self.fullAddress):
-            filelist.append(filename)
-        return filelist
+        file_list = []
+        for filename in listdir(self.fullAddress):
+            file_list.append(filename)
+        return file_list
         
     def copy(self, dest):
         copytree(self.fullAddress, dest)
