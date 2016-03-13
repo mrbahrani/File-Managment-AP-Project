@@ -1,20 +1,18 @@
-from os import rename, access, remove, R_OK, F_OK
+from os import rename, access, remove, R_OK, F_OK, startfile
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
-from shutil import rmtree
-from shutil import copytree
-
+from shutil import rmtree, copyfile, copytree
 
 
 class File(object):
     def __init__(self, strAdrs):
         self.fullPath = strAdrs
         self.__existence()
-        # self.__reachable()
+        self.__reachable()
         self.type = strAdrs.split(".")[-1]
-        self.name = strAdrs.split("\\")[-1]
-        # self.Jname = strAdrs.name.split(".")[0]
-        # self.parent = strAdrs.split("\\")[-2]
+        self.name = strAdrs.split("\\")[-1][:]
+        self.Jname = strAdrs.name.split(".")[0]
+        self.parent = strAdrs.split("\\")[-2]
 
     def __existence(self):
         """
@@ -29,10 +27,26 @@ class File(object):
             raise NoPermission
 
     def openf(self):
-        pass
-        
+        """
+        This method opens the file.
+        """
+        try:
+            startfile(self.fullPath)
+        except Exception:
+            print ("An exception ocurred")
+
     def copy(self,dest):
-        pass
+        """
+        This method creates a copy of the file.
+        parameters:
+        self : Object
+        dest : new file's address
+        """
+        try:
+            copyfile(self.fullPath, dest)
+            self.fullPath = dest
+        except Exception:
+            print ("An exception ocurred")
 
     def cut(self, second_path):
         """
@@ -83,12 +97,12 @@ class Directory(object):
     def openf(self):
         pass
         
-    def copy(self,dest):
-        copytree(self.fullAddress,dest)
+    def copy(self, dest):
+        copytree(self.fullAddress, dest)
 
-    def cut(self,dest):
-        self.copy(self,dest)
-        self.delete(self)
+    def cut(self, dest):
+        self.copy(self, dest)
+        self.delete()
 
     def delete(self):
         """
