@@ -2,6 +2,7 @@ from os import rename, access, remove, R_OK, F_OK
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
 from shutil import rmtree
+from shutil import copytree
 
 
 
@@ -83,10 +84,11 @@ class Directory(object):
         pass
         
     def copy(self,dest):
-        pass
+        copytree(self.fullAddress,dest)
 
     def cut(self,dest):
-        pass
+        self.copy(self,dest)
+        self.delete(self)
 
     def delete(self):
         """
