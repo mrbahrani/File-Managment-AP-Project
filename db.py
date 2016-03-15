@@ -2,6 +2,10 @@
 Thin file including functions for creating needed database and tables .
 List of included functions :
 1.connect_db
+2.create_cash_db
+3.add_new_file
+4.add_new_directory
+5.get_directory_childrens
 """
 from sqlite3 import *
 

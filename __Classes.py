@@ -91,7 +91,13 @@ class Directory(object):
     def __init__(self, strAdrs):
         self.fullAddress = strAdrs
         self.name = strAdrs.split("\\")[-1]
-        self.parent = strAdrs.split("\\")[-2]
+        try:
+            if strAdrs.split("\\")[-1]:
+                self.parent = strAdrs.split("\\")[-2]
+            else:
+                self.parent = None
+        except IndexError:
+            self.parent = None
         self.children = list()
 
     def openf(self):
