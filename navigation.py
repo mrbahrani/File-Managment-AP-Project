@@ -1,8 +1,13 @@
 """
 This file included files and variables needed for user file navigation.
 List of variables:
-
-List of functions
+1.history_list : list
+2.here : int
+List of functions:
+1.add_here
+2.history_back
+3.history_forward
+4.index_distance
 """
 from __Classes import Directory
 history_list = []                           # History container
@@ -28,6 +33,41 @@ def add_here(directory_path, h_list=history_list):
         h_list.append([directory_path, directory.parent])
 
 
-# while 1:
-#     add_here(str(raw_input(':')))
-#     print history_list
+def history_back(index=here, history=history_list):
+    """
+    |This function returns a step back from current index of history as a list
+    history_back([index=here])
+    :param index:int
+    :param history:list
+    """
+    try:
+        index -= 1
+        return history[index]
+    except IndexError:
+        return False
+
+
+def history_forward(index=here, history=history_list):
+    """
+    |This function returns a step forward from current index of history as a list
+    history_forward([index=here])
+    :param index:int
+    :param history:list
+    """
+    try:
+        index += 1
+        return history[index]
+    except IndexError:
+        return False
+
+
+def index_distance(index=here, history=history_list):
+    """
+    | This function returns the distance between current directory and end of the history list.
+    | If it return 0, There is no forward directory
+    | And if it return the length of history_list, there is no backward directory
+    index_distance([index=here][, history=history_list])
+    :param index:int
+    :param history:list
+    """
+    return len(history) - index
