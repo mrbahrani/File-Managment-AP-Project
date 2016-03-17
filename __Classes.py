@@ -56,6 +56,7 @@ class File(object):
         """
         try:
             rename(self.fullPath, second_path)
+            self.delete()
         except WindowsError:
             error_show('The second directory path is invalid', 'listener must add')
         except Exception:
