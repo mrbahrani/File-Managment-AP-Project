@@ -82,10 +82,10 @@ class Ui_MainWindow(object):
         self.menuView_mode.setObjectName(_fromUtf8("menuView_mode"))
         self.menuHelp = QtGui.QMenu(self.menubar)
         self.menuHelp.setObjectName(_fromUtf8("menuHelp"))
-        self.menuVirtual = QtGui.QMenu(self.menubar)
-        self.menuVirtual.setObjectName(_fromUtf8("menuVirtual"))
-        self.menuShell = QtGui.QMenu(self.menubar)
-        self.menuShell.setObjectName(_fromUtf8("menuShell"))
+       # self.menuVirtual = QtGui.QMenu(self.menubar)
+        #self.menuVirtual.setObjectName(_fromUtf8("menuVirtual"))
+        #self.menuShell = QtGui.QMenu(self.menubar)
+        #self.menuShell.setObjectName(_fromUtf8("menuShell"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
@@ -124,13 +124,13 @@ class Ui_MainWindow(object):
         self.actionList.setObjectName(_fromUtf8("actionList"))
         self.actionNew_directory_2 = QtGui.QAction(MainWindow)
         self.actionNew_directory_2.setObjectName(_fromUtf8("actionNew_directory_2"))
-        self.actionVirtual_drive = QtGui.QAction(MainWindow)
-        self.actionVirtual_drive.setObjectName(_fromUtf8("actionVirtual_drive"))
-        self.actionOpen_shell = QtGui.QAction(MainWindow)
-        self.actionOpen_shell.setObjectName(_fromUtf8("actionOpen_shell"))
-        self.actionRestart_shell = QtGui.QAction(MainWindow)
-        self.actionRestart_shell.setObjectName(_fromUtf8("actionRestart_shell"))
-        self.menuFile.addAction(self.actionNew_directory)
+       # self.actionVirtual_drive = QtGui.QAction(MainWindow)
+        #self.actionVirtual_drive.setObjectName(_fromUtf8("actionVirtual_drive"))
+       # self.actionOpen_shell = QtGui.QAction(MainWindow)
+        #self.actionOpen_shell.setObjectName(_fromUtf8("actionOpen_shell"))
+        #self.actionRestart_shell = QtGui.QAction(MainWindow)
+        #self.actionRestart_shell.setObjectName(_fromUtf8("actionRestart_shell"))
+        #self.menuFile.addAction(self.actionNew_directory)
         self.menuFile.addAction(self.actionNewFile)
         self.menuEdit.addAction(self.actionCopy)
         self.menuEdit.addAction(self.actionCut)
@@ -146,16 +146,16 @@ class Ui_MainWindow(object):
         self.menuView.addAction(self.menuView_mode.menuAction())
         self.menuHelp.addAction(self.actionTutorial)
         self.menuHelp.addAction(self.actionAbout)
-        self.menuVirtual.addAction(self.actionNew_directory_2)
-        self.menuVirtual.addAction(self.actionVirtual_drive)
-        self.menuVirtual.addSeparator()
-        self.menuShell.addAction(self.actionOpen_shell)
-        self.menuShell.addAction(self.actionRestart_shell)
+        #self.menuVirtual.addAction(self.actionNew_directory_2)
+        #self.menuVirtual.addAction(self.actionVirtual_drive)
+        #self.menuVirtual.addSeparator()
+        #self.menuShell.addAction(self.actionOpen_shell)
+        #self.menuShell.addAction(self.actionRestart_shell)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuEdit.menuAction())
         self.menubar.addAction(self.menuView.menuAction())
-        self.menubar.addAction(self.menuShell.menuAction())
-        self.menubar.addAction(self.menuVirtual.menuAction())
+        #self.menubar.addAction(self.menuShell.menuAction())
+        #self.menubar.addAction(self.menuVirtual.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
         
         self.retranslateUi(MainWindow)
@@ -163,17 +163,17 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
-        self.pushButton_2.setText(_translate("MainWindow", "PushButton", None))
-        self.pushButton.setText(_translate("MainWindow", "PushButton", None))
-        self.pushButton_3.setText(_translate("MainWindow", "PushButton", None))
-        self.label.setText(_translate("MainWindow", "جست و جو", None))
+        self.pushButton_2.setText(_translate("MainWindow", "Back", None))
+        self.pushButton.setText(_translate("MainWindow", "Up", None))
+        self.pushButton_3.setText(_translate("MainWindow", "Forward", None))
+        self.label.setText(_translate("MainWindow", "Search", None))
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit", None))
         self.menuView.setTitle(_translate("MainWindow", "View", None))
         self.menuView_mode.setTitle(_translate("MainWindow", "View mode", None))
         self.menuHelp.setTitle(_translate("MainWindow", "Help", None))
-        self.menuVirtual.setTitle(_translate("MainWindow", "Virtual", None))
-        self.menuShell.setTitle(_translate("MainWindow", "Shell", None))
+       # self.menuVirtual.setTitle(_translate("MainWindow", "Virtual", None))
+        #self.menuShell.setTitle(_translate("MainWindow", "Shell", None))
         self.actionNew_directory.setText(_translate("MainWindow", "New directory", None))
         self.actionNewFile.setText(_translate("MainWindow", "NewFile", None))
         self.actionCopy.setText(_translate("MainWindow", "Copy", None))
@@ -191,19 +191,19 @@ class Ui_MainWindow(object):
         self.actionSmall_icons.setText(_translate("MainWindow", "Small icons", None))
         self.actionList.setText(_translate("MainWindow", "List", None))
         self.actionNew_directory_2.setText(_translate("MainWindow", "New directory", None))
-        self.actionVirtual_drive.setText(_translate("MainWindow", "Virtual drive", None))
-        self.actionOpen_shell.setText(_translate("MainWindow", "Open shell", None))
-        self.actionRestart_shell.setText(_translate("MainWindow", "Restart shell", None))
+        #self.actionVirtual_drive.setText(_translate("MainWindow", "Virtual drive", None))
+     #   self.actionOpen_shell.setText(_translate("MainWindow", "Open shell", None))
+      #  self.actionRestart_shell.setText(_translate("MainWindow", "Restart shell", None))
 
 
-class ExampleApp(QtGui.QMainWindow, Ui_MainWindow):
-    def __init__(self):
-        # Explaining super is out of the scope of this article
-        # So please google it if you're not familar with it
-        # Simple reason why we use it here is that it allows us to
+#class ExampleApp(QtGui.QMainWindow, Ui_MainWindow):
+ #  def __init__(self):
+ #       # Explaining super is out of the scope of this article
+  #      # So please google it if you're not familar with it
+     # Simple reason why we use it here is that it allows us to
         # access variables, methods etc in the design.py file
-        super(self.__class__, self).__init__()
-        self.setupUi(self)  # This is defined in design.py file automatically
+     #   super(self.__class__, self).__init__()
+      #  self.setupUi(self)  # This is defined in design.py file automatically
                             # It sets up layout and widgets that are defined
 
 

@@ -20,11 +20,13 @@ def get_directories(path_address):
     :return list
     """
     includes = listdir(path_address)
+    #print includes
     result = []
     for checker in includes:
-        if isdir(checker):
+        if isdir(path_address+checker):
             result += [checker]
     return result
+print get_directories("D:\\Game Of Thrones\\")
 
 
 def get_files(path_address):
@@ -36,6 +38,6 @@ def get_files(path_address):
     includes = listdir(path_address)
     result = []
     for checker in includes:
-        if isfile(checker):
+        if isfile(path_address+checker):
             result += [checker]
     return result
