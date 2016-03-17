@@ -2,7 +2,24 @@ from __Classes import *
 from DefaultUI import *
 from PyQt4 import QtGui
 from funcs import *
-#from threading import Thread
+
+
+def file_icon(file_name):
+    """
+    | This function returns proper icon path for file type
+    :param file_name:str
+    :return str
+    """
+    file_type = file_name.split('.')[-1]
+    icons_types = [['mkv', 'mp4', 'avi', 'icon/movie.ico'], ['mp3', 'flac', 'wav', 'icons/music.ico']]
+    icons_types += [['docx, doc', 'icons/word.ico'], ['jpg', 'jpeg', 'gif', 'ttf', 'ico', 'png', 'icons/picture.ico']]
+    icons_types += ['zip', 'rar', 'gzip', 'icons/zip.ico']
+    for checker in icons_types:
+        if file_type in checker:
+            return checker[-1]
+        else:
+            return 'icons/text.ico'
+
 
 def treeView(fullPath,qwtIt):
     #This function visualizes the tree view of the directories
@@ -41,6 +58,8 @@ def listView(full_path, list_view):
             for file_name in files_list:
                 item = QtGui.QListWidget(list_view)
                 item.setText(file_name)
+                icon = QtGui.QIcon(file_icon(file_name))
+                item.setIcon(icon)
 
     except WindowsError:
         print("Access denied")
