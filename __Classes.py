@@ -35,7 +35,7 @@ class File(object):
         except Exception:
             print ("An exception ocurred")
 
-    def copy(self,dest):
+    def copy(self, dest):
         """
         This method creates a copy of the file.
         parameters:
