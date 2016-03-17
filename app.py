@@ -20,12 +20,14 @@ def window():
    #root.setText(0,"C")
    #treeView(strAddress,root)
    listRoot = []
-   for rt in listDrives:
-      i = QtGui.QTreeWidgetItem(ui.treeWidget)
-      j=QtGui.QListWidgetItem(ui.listView)
-      j.setText(rt[0].upper())
-      i.setText(0,rt[0].upper())
-      treeView(rt,i)
+   for driver in listDrives:
+      tree_widget_item = QtGui.QTreeWidgetItem(ui.treeWidget)
+      list_widget_item = QtGui.QListWidgetItem(ui.listView)
+      list_widget_item.setText(driver[0].upper())
+      icon = QtGui.QIcon('icons/folder.ico')
+      list_widget_item.setIcon(icon)
+      tree_widget_item.setText(0, driver[0].upper())
+      treeView(driver, tree_widget_item)
 
    MainWindow.show()
    sys.exit(app.exec_())
