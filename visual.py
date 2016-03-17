@@ -17,3 +17,17 @@ def treeView(fullPath,qwtIt):
         print("Accsess denied")
     except:
         print("An unwanted exception ocurred!!")
+def listView(fullPath,lView):
+    #This function visualizes the list view of the directories
+    try:
+        dirList= get_directories(fullPath)
+        if bool(dirList):
+            for it in dirList:
+                i = QtGui.QListWidgetItem(lView)
+                i.setText(0,it)
+                #qwtIt.addChild(i)
+
+    except WindowsError:
+        print("Accsess denied")
+    except:
+        print("An unwanted exception ocurred!!")

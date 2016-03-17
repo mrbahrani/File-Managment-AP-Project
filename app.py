@@ -22,10 +22,10 @@ def window():
    listRoot = []
    for rt in listDrives:
       i = QtGui.QTreeWidgetItem(ui.treeWidget)
+      j=QtGui.QListWidgetItem(ui.listView)
+      j.setText(rt[0].upper())
       i.setText(0,rt[0].upper())
       treeView(rt,i)
-
-
 
    MainWindow.show()
    sys.exit(app.exec_())

@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.treeWidget.setObjectName(_fromUtf8("treeWidget"))
         self.treeWidget.headerItem().setText(0, _fromUtf8("1"))
         self.gridLayout_3.addWidget(self.treeWidget, 2, 0, 1, 11)
-        self.listView = QtGui.QListView(self.centralwidget)
+        self.listView = QtGui.QListWidget(self.centralwidget)
         self.listView.setObjectName(_fromUtf8("ListView"))
         self.gridLayout_3.addWidget(self.listView, 2, 11, 1, 1)
 
