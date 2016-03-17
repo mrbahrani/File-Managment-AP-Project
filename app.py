@@ -27,6 +27,8 @@ def window():
       icon = QtGui.QIcon('icons/folder.ico')
       list_widget_item.setIcon(icon)
       tree_widget_item.setText(0, driver[0].upper())
+      tree_widget_item.setIcon(0, icon)
+      tree_widget_item.setIcon(1, icon)
       treeView(driver, tree_widget_item)
 
    MainWindow.show()
