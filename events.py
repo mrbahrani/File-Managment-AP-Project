@@ -81,8 +81,20 @@ def paste(current_directory, memory_list=memory):
                 file_object.cut(current_directory)
 
 
-def mEditAcDelete_triggered():
-    pass
+def delete_action(items, current_directory):
+    """
+    |This void function delet all items in current_directory.
+    :param items:list
+    :param current_directory:str
+    """
+    for item in items:
+        if isdir(item):
+            directory = Directory(current_directory + item)
+            directory.delete()
+        else:
+            file_object = File(current_directory + item)
+            file_object.delete()
+
 
 def mEditAcUndo_triggered():
     pass
@@ -103,8 +115,14 @@ def mHelpAcAbout_triggered():
    #msg.setStandardButtons(QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
    #msg.buttonClicked.connect(msgbtn)
    msg.exec_()
-def mHelpAcHelp_triggered():
-    pass
+
+
+def show_help_pdf():
+    """
+    | This void function opens help pdf file.
+    """
+    pdf = File('help.pdf')
+    pdf.openf()
 
 
 def btnFor_clicked():
