@@ -4,8 +4,14 @@ from PyQt4 import QtGui
 from funcs import *
 from os import *
 
-def mFileAcNDirectory(folderName, currentDirectory):
-    mkdir(currentDirectory+folderName)
+
+def new_directory_action(directory_name, current_path):
+    """
+    | This function creates a new directory into the current_path
+    :param directory_name : str
+    :param current_path:str
+    """
+    mkdir(current_path + directory_name)
 
 def mFileAcNFile(filename,type,currentDirectory):
     pass

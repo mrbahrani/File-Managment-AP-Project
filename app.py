@@ -3,6 +3,7 @@ from DefaultUI import *
 from funcs import *
 from visual import *
 from navigation import *
+from os.path import isdir
 add_here('\\')
 
 
@@ -23,17 +24,20 @@ def window():
     # root.setText(0,"C")
     # treeView(strAddress,root)
     list_root = []
+    icon = QtGui.QIcon('icons/driver.ico')
     for driver in listDrives:
-       tree_widget_item = QtGui.QTreeWidgetItem(ui.treeWidget)
-       list_widget_item = QtGui.QListWidgetItem(ui.listView)
-       list_widget_item.setText(driver[0].upper())
-       icon = QtGui.QIcon('icons/driver.ico')
-       list_widget_item.setIcon(icon)
-       tree_widget_item.setText(0, driver[0].upper())
-       tree_widget_item.setIcon(0, icon)
-       tree_widget_item.setIcon(1, icon)
-       treeView(driver, tree_widget_item)
-
+        tree_widget_item = QtGui.QTreeWidgetItem(ui.treeWidget)
+        tree_widget_item.setText(0, driver[0])
+        tree_widget_item.setIcon(0, icon)
+        tree_widget_item.setIcon(1, icon)
+        treeView(driver, tree_widget_item)
+    for i in listdir('C:\\Python27\\'):
+        list_widget_item = QtGui.QListWidgetItem(ui.listView)
+        list_widget_item.setText(i)
+        if isdir('C:\\Python27\\' + i):
+            list_widget_item.setIcon(icon)
+        else:
+            list_widget_item.setIcon(QtGui.QIcon('icons/text.ico'))
     MainWindow.show()
     sys.exit(app.exec_())
 
