@@ -1,6 +1,7 @@
 from __Classes import *
 from PyQt4 import QtGui
 from os import mknod, mkdir
+from os.path import isdir
 
 memory = []                                         # This list includes a number and a list
 # Number is 0 for copy or 1 for cut and list has strings of file or directory names
@@ -40,11 +41,45 @@ def copy_action(files_names, current_directory, memory_list=memory):
     memory_list += [0, files_names]
 
 
-def mEditAcCut_triggered():
-    pass
+def cut_action(files_names, current_directory, memory_list=memory):
+    """
+    | This function saves a list of files those must cut to another directory to the memory list
+    copy_action(files_names, current_directory[, memory_list=memory])
+    :param files_names:list
+    :param current_directory:str
+    :param memory_list:list
+    """
+    for element in memory_list:
+        memory_list.pop()
+    for element_index in range(len(files_names)):
+        files_names[element_index] = current_directory + files_names[element_index]
+    memory_list += [1, files_names]
 
-def mEditAcPaste_triggered():
-    pass
+
+def paste(current_directory, memory_list=memory):
+    """
+    | This function will paste(copy or cut) all elements are in the memory list.
+    paste(current_directory[, memory_list=memory])
+    :param current_directory:str
+    :param memory_list:list
+    """
+    if not memory_list[0]:
+        for element in memory_list[1]:
+            if isdir(element):
+                directory = Directory(element)
+                directory.copy(current_directory)
+            else:
+                file_object = File(element)
+                file_object.copy(current_directory)
+    else:
+        for element in memory_list[1]:
+            if isdir(element):
+                directory = Directory(element)
+                directory.cut(current_directory)
+            else:
+                file_object = File(element)
+                file_object.cut(current_directory)
+
 
 def mEditAcDelete_triggered():
     pass
