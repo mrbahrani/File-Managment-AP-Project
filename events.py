@@ -1,6 +1,6 @@
 from __Classes import *
 from PyQt4 import QtGui
-from os import mknod, mkdir
+from os import *
 from os.path import isdir
 
 memory = []                                         # This list includes a number and a list
@@ -34,6 +34,8 @@ def copy_action(files_names, current_directory, memory_list=memory):
     :param current_directory:str
     :param memory_list:list
     """
+    if type(files_names) != list:
+        files_names = list(files_names)
     for element in memory_list:
         memory_list.pop()
     for element_index in range(len(files_names)):

@@ -4,17 +4,22 @@ from funcs import *
 from visual import *
 from navigation import *
 from os.path import isdir
+from events import *
 add_here('\\')
+selected_item = [""]
 
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.ui.actionCopy = QtGui.QAction(QtGui.QIcon(''), '$Copy', self)
+        self.ui.actionCopy.setShortcut('Ctrl+C')
+        self.ui.menuEdit.triggered.connect(self.copy)
         self.setup()
 
     def setup(self):
-        self.ui.setupUi(self)
         self.ui.treeWidget.setHeaderLabels(["Directories"])
         model0 = QtGui.QFileSystemModel()
         model0.setRootPath("/")
@@ -33,14 +38,26 @@ class MainWindow(QtGui.QMainWindow):
                 list_widget_item.setIcon(self.icon)
             else:
                 list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
-        self.ui.listView.itemClicked.connect(self.printer)
+        self.ui.listView.itemClicked.connect(self.selected_saver)
 
-    def printer(self, item):
-        print item.text()
+    def selected_saver(self, item, selected_item_list=selected_item):
+        """
+        | This method saves text of selected item into the selected_item list
+         selected_saver(self, item[, selected_item_list=selected_item])
+         :param item:Object
+         :param selected_item_list:list
+        """
+        selected_item_list.pop()
+        selected_item_list.append(str(item.text()))
+        print type(selected_item[0])
 
     def start_show(self, app):
         self.show()
         sys.exit(app.exec_())
+
+    def copy(self, action, item=selected_item):
+        copy_action(item, 'E:\\Music\\')
+        print memory
 
 
 if __name__ == "__main__":
