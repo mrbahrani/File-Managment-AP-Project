@@ -12,11 +12,10 @@ selected_item = [""]
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.ui.actionCopy = QtGui.QAction(QtGui.QIcon(''), '$Copy', self)
-        self.ui.actionCopy.setShortcut('Ctrl+C')
-        self.ui.menuEdit.triggered.connect(self.copy)
+        self.add_actions()
         self.setup()
 
     def setup(self):
@@ -40,6 +39,13 @@ class MainWindow(QtGui.QMainWindow):
                 list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
         self.ui.listView.itemClicked.connect(self.selected_saver)
 
+    def add_actions(self):
+        """
+        | This method adds all slots of actions of menu bar elements
+        """
+        self.ui.actionCopy.triggered.connect(self.copy)
+        self.ui.actionCut.triggered.connect(self.cut)
+
     def selected_saver(self, item, selected_item_list=selected_item):
         """
         | This method saves text of selected item into the selected_item list
@@ -59,6 +65,9 @@ class MainWindow(QtGui.QMainWindow):
         copy_action(item, 'E:\\Music\\')
         print memory
 
+    def cut(self, action, item=selected_item):
+        cut_action(item, 'E:\\Music\\')
+        print memory
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

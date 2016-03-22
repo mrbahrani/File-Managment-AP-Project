@@ -36,7 +36,9 @@ def copy_action(files_names, current_directory, memory_list=memory):
     """
     if type(files_names) != list:
         files_names = list(files_names)
-    for element in memory_list:
+    if "" in files_names:
+        return
+    for element in range(len(memory_list)):
         memory_list.pop()
     for element_index in range(len(files_names)):
         files_names[element_index] = current_directory + files_names[element_index]
