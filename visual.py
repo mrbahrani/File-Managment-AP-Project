@@ -11,14 +11,15 @@ def file_icon(file_name):
     :return str
     """
     file_type = file_name.split('.')[-1]
-    icons_types = [['mkv', 'mp4', 'avi', 'icon/movie.ico'], ['mp3', 'flac', 'wav', 'icons/music.ico']]
+    print file_type
+    icons_types = [['mkv', 'mp4', 'avi', 'icons/movie.ico'], ['mp3', 'flac', 'wav', 'icons/music.ico']]
     icons_types += [['docx, doc', 'icons/word.ico'], ['jpg', 'jpeg', 'gif', 'ttf', 'ico', 'png', 'icons/picture.ico']]
     icons_types += ['zip', 'rar', 'gzip', 'icons/zip.ico']
     for checker in icons_types:
         if file_type in checker:
             return checker[-1]
-        else:
-            return 'icons/text.ico'
+        # else:
+        #     return 'icons/text.ico'
 
 
 def treeView(fullPath,qwtIt):

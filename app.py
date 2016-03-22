@@ -26,13 +26,13 @@ class MainWindow(QtGui.QMainWindow):
             tree_widget_item.setIcon(1, self.icon)
 
             treeView(driver, tree_widget_item)
-        for i in listdir('C:\\Python27\\'):
+        for i in listdir('E:\\Music\\'):
             list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
             list_widget_item.setText(i)
-            if isdir('C:\\Python27\\' + i):
+            if isdir('E:\\Music\\' + i):
                 list_widget_item.setIcon(self.icon)
             else:
-                list_widget_item.setIcon(QtGui.QIcon('icons/text.ico'))
+                list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
         self.ui.listView.itemClicked.connect(self.printer)
 
     def printer(self, item):
