@@ -33,13 +33,17 @@ class MainWindow(QtGui.QMainWindow):
             tree_widget_item.setIcon(1, self.icon)
 
             treeView(driver, tree_widget_item)
-        for i in listdir('E:\\Music\\'):
+        for driver in drivers():
             list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
-            list_widget_item.setText(i)
-            if isdir('E:\\Music\\' + i):
-                list_widget_item.setIcon(self.icon)
-            else:
-                list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
+            list_widget_item.setIcon(QtGui.QIcon('icons\\mycomputer.ico'))
+            list_widget_item.setText(driver)
+        #for i in listdir('C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\'):
+         #   list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
+          #  list_widget_item.setText(i)
+           # if isdir("C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\"+ i):
+            #    list_widget_item.setIcon(self.icon)
+            #else:
+             #   list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
         print '**************************'
@@ -74,11 +78,11 @@ class MainWindow(QtGui.QMainWindow):
         sys.exit(app.exec_())
 
     def copy(self, action, item=selected_item):
-        copy_action(item, 'E:\\Music\\')
+        copy_action(item, 'C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\')
         print memory
 
     def cut(self, action, item=selected_item):
-        cut_action(item, 'E:\\Music\\')
+        cut_action(item, 'C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\')
         print memory
 
     def paste(self):

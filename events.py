@@ -3,6 +3,7 @@ from PyQt4 import QtGui
 from os import *
 from os.path import isdir
 from visual import *
+from navigation import *
 
 memory = []                                         # This list includes a number and a list
 # Number is 0 for copy or 1 for cut and list has strings of file or directory names
@@ -154,12 +155,14 @@ def list_Dclicked(*args):
     :return:
     """
     print args
-    if isdir(args[0]+ "\\" + args[1]):
+    if isdir(args[0] + args[1]):
         curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
         listView(curDir.fullAddress,args[2])
+        add_here(curDir.fullAddress,history_list)
     else:
         curFile =File(args[0]+ "\\" +args[1])
+        print(curFile.fullPath,"->kir<-")
         curFile.openf()
 
 
