@@ -78,7 +78,6 @@ class MainWindow(QtGui.QMainWindow):
         """
         selected_item_list.pop()
         selected_item_list.append(str(item.text()))
-        # print type(selected_item[0])
         self.ui.lineEdit.setText(selected_item[0])
 
     def treeWidget_itemClicked(self, itemList, selected_item):
@@ -89,19 +88,15 @@ class MainWindow(QtGui.QMainWindow):
         sys.exit(app.exec_())
 
     def copy(self, action, item=selected_item):
-
-        copy_action(item, 'C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\')
+        copy_action(item, history_list[here + 1][0])
         # print memory
 
     def cut(self, action, item=selected_item):
-        cut_action(item, 'C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\')
+        cut_action(item, history_list[here + 1][0])
 
-        copy_action(item, 'E:\\Mus!c\\')
-        # print memory
+    def paste(self, action, item=selected_item):
 
-    def cut(self, action, item=selected_item):
-
-        cut_action(item, 'E:\\Mus!c\\')
+        paste_action(history_list[here + 1][0])
 
         # print memory
 

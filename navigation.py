@@ -22,9 +22,6 @@ def add_here(directory_path, h_list=history_list):
     :param h_list:list
     """
     directory = Directory(directory_path)
-    # print "**************************"
-    # print directory.parent
-    print directory_path
     try:
         parent_lindex =[h_list.index(x) for x in h_list if x[1] == directory.parent][-1]
         if h_list[parent_lindex][0] != directory_path:
@@ -34,8 +31,8 @@ def add_here(directory_path, h_list=history_list):
         pass
     finally:
         h_list += [[(directory_path + "\\").replace("\\\\", "\\"), directory.parent + ""]]
-        print '-------------------------------------------'
-        print h_list
+        here = len(history_list) - 1
+
 
 
 def history_back(index=here, history=history_list):

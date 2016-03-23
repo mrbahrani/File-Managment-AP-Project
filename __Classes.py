@@ -209,7 +209,7 @@ class NewFile(QtGui.QDialog):
         if comboBox.findText(comboBox.currentText()) == -1:
             comboBox.addItem(comboBox.currentText())
 
-    def __NewFile(self ,app):
+    def __NewFile(self,app):
         self.show()
         sys.exit(app.exec_())
 

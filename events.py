@@ -27,6 +27,7 @@ def new_file_action(file_name, type, current_directory):
     """
     mknod(current_directory + file_name + type)
 
+
 def copy_action(files_names, current_directory, memory_list=memory):
     """
     | This function saves a list of files those must copy to another directory to the memory list
@@ -35,6 +36,7 @@ def copy_action(files_names, current_directory, memory_list=memory):
     :param current_directory:str
     :param memory_list:list
     """
+    print "COPY"
     if type(files_names) != list:
         files_names = list(files_names)
     if "" in files_names:
@@ -42,11 +44,18 @@ def copy_action(files_names, current_directory, memory_list=memory):
     for element in range(len(memory_list)):
         memory_list.pop()
     for element_index in range(len(files_names)):
+        print '*****************************************'
+        print current_directory
+        print files_names[element_index]
+        print current_directory + files_names[element_index]
         files_names[element_index] = current_directory + files_names[element_index]
     memory_list += [0, files_names]
+    print memory
+    print "______________________________________________________________________"
 
 
 def cut_action(files_names, current_directory, memory_list=memory):
+    print "CUT"
     """
     | This function saves a list of files those must cut to another directory to the memory list
     copy_action(files_names, current_directory[, memory_list=memory])
@@ -62,6 +71,7 @@ def cut_action(files_names, current_directory, memory_list=memory):
 
 
 def paste_action(current_directory, memory_list=memory):
+    print "PASTE"
     """
     | This function will paste(copy or cut) all elements are in the memory list.
     paste(current_directory[, memory_list=memory])
@@ -69,15 +79,17 @@ def paste_action(current_directory, memory_list=memory):
     :param memory_list:list
     """
     if not memory_list[0]:
+        print "-------------------"
+        print current_directory
+        print memory
+        print "))))))))))))))))))))))))))))))))))))))))))"
         for element in memory_list[1]:
-            print '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4'
-            print element
-            print isdir(element)
-            if isdir(element):
-                directory = Directory(element)
+            if isdir(current_directory + element):
+                directory = Directory(current_directory + element)
                 directory.copy(current_directory + directory.name)
             else:
-                file_object = File(element)
+
+                file_object = File(current_directory + element)
                 file_object.copy(current_directory)
     else:
         for element in memory_list[1]:
@@ -153,28 +165,18 @@ def list_Dclicked(*args):
     :param args:
     :return:
     """
-    # print args
-    print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-    print history_list
-    print args[0]
-    print args[1]
-    print args[0] + "\\" + args[1]
+    print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+    print memory
+
     if not (args[0]):
         curDir = Directory(args[1])
         args[2].clear()
-        print "*********************************"
-        print curDir.fullAddress
-        print "/////////////////////////////////////"
         listView(curDir.fullAddress, args[2])
         add_here(args[1])
     elif isdir(args[0] + "\\" + args[1]):
         curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
         listView(curDir.fullAddress + "\\",args[2])
-        print "****************************************************************"
-        print curDir.fullAddress
-        print history_list
-        print "##############################################################"
         add_here(curDir.fullAddress)
     else:
         curFile =File(args[0]+ "\\" +args[1])
