@@ -145,14 +145,20 @@ class Directory(object):
 class _NewFile(QtGui.QDialog):
     def __init__(self, parent=None):
         super(_NewFile, self).__init__(parent)
+        
         self.browseButton = self.createButton("&Browse...", self.browse)
         self.findButton = self.createButton("&Create", self.create)
+
+        
         self.fileComboBox = self.createComboBox()
         self.textComboBox = self.createComboBox()
         self.directoryComboBox = self.createComboBox(QtCore.QDir.currentPath())
+
         fileLabel = QtGui.QLabel("NameFile:")
         textLabel = QtGui.QLabel("TypeFile:")
         directoryLabel = QtGui.QLabel("In directory:")
+
+        
         self.filesFoundLabel = QtGui.QLabel()
         buttonsLayout = QtGui.QHBoxLayout()
         buttonsLayout.addWidget(self.findButton)
@@ -167,6 +173,8 @@ class _NewFile(QtGui.QDialog):
         mainLayout.addWidget(self.filesFoundLabel, 4, 0)
         mainLayout.addLayout(buttonsLayout, 5, 0, 1, 3)
         self.setLayout(mainLayout)
+
+        
         self.setWindowTitle("Create_New_File")
         self.resize(500, 300)
 
@@ -179,9 +187,19 @@ class _NewFile(QtGui.QDialog):
             self.directoryComboBox.setCurrentIndex(self.directoryComboBox.findText(directory))
 
     def create(self):
-        pass
+        Name = self.fileComboBox.currentText()
+        Type = self.textComboBox.currentText()
+        Path = self.directoryComboBox.currentText()
+
+        self.updateComboBox(self.fileComboBox)
+        self.updateComboBox(self.textComboBox)
+        self.updateComboBox(self.directoryComboBox)
+        
+        self.item_list = [str(Name), str(Type) , str(Path)]
     
-    def updateComboBox(comboBox):
+#       print self.item_list
+    
+    def updateComboBox(self,comboBox):
         if comboBox.findText(comboBox.currentText()) == -1:
             comboBox.addItem(comboBox.currentText())
 

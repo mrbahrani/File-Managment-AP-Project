@@ -8,12 +8,9 @@ from visual import *
 from navigation import *
 from os.path import isdir
 from events import *
-<<<<<<< HEAD
 import sys
 add_here('\\')
-=======
 # add_here('E:\\Music\\')
->>>>>>> feaac88c3ec8815ea191c412bfd224c8b9f858b8
 selected_item = [""]
 
 
@@ -49,7 +46,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
         print '**************************'
-        print history_list[-1][1] + history_list[-1][0]
+        #print history_list[-1][1] + history_list[-1][0]
         self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][1] + history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
 
     def add_actions(self):
@@ -58,13 +55,9 @@ class MainWindow(QtGui.QMainWindow):
         """
         self.ui.actionCopy.triggered.connect(self.copy)
         self.ui.actionCut.triggered.connect(self.cut)
-<<<<<<< HEAD
         self.ui.actionNewFile.triggered.connect(self.NewFile)
-        
-=======
         self.ui.actionPaste.triggered.connect(self.paste)
 
->>>>>>> feaac88c3ec8815ea191c412bfd224c8b9f858b8
     def selected_saver(self, item, selected_item_list=selected_item):
         """
         | This method saves text of selected item into the selected_item list
@@ -89,6 +82,7 @@ class MainWindow(QtGui.QMainWindow):
         print memory
 
     def cut(self, action, item=selected_item):
+
         cut_action(item, 'E:\\Mus!c\\')
         print memory
         
