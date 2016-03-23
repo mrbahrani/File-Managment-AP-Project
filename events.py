@@ -165,11 +165,11 @@ def list_Dclicked(*args):
     elif isdir(args[0] + args[1]):
         curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
-        listView(curDir.fullAddress,args[2])
-        # print "****************************************************************"
-        # print curDir.fullAddress
-        # print history_list
-        # print "##############################################################"
+        listView(curDir.fullAddress + "\\",args[2])
+        print "****************************************************************"
+        print curDir.fullAddress
+        print history_list
+        print "##############################################################"
         add_here(curDir.fullAddress)
     else:
         curFile =File(args[0]+ "\\" +args[1])
