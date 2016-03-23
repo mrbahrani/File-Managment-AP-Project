@@ -1,3 +1,6 @@
+"""
+history_list is not still ready so the wroten code just print name of the file not it's path
+"""
 from __Classes import *
 from DefaultUI import *
 from funcs import *
@@ -37,7 +40,9 @@ class MainWindow(QtGui.QMainWindow):
                 list_widget_item.setIcon(self.icon)
             else:
                 list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
+        self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
+        self.ui.listView.doubleClicked().connect(lambda: list_Dclicked(history_list[-1],self.ui.listView.currentItem(),self.ui.listView))
 
     def add_actions(self):
         """
@@ -57,6 +62,10 @@ class MainWindow(QtGui.QMainWindow):
         selected_item_list.pop()
         selected_item_list.append(str(item.text()))
         print type(selected_item[0])
+        self.ui.lineEdit.setText(selected_item[0])
+
+    def treeWidget_itemClicked(self, itemList, selected_item):
+        self.ui.lineEdit.setText(itemList.text(selected_item))
 
     def start_show(self, app):
         self.show()
@@ -70,8 +79,15 @@ class MainWindow(QtGui.QMainWindow):
         cut_action(item, 'E:\\Music\\')
         print memory
 
+<<<<<<< HEAD
     def paste(self):
         paste_action('F:\\s')
+=======
+
+
+
+
+>>>>>>> 7327f018c5fd86baeb4dc1abd339935ea2bfbcc1
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

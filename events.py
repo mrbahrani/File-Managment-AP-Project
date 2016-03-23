@@ -2,6 +2,7 @@ from __Classes import *
 from PyQt4 import QtGui
 from os import *
 from os.path import isdir
+from visual import *
 
 memory = []                                         # This list includes a number and a list
 # Number is 0 for copy or 1 for cut and list has strings of file or directory names
@@ -137,5 +138,25 @@ def btnBack_clicked():
 
 def btnUp_clicked():
     pass
+
+def list_Dclicked(*args):
+    """
+
+    :param args:0.current address,1.file name(+format),2.list widget
+    :return:
+    """
+    """
+    :param args:
+    :return:
+    """
+    if isdir(args[0]+args[1]):
+        curDir = Directory(args[0]+args[1])
+        args[2].clear()
+        listView(curDir.fullAddress,args[2])
+    else:
+        curFile =File(args[0]+args[0])
+        curFile.openf()
+
+
 
 
