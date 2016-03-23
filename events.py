@@ -2,6 +2,7 @@ from __Classes import *
 from PyQt4 import QtGui
 from os import *
 from os.path import isdir
+from visual import *
 
 memory = []                                         # This list includes a number and a list
 # Number is 0 for copy or 1 for cut and list has strings of file or directory names
@@ -59,7 +60,7 @@ def cut_action(files_names, current_directory, memory_list=memory):
     memory_list += [1, files_names]
 
 
-def paste(current_directory, memory_list=memory):
+def paste_action(current_directory, memory_list=memory):
     """
     | This function will paste(copy or cut) all elements are in the memory list.
     paste(current_directory[, memory_list=memory])
@@ -68,9 +69,12 @@ def paste(current_directory, memory_list=memory):
     """
     if not memory_list[0]:
         for element in memory_list[1]:
+            print '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4'
+            print element
+            print isdir(element)
             if isdir(element):
                 directory = Directory(element)
-                directory.copy(current_directory)
+                directory.copy(current_directory + directory.name)
             else:
                 file_object = File(element)
                 file_object.copy(current_directory)
@@ -136,5 +140,28 @@ def btnBack_clicked():
 
 def btnUp_clicked():
     pass
+
+
+def list_Dclicked(*args):
+    """
+
+    :param args:0.current address,1.file name(+format),2.list widget
+    :return:
+    """
+    """
+    :param args:
+    :return:
+    """
+    print args
+    if isdir(args[0]+ "\\" + args[1]):
+        curDir = Directory(args[0] + "\\" +args[1])
+        args[2].clear()
+        listView(curDir.fullAddress,args[2])
+    else:
+        curFile =File(args[0]+ "\\" +args[1])
+        curFile.openf()
+
+
+
 
 
