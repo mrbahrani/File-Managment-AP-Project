@@ -45,6 +45,7 @@ class MainWindow(QtGui.QMainWindow):
         """
         self.ui.actionCopy.triggered.connect(self.copy)
         self.ui.actionCut.triggered.connect(self.cut)
+        self.ui.actionPaste.triggered.connect(self.paste)
 
     def selected_saver(self, item, selected_item_list=selected_item):
         """
@@ -68,6 +69,9 @@ class MainWindow(QtGui.QMainWindow):
     def cut(self, action, item=selected_item):
         cut_action(item, 'E:\\Music\\')
         print memory
+
+    def paste(self):
+        paste_action('F:\\s')
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

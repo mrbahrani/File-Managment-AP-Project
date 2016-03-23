@@ -1,7 +1,7 @@
 from os import rename, access, remove, R_OK, F_OK, startfile, listdir
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
-from shutil import rmtree, copyfile, copytree
+from shutil import rmtree, copy2, copytree
 
 
 class File(object):
@@ -11,7 +11,8 @@ class File(object):
         self.__reachable()
         self.type = strAdrs.split(".")[-1]
         self.name = strAdrs.split("\\")[-1][:]
-        self.Jname = strAdrs.name.split(".")[0]
+        # self.Jname = strAdrs.name.split(".")[0]
+        self.Jname = strAdrs.split(".")[0]
         self.parent = strAdrs.split("\\")[-2]
 
     def __existence(self):
@@ -33,7 +34,7 @@ class File(object):
         try:
             startfile(self.fullPath)
         except Exception:
-            print ("An exception ocurred")
+            print ("An exception ocurred during open")
 
     def copy(self, dest):
         """
@@ -43,10 +44,13 @@ class File(object):
         dest : new file's address
         """
         try:
-            copyfile(self.fullPath, dest)
+            print dest
+            print self.fullPath
+            copy2(self.fullPath, dest)
             self.fullPath = dest
-        except Exception:
-            print ("An exception ocurred")
+        except Exception as e:
+            print e
+            print ("An exception ocurred during copy")
 
     def cut(self, second_path):
         """

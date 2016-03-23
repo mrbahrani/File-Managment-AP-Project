@@ -60,7 +60,7 @@ def cut_action(files_names, current_directory, memory_list=memory):
     memory_list += [1, files_names]
 
 
-def paste(current_directory, memory_list=memory):
+def paste_action(current_directory, memory_list=memory):
     """
     | This function will paste(copy or cut) all elements are in the memory list.
     paste(current_directory[, memory_list=memory])
