@@ -49,7 +49,6 @@ def listView(full_path, list_view):
         files_list = get_files(full_path)
         if dir_list:
             for it in dir_list:
-                print 'kir'
                 item = QtGui.QListWidgetItem(list_view)
                 item.setText(it)
                 icon = QtGui.QIcon('icons/folder.ico')
@@ -64,5 +63,6 @@ def listView(full_path, list_view):
 
     except WindowsError:
         print("Access denied")
-    except:
-        print("An unwanted exception ocurred!!")
+    # except Exception as e:
+    #     print("An unwanted exception ocurred!!")
+    #     print e
