@@ -13,7 +13,7 @@ class File(object):
         self.__reachable()
         self.type = strAdrs.split(".")[-1]
         self.name = strAdrs.split("\\")[-1][:]
-        self.Jname = strAdrs.name.split(".")[0]
+        self.Jname = strAdrs.split(".")[0]
         self.parent = strAdrs.split("\\")[-2]
 
     def __existence(self):

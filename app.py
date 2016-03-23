@@ -58,7 +58,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.listView.itemClicked.connect(self.selected_saver)
         # print '**************************'
         # print history_list[-1]
-        self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][1] + history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+        self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
 
     def add_actions(self):
         """

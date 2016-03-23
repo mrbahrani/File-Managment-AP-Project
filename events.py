@@ -154,6 +154,11 @@ def list_Dclicked(*args):
     :return:
     """
     # print args
+    print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+    print history_list
+    print args[0]
+    print args[1]
+    print args[0] + "\\" + args[1]
     if not (args[0]):
         curDir = Directory(args[1])
         args[2].clear()
@@ -162,7 +167,7 @@ def list_Dclicked(*args):
         print "/////////////////////////////////////"
         listView(curDir.fullAddress, args[2])
         add_here(args[1])
-    elif isdir(args[0] + args[1]):
+    elif isdir(args[0] + "\\" + args[1]):
         curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
         listView(curDir.fullAddress + "\\",args[2])
