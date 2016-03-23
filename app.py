@@ -42,6 +42,7 @@ class MainWindow(QtGui.QMainWindow):
                 list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
+        self.ui.listView.doubleClicked().connect(lambda: list_Dclicked(history_list[-1],self.ui.listView.currentItem(),self.ui.listView))
 
     def add_actions(self):
         """
@@ -76,6 +77,11 @@ class MainWindow(QtGui.QMainWindow):
     def cut(self, action, item=selected_item):
         cut_action(item, 'E:\\Music\\')
         print memory
+
+
+
+
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
