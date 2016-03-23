@@ -148,9 +148,9 @@ class Directory(object):
             error_show("An Error happened, please restart the app.", 'listener must add')
 
 
-class NewFile(QtGui.QDialog):
+class New_File(QtGui.QDialog):
     def __init__(self, parent=None):
-        super(NewFile, self).__init__(parent)
+        super(New_File, self).__init__(parent)
         
         self.browseButton = self.createButton("&Browse...", self.browse)
         self.findButton = self.createButton("&Create", self.create)
@@ -180,6 +180,7 @@ class NewFile(QtGui.QDialog):
         mainLayout.addLayout(buttonsLayout, 5, 0, 1, 3)
         self.setLayout(mainLayout)
 
+        self.create()
         
         self.setWindowTitle("Create_New_File")
         self.resize(500, 300)
@@ -202,16 +203,22 @@ class NewFile(QtGui.QDialog):
         self.updateComboBox(self.directoryComboBox)
         
         self.item_list = [str(Name), str(Type) , str(Path)]
-    
-#       print self.item_list
+        item_list = self.item_list
+        
+        if self.item_list[0] and self.item_list[1] and self.item_list[-1]:
+            file = open(str(self.item_list[-1] + '/' + self.item_list[0] + '.' + self.item_list[1]), 'w')
+            file.close() 
     
     def updateComboBox(self,comboBox):
         if comboBox.findText(comboBox.currentText()) == -1:
             comboBox.addItem(comboBox.currentText())
 
+<<<<<<< HEAD
     def __NewFile(self,app):
+=======
+    def _NewFile(self ,app ):
+>>>>>>> 4b5dfca31c1cc38a1fb075f375b020f6976f1e64
         self.show()
-        sys.exit(app.exec_())
 
     def createButton(self, text, member):
         button = QtGui.QPushButton(text)
