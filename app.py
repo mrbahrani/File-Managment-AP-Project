@@ -9,7 +9,7 @@ from navigation import *
 from os.path import isdir
 from events import *
 import sys
-add_here('\\')
+# add_here('\\')
 # add_here('E:\\Music\\')
 selected_item = [""]
 
@@ -22,8 +22,8 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
-         
-    
+
+
     def setup(self):
         self.ui.treeWidget.setHeaderLabels(["Directories"])
         model0 = QtGui.QFileSystemModel()
@@ -36,7 +36,6 @@ class MainWindow(QtGui.QMainWindow):
             tree_widget_item.setIcon(1, self.icon)
 
             treeView(driver, tree_widget_item)
-<<<<<<< HEAD
         for driver in drivers():
             list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
             list_widget_item.setIcon(QtGui.QIcon('icons\\mycomputer.ico'))
@@ -48,19 +47,17 @@ class MainWindow(QtGui.QMainWindow):
             #    list_widget_item.setIcon(self.icon)
             #else:
              #   list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
-=======
-        for i in listdir('E:\\Mus!c\\'):
-            list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
-            list_widget_item.setText(i)
-            if isdir('E:\\Mus!c\\' + i):
-                list_widget_item.setIcon(self.icon)
-            else:
-                list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
->>>>>>> fc0e066f194d13f48865516a70ceeb699b201976
+        # for i in listdir('E:\\Music\\'):
+        #     list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
+        #     list_widget_item.setText(i)
+        #     if isdir('E:\\Music\\' + i):
+        #         list_widget_item.setIcon(self.icon)
+        #     else:
+        #         list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
         print '**************************'
-        #print history_list[-1][1] + history_list[-1][0]
+        print history_list[-1]
         self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][1] + history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
 
     def add_actions(self):
@@ -92,31 +89,31 @@ class MainWindow(QtGui.QMainWindow):
         sys.exit(app.exec_())
 
     def copy(self, action, item=selected_item):
-<<<<<<< HEAD
+
         copy_action(item, 'C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\')
         print memory
 
     def cut(self, action, item=selected_item):
         cut_action(item, 'C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\')
-=======
+
         copy_action(item, 'E:\\Mus!c\\')
         print memory
 
     def cut(self, action, item=selected_item):
 
         cut_action(item, 'E:\\Mus!c\\')
->>>>>>> fc0e066f194d13f48865516a70ceeb699b201976
+
         print memory
-        
-    
+
+
     def NewFile(self , file_name=None , type=None):
-        NewFile = _NewFile()
+        NewFile = NewFile()
         NewFile.__NewFile(app)
-        
-                
+
+
         #directory = QtGui.QFileDialog.getSaveFileName(self, "New_File",
          #       new_file_action('aaa','py','C:\\'))
-        
+
 
     def paste(self):
         paste_action('F:\\')

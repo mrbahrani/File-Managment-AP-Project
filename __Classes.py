@@ -142,9 +142,9 @@ class Directory(object):
             error_show("An Error happened, please restart the app.", 'listener must add')
 
 
-class _NewFile(QtGui.QDialog):
+class NewFile(QtGui.QDialog):
     def __init__(self, parent=None):
-        super(_NewFile, self).__init__(parent)
+        super(NewFile, self).__init__(parent)
         
         self.browseButton = self.createButton("&Browse...", self.browse)
         self.findButton = self.createButton("&Create", self.create)
@@ -220,11 +220,11 @@ class _NewFile(QtGui.QDialog):
                 QtGui.QSizePolicy.Preferred)
         return comboBox
 
-if __name__ == '__main__':
-
-    import sys
-
-    app = QtGui.QApplication(sys.argv)
-    window = _NewFile()
-    window.show()
-    sys.exit(app.exec_())
+# if __name__ == '__main__':
+#
+#     import sys
+#
+#     app = QtGui.QApplication(sys.argv)
+#     window = NewFile()
+#     window.show()
+#     sys.exit(app.exec_())
