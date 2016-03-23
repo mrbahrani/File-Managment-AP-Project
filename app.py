@@ -56,8 +56,8 @@ class MainWindow(QtGui.QMainWindow):
         #         list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
-        print '**************************'
-        print history_list[-1]
+        # print '**************************'
+        # print history_list[-1]
         self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][1] + history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
 
     def add_actions(self):
@@ -78,7 +78,7 @@ class MainWindow(QtGui.QMainWindow):
         """
         selected_item_list.pop()
         selected_item_list.append(str(item.text()))
-        print type(selected_item[0])
+        # print type(selected_item[0])
         self.ui.lineEdit.setText(selected_item[0])
 
     def treeWidget_itemClicked(self, itemList, selected_item):
@@ -91,19 +91,19 @@ class MainWindow(QtGui.QMainWindow):
     def copy(self, action, item=selected_item):
 
         copy_action(item, 'C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\')
-        print memory
+        # print memory
 
     def cut(self, action, item=selected_item):
         cut_action(item, 'C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\')
 
         copy_action(item, 'E:\\Mus!c\\')
-        print memory
+        # print memory
 
     def cut(self, action, item=selected_item):
 
         cut_action(item, 'E:\\Mus!c\\')
 
-        print memory
+        # print memory
 
 
     def NewFile(self , file_name=None , type=None):

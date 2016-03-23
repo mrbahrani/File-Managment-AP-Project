@@ -153,18 +153,24 @@ def list_Dclicked(*args):
     :param args:
     :return:
     """
-    print args
-
+    # print args
     if not (args[0]):
         curDir = Directory(args[1])
         args[2].clear()
+        print "*********************************"
+        print curDir.fullAddress
+        print "/////////////////////////////////////"
         listView(curDir.fullAddress, args[2])
         add_here(args[1])
     elif isdir(args[0] + args[1]):
         curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
         listView(curDir.fullAddress,args[2])
-        add_here(curDir.fullAddress,history_list)
+        # print "****************************************************************"
+        # print curDir.fullAddress
+        # print history_list
+        # print "##############################################################"
+        add_here(curDir.fullAddress)
     else:
         curFile =File(args[0]+ "\\" +args[1])
         # print(curFile.fullPath,"->kir<-")

@@ -93,14 +93,20 @@ class File(object):
 class Directory(object):
     def __init__(self, strAdrs):
         self.fullAddress = strAdrs
-        self.name = strAdrs.split("\\")[-1]
+        # print "***********************************************"
+        # print strAdrs
+        # print strAdrs.split("\\")
+        if strAdrs.split("\\")[-1]:
+            self.name = strAdrs.split("\\")[-1]
+        else:
+            self.name = strAdrs
         try:
             if strAdrs.split("\\")[-1]:
-                self.parent = strAdrs.split("\\")[-2]
+                self.parent = strAdrs.split("\\")[-3]
             else:
-                self.parent = None
+                self.parent = ""
         except IndexError:
-            self.parent = None
+            self.parent = ""
         self.children = list()
 
     def openf(self):

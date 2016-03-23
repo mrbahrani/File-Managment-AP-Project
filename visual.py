@@ -10,7 +10,7 @@ def file_icon(file_name):
     :param file_name:str
     :return str
     """
-    file_type = file_name.split('.')[-1]
+    file_type = file_name.split('.')[-1].lower()
     print file_type
     icons_types = [['mkv', 'mp4', 'avi', 'icons/movie.ico'], ['mp3', 'flac', 'wav', 'icons/music.ico']]
     icons_types += [['docx, doc', 'icons/word.ico'], ['jpg', 'jpeg', 'gif', 'ttf', 'ico', 'png', 'icons/picture.ico']]
@@ -18,8 +18,7 @@ def file_icon(file_name):
     for checker in icons_types:
         if file_type in checker:
             return checker[-1]
-        # else:
-        #     return 'icons/text.ico'
+    return 'icons/text.ico'
 
 
 def treeView(fullPath,qwtIt):
@@ -56,13 +55,13 @@ def listView(full_path, list_view):
 
         if files_list:
             for file_name in files_list:
-                item = QtGui.QListWidget(list_view)
+                item = QtGui.QListWidgetItem(list_view)
                 item.setText(file_name)
                 icon = QtGui.QIcon(file_icon(file_name))
                 item.setIcon(icon)
 
     except WindowsError:
         print("Access denied")
-    # except Exception as e:
-    #     print("An unwanted exception ocurred!!")
-    #     print e
+    except Exception as e:
+        print("An unwanted exception ocurred!!")
+        print e
