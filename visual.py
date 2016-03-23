@@ -44,6 +44,7 @@ def listView(full_path, list_view):
     :param full_path:str
     :param list_view:obj
     """
+    list_view.clear()
     try:
         dir_list = get_directories(full_path)
         files_list = get_files(full_path)
@@ -53,16 +54,16 @@ def listView(full_path, list_view):
                 item.setText(it)
                 icon = QtGui.QIcon('icons/folder.ico')
                 item.setIcon(icon)
-
-        if files_list:
-            for file_name in files_list:
-                item = QtGui.QListWidget(list_view)
-                item.setText(file_name)
-                icon = QtGui.QIcon(file_icon(file_name))
-                item.setIcon(icon)
-
     except WindowsError:
         print("Access denied")
+    if files_list:
+        print files_list
+        for file_name in files_list:
+            print "***"
+            item = QtGui.QListWidgetItem(list_view)
+            item.setText(file_name)
+            #icon = QtGui.QIcon(file_icon(file_name))
+            item.setIcon(icon)
     # except Exception as e:
     #     print("An unwanted exception ocurred!!")
     #     print e
