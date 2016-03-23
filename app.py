@@ -5,6 +5,7 @@ from visual import *
 from navigation import *
 from os.path import isdir
 from events import *
+import sys
 add_here('\\')
 selected_item = [""]
 
@@ -17,7 +18,8 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
-
+         
+    
     def setup(self):
         self.ui.treeWidget.setHeaderLabels(["Directories"])
         model0 = QtGui.QFileSystemModel()
@@ -30,10 +32,10 @@ class MainWindow(QtGui.QMainWindow):
             tree_widget_item.setIcon(1, self.icon)
 
             treeView(driver, tree_widget_item)
-        for i in listdir('E:\\Music\\'):
+        for i in listdir('E:\\Mus!c\\'):
             list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
             list_widget_item.setText(i)
-            if isdir('E:\\Music\\' + i):
+            if isdir('E:\\Mus!c\\' + i):
                 list_widget_item.setIcon(self.icon)
             else:
                 list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
@@ -45,7 +47,8 @@ class MainWindow(QtGui.QMainWindow):
         """
         self.ui.actionCopy.triggered.connect(self.copy)
         self.ui.actionCut.triggered.connect(self.cut)
-
+        self.ui.actionNewFile.triggered.connect(self.NewFile)
+        
     def selected_saver(self, item, selected_item_list=selected_item):
         """
         | This method saves text of selected item into the selected_item list
@@ -62,12 +65,22 @@ class MainWindow(QtGui.QMainWindow):
         sys.exit(app.exec_())
 
     def copy(self, action, item=selected_item):
-        copy_action(item, 'E:\\Music\\')
+        copy_action(item, 'E:\\Mus!c\\')
         print memory
 
     def cut(self, action, item=selected_item):
-        cut_action(item, 'E:\\Music\\')
+        cut_action(item, 'E:\\Mus!c\\')
         print memory
+        
+    
+    def NewFile(self , file_name=None , type=None):
+        NewFile = _NewFile()
+        NewFile.__NewFile(app)
+        
+                
+        #directory = QtGui.QFileDialog.getSaveFileName(self, "New_File",
+         #       new_file_action('aaa','py','C:\\'))
+        
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

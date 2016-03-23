@@ -25,7 +25,6 @@ def new_file_action(file_name, type, current_directory):
     """
     mknod(current_directory + file_name + type)
 
-
 def copy_action(files_names, current_directory, memory_list=memory):
     """
     | This function saves a list of files those must copy to another directory to the memory list
