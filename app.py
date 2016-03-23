@@ -14,14 +14,16 @@ import sys
 selected_item = [""]
 
 
-class MainWindow(QtGui.QMainWindow):
+class MainWindow(QtGui.QMainWindow,New_File ):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
         self.ui = Ui_MainWindow()
+        self.New_File = New_File()
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
+    
 
 
     def setup(self):
@@ -106,13 +108,10 @@ class MainWindow(QtGui.QMainWindow):
         # print memory
 
 
-    def NewFile(self , file_name=None , type=None):
-        NewFile = NewFile()
-        NewFile.__NewFile(app)
-
-
-        #directory = QtGui.QFileDialog.getSaveFileName(self, "New_File",
-         #       new_file_action('aaa','py','C:\\'))
+    def NewFile(self):
+        self.New_File._NewFile(self)
+           
+        
 
 
     def paste(self):
