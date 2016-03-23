@@ -1,7 +1,9 @@
 from os import rename, access, remove, R_OK, F_OK, startfile, listdir
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
-from shutil import rmtree, copy2, copytree
+from shutil import rmtree, copyfile, copytree
+from PyQt4 import QtCore, QtGui
+import sys
 
 
 class File(object):
@@ -11,8 +13,7 @@ class File(object):
         self.__reachable()
         self.type = strAdrs.split(".")[-1]
         self.name = strAdrs.split("\\")[-1][:]
-        # self.Jname = strAdrs.name.split(".")[0]
-        self.Jname = strAdrs.split(".")[0]
+        self.Jname = strAdrs.name.split(".")[0]
         self.parent = strAdrs.split("\\")[-2]
 
     def __existence(self):
@@ -34,7 +35,7 @@ class File(object):
         try:
             startfile(self.fullPath)
         except Exception:
-            print ("An exception ocurred during open")
+            print ("An exception ocurred")
 
     def copy(self, dest):
         """
@@ -44,13 +45,10 @@ class File(object):
         dest : new file's address
         """
         try:
-            print dest
-            print self.fullPath
-            copy2(self.fullPath, dest)
+            copyfile(self.fullPath, dest)
             self.fullPath = dest
-        except Exception as e:
-            print e
-            print ("An exception ocurred during copy")
+        except Exception:
+            print ("An exception ocurred")
 
     def cut(self, second_path):
         """
@@ -142,3 +140,91 @@ class Directory(object):
             error_show('The second directory path is invalid', 'listener must add')
         except Exception:
             error_show("An Error happened, please restart the app.", 'listener must add')
+
+
+class _NewFile(QtGui.QDialog):
+    def __init__(self, parent=None):
+        super(_NewFile, self).__init__(parent)
+        
+        self.browseButton = self.createButton("&Browse...", self.browse)
+        self.findButton = self.createButton("&Create", self.create)
+
+        
+        self.fileComboBox = self.createComboBox()
+        self.textComboBox = self.createComboBox()
+        self.directoryComboBox = self.createComboBox(QtCore.QDir.currentPath())
+
+        fileLabel = QtGui.QLabel("NameFile:")
+        textLabel = QtGui.QLabel("TypeFile:")
+        directoryLabel = QtGui.QLabel("In directory:")
+
+        
+        self.filesFoundLabel = QtGui.QLabel()
+        buttonsLayout = QtGui.QHBoxLayout()
+        buttonsLayout.addWidget(self.findButton)
+        mainLayout = QtGui.QGridLayout()
+        mainLayout.addWidget(fileLabel, 0, 0)
+        mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
+        mainLayout.addWidget(textLabel, 1, 0)
+        mainLayout.addWidget(self.textComboBox, 1, 1, 1, 2)
+        mainLayout.addWidget(directoryLabel, 2, 0)
+        mainLayout.addWidget(self.directoryComboBox, 2, 1)
+        mainLayout.addWidget(self.browseButton, 2, 2)
+        mainLayout.addWidget(self.filesFoundLabel, 4, 0)
+        mainLayout.addLayout(buttonsLayout, 5, 0, 1, 3)
+        self.setLayout(mainLayout)
+
+        
+        self.setWindowTitle("Create_New_File")
+        self.resize(500, 300)
+
+    def browse(self):
+        directory = QtGui.QFileDialog.getExistingDirectory(self, "Create_New_File",
+                QtCore.QDir.currentPath())
+        if directory:
+            if self.directoryComboBox.findText(directory) == -1:
+                self.directoryComboBox.addItem(directory)
+            self.directoryComboBox.setCurrentIndex(self.directoryComboBox.findText(directory))
+
+    def create(self):
+        Name = self.fileComboBox.currentText()
+        Type = self.textComboBox.currentText()
+        Path = self.directoryComboBox.currentText()
+
+        self.updateComboBox(self.fileComboBox)
+        self.updateComboBox(self.textComboBox)
+        self.updateComboBox(self.directoryComboBox)
+        
+        self.item_list = [str(Name), str(Type) , str(Path)]
+    
+#       print self.item_list
+    
+    def updateComboBox(self,comboBox):
+        if comboBox.findText(comboBox.currentText()) == -1:
+            comboBox.addItem(comboBox.currentText())
+
+    def __NewFile(self ,app):
+        self.show()
+        sys.exit(app.exec_())
+
+    def createButton(self, text, member):
+        button = QtGui.QPushButton(text)
+        button.clicked.connect(member)
+        return button
+
+    def createComboBox(self, text=""):
+        comboBox = QtGui.QComboBox()
+        comboBox.setEditable(True)
+        comboBox.addItem(text)
+        comboBox.setSizePolicy(QtGui.QSizePolicy.Expanding,
+                QtGui.QSizePolicy.Preferred)
+        return comboBox
+
+if __name__ == '__main__':
+
+    import sys
+
+    app = QtGui.QApplication(sys.argv)
+    window = _NewFile()
+    window.show()
+    sys.exit(app.exec_())
