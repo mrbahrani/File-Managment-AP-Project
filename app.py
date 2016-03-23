@@ -8,7 +8,7 @@ from visual import *
 from navigation import *
 from os.path import isdir
 from events import *
-add_here('\\')
+# add_here('E:\\Music\\')
 selected_item = [""]
 
 
@@ -42,7 +42,9 @@ class MainWindow(QtGui.QMainWindow):
                 list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
-        self.ui.listView.doubleClicked().connect(lambda: list_Dclicked(history_list[-1],self.ui.listView.currentItem(),self.ui.listView))
+        print '**************************'
+        print history_list[-1][1] + history_list[-1][0]
+        self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][1] + history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
 
     def add_actions(self):
         """
@@ -79,15 +81,9 @@ class MainWindow(QtGui.QMainWindow):
         cut_action(item, 'E:\\Music\\')
         print memory
 
-<<<<<<< HEAD
     def paste(self):
-        paste_action('F:\\s')
-=======
+        paste_action('F:\\')
 
-
-
-
->>>>>>> 7327f018c5fd86baeb4dc1abd339935ea2bfbcc1
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)

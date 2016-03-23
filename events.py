@@ -70,9 +70,12 @@ def paste_action(current_directory, memory_list=memory):
     """
     if not memory_list[0]:
         for element in memory_list[1]:
+            print '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4'
+            print element
+            print isdir(element)
             if isdir(element):
                 directory = Directory(element)
-                directory.copy(current_directory)
+                directory.copy(current_directory + directory.name)
             else:
                 file_object = File(element)
                 file_object.copy(current_directory)
@@ -138,6 +141,7 @@ def btnBack_clicked():
 
 def btnUp_clicked():
     pass
+
 
 def list_Dclicked(*args):
     """
