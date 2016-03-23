@@ -1,3 +1,6 @@
+"""
+history_list is not still ready so the wroten code just print name of the file not it's path
+"""
 from __Classes import *
 from DefaultUI import *
 from funcs import *
@@ -37,6 +40,7 @@ class MainWindow(QtGui.QMainWindow):
                 list_widget_item.setIcon(self.icon)
             else:
                 list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
+        self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
 
     def add_actions(self):
@@ -56,6 +60,10 @@ class MainWindow(QtGui.QMainWindow):
         selected_item_list.pop()
         selected_item_list.append(str(item.text()))
         print type(selected_item[0])
+        self.ui.lineEdit.setText(selected_item[0])
+
+    def treeWidget_itemClicked(self, itemList, selected_item):
+        self.ui.lineEdit.setText(itemList.text(selected_item))
 
     def start_show(self, app):
         self.show()
