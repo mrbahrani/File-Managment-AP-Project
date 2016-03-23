@@ -10,7 +10,7 @@ List of functions:
 4.index_distance
 """
 from __Classes import Directory
-history_list = []                           # History container
+history_list = [['Music', 'E:\\']]                           # History container
 here = 0                                    # The index of current directory
 
 

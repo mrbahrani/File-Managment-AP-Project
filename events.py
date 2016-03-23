@@ -153,13 +153,15 @@ def list_Dclicked(*args):
     :param args:
     :return:
     """
-    if isdir(args[0]+args[1]):
-        curDir = Directory(args[0]+args[1])
+    print args
+    if isdir(args[0]+ "\\" + args[1]):
+        curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
         listView(curDir.fullAddress,args[2])
     else:
-        curFile =File(args[0]+args[0])
+        curFile =File(args[0]+ "\\" +args[1])
         curFile.openf()
+
 
 
 
