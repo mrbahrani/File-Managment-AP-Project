@@ -187,11 +187,12 @@ class Ui_MainWindow(object):
         self.actionCopy.setShortcut(_translate("MainWindow", "Ctrl+C", None))
         self.actionCut.setText(_translate("MainWindow", "Cut", None))
         # The Line below adds shortcut to the action
-        self.actionCut.setShortcut(_translate("MainWindow", "Ctrl+T", None))
+        self.actionCut.setShortcut(_translate("MainWindow", "Ctrl+X", None))
         self.actionPaste.setText(_translate("MainWindow", "Paste", None))
         # The Line below adds shortcut to the action
-        self.actionPaste.setShortcut(_translate("MainWindow", "Ctrl+P", None))
+        self.actionPaste.setShortcut(_translate("MainWindow", "Ctrl+V", None))
         self.actionDelete.setText(_translate("MainWindow", "Delete", None))
+        self.actionDelete.setShortcut(_translate("MainWindow", "Delete", None))
         self.actionUndo.setText(_translate("MainWindow", "Undo", None))
         self.actionFind.setText(_translate("MainWindow", "Find", None))
         self.actionTutorial.setText(_translate("MainWindow", "Tutorial", None))

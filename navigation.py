@@ -11,10 +11,10 @@ List of functions:
 """
 from __Classes import Directory
 history_list = [["", ""]]                           # History container
-here = 0                                    # The index of current directory
+here = [0]                                    # The index of current directory
 
 
-def add_here(directory_path, h_list=history_list):
+def add_here(directory_path, h_list=history_list, here_index=here):
     """
     |This void function adds current directory to the history list in a very confusing way!
     add_here(directory_path[, h_list=history_list])
@@ -31,7 +31,9 @@ def add_here(directory_path, h_list=history_list):
         pass
     finally:
         h_list += [[(directory_path + "\\").replace("\\\\", "\\"), directory.parent + ""]]
-        here = len(history_list) - 1
+        index_placeholder = here_index[0]
+        here_index.pop()
+        here_index.append(index_placeholder + 1)
 
 
 

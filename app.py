@@ -14,16 +14,14 @@ import sys
 selected_item = [""]
 
 
-class MainWindow(QtGui.QMainWindow,New_File ):
+class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
         self.ui = Ui_MainWindow()
-        self.New_File = New_File()
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
-    
 
 
     def setup(self):
@@ -68,7 +66,7 @@ class MainWindow(QtGui.QMainWindow,New_File ):
         """
         self.ui.actionCopy.triggered.connect(self.copy)
         self.ui.actionCut.triggered.connect(self.cut)
-        self.ui.actionNewFile.triggered.connect(self.NewFile)
+        # self.ui.actionNewFile.triggered.connect(self.NewFile)
         self.ui.actionPaste.triggered.connect(self.paste)
 
     def selected_saver(self, item, selected_item_list=selected_item):
@@ -80,6 +78,7 @@ class MainWindow(QtGui.QMainWindow,New_File ):
         """
         selected_item_list.pop()
         selected_item_list.append(str(item.text()))
+        # print type(selected_item[0])
         self.ui.lineEdit.setText(selected_item[0])
 
     def treeWidget_itemClicked(self, itemList, selected_item):
@@ -90,27 +89,28 @@ class MainWindow(QtGui.QMainWindow,New_File ):
         sys.exit(app.exec_())
 
     def copy(self, action, item=selected_item):
-        copy_action(item, history_list[here + 1][0])
-        # print memory
+        """
+        | This method calls copy_action function for selected item
+        :param action:QAction
+        :param item:list
+        """
+        copy_action(item[0], history_list[here[0]][0])
 
     def cut(self, action, item=selected_item):
-        cut_action(item, history_list[here + 1][0])
+        """
+        | This method calls cut_action function for selected item
+        :param action:QAction
+        :param item:list
+        """
+        cut_action(item[0], history_list[here[0]][0])
 
-    def paste(self, action, item=selected_item):
-
-        paste_action(history_list[here + 1][0])
-
-        # print memory
-
-
-    def NewFile(self):
-        self.New_File._NewFile(self)
-           
-        
-
-
-    def paste(self):
-        paste_action('F:\\')
+    def paste(self, action):
+        """
+        | This function calls paste_action function for current directory. Before that it'll clear QListWidget
+        :param action:QAction
+        """
+        self.ui.listView.clear()                    # This line clears QListWidget
+        paste_action(history_list[here[0]][0], self.ui.listView)
 
 
 if __name__ == "__main__":

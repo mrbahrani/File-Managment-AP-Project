@@ -25,7 +25,7 @@ def get_directories(path_address):
         if isdir(path_address+checker):
             result += [checker]
     return result
-print get_directories("C:\\")
+# print get_directories("C:\\")
 
 
 def get_files(path_address):

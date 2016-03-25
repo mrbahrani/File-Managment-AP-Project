@@ -1,7 +1,7 @@
 from os import rename, access, remove, R_OK, F_OK, startfile, listdir
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
-from shutil import rmtree, copyfile, copytree
+from shutil import rmtree, copy2, copytree
 from PyQt4 import QtCore, QtGui
 import sys
 
@@ -45,9 +45,9 @@ class File(object):
         dest : new file's address
         """
         try:
-            copyfile(self.fullPath, dest)
+            copy2(self.fullPath, dest)
             self.fullPath = dest
-        except Exception:
+        except Exception as e:
             print ("An exception ocurred")
 
     def cut(self, second_path):
@@ -93,9 +93,6 @@ class File(object):
 class Directory(object):
     def __init__(self, strAdrs):
         self.fullAddress = strAdrs
-        # print "***********************************************"
-        # print strAdrs
-        # print strAdrs.split("\\")
         if strAdrs.split("\\")[-1]:
             self.name = strAdrs.split("\\")[-1]
         else:
@@ -116,10 +113,11 @@ class Directory(object):
         return file_list
         
     def copy(self, dest):
+        dest += self.fullAddress.split("\\")[-1]
         copytree(self.fullAddress, dest)
 
     def cut(self, dest):
-        self.copy(self, dest)
+        self.copy(dest)
         self.delete()
 
     def delete(self):
@@ -213,11 +211,9 @@ class New_File(QtGui.QDialog):
         if comboBox.findText(comboBox.currentText()) == -1:
             comboBox.addItem(comboBox.currentText())
 
-<<<<<<< HEAD
-    def __NewFile(self,app):
-=======
+
     def _NewFile(self ,app ):
->>>>>>> 4b5dfca31c1cc38a1fb075f375b020f6976f1e64
+
         self.show()
 
     def createButton(self, text, member):
