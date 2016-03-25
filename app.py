@@ -68,6 +68,7 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.actionCut.triggered.connect(self.cut)
         # self.ui.actionNewFile.triggered.connect(self.NewFile)
         self.ui.actionPaste.triggered.connect(self.paste)
+        self.ui.actionDelete.triggered.connect(self.delete)
 
     def selected_saver(self, item, selected_item_list=selected_item):
         """
@@ -111,6 +112,10 @@ class MainWindow(QtGui.QMainWindow):
         """
         self.ui.listView.clear()                    # This line clears QListWidget
         paste_action(history_list[here[0]][0], self.ui.listView)
+
+    def delete(self, action, item=selected_item):
+        self.ui.listView.clear()
+        delete_action(item[0], history_list[here[0]][0], self.ui.listView)
 
 
 if __name__ == "__main__":

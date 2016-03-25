@@ -93,19 +93,20 @@ def paste_action(current_directory, list_widget, memory_list=memory):
     listView(current_directory, list_widget)
 
 
-def delete_action(items, current_directory):
+def delete_action(item, current_directory, list_widget):
     """
     |This void function delet all items in current_directory.
-    :param items:list
+    :param item:str
     :param current_directory:str
     """
-    for item in items:
-        if isdir(item):
+    if item:
+        if isdir(current_directory + item):
             directory = Directory(current_directory + item)
             directory.delete()
         else:
             file_object = File(current_directory + item)
             file_object.delete()
+    listView(current_directory, list_widget)
 
 
 def mEditAcUndo_triggered():
