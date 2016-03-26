@@ -61,9 +61,14 @@ class MainWindow(QtGui.QMainWindow,New_File ):
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
         self.ui.treeWidget.itemExpanded.connect(treeWidget_itemExpanded)
-        # print '**************************'
-        # print history_list[-1]
+        print '**************************'
+        print history_list[-1]
         self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+       
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Enter or QtCore.Qt.Key_Return:
+            self.ui.listView.itemActivated.connect(lambda: list_Dclicked(history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+                           
 
     def add_actions(self):
         """

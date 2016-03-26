@@ -154,6 +154,10 @@ def btnBack_clicked():
 def btnUp_clicked():
     pass
 
+def enter(*args):
+    pass
+    
+
 
 def list_Dclicked(*args):
     """
@@ -182,6 +186,7 @@ def list_Dclicked(*args):
         curFile =File(args[0]+ "\\" +args[1])
         # print(curFile.fullPath,"->kir<-")
         curFile.openf()
+
 
 def treeWidget_itemExpanded(expanded):
     children = expanded.childCount()
