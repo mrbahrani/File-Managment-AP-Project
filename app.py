@@ -64,7 +64,7 @@ class MainWindow(QtGui.QMainWindow,New_File ):
         print '**************************'
         print history_list[-1]
         self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
-       
+        self.ui.pushButton.clicked.connect(self.up)
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Enter or QtCore.Qt.Key_Return:
             self.ui.listView.itemActivated.connect(lambda: list_Dclicked(history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
@@ -94,6 +94,11 @@ class MainWindow(QtGui.QMainWindow,New_File ):
         self.ui.lineEdit.setText(self.ui.treeWidget.currentItem().dir)
         self.ui.listView.clear()
         listView(self.ui.treeWidget.currentItem().dir, self.ui.listView)
+
+    def up(self,h_list=history_list):
+        self.ui.lineEdit.setText(h_list[-1][0])
+        self.ui.listView.clear()
+        listView(h_list[-1][0],self.ui.listView)
 
     def start_show(self, app):
         self.show()
