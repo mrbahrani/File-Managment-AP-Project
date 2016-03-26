@@ -183,7 +183,11 @@ def list_Dclicked(*args):
         # print(curFile.fullPath,"->kir<-")
         curFile.openf()
 
-
+def treeWidget_itemExpanded(expanded):
+    children = expanded.childCount()
+    for it in range(children):
+        child = expanded.child(it)
+        treeView(child.dir, child)
 
 
 

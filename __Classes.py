@@ -213,11 +213,7 @@ class New_File(QtGui.QDialog):
         if comboBox.findText(comboBox.currentText()) == -1:
             comboBox.addItem(comboBox.currentText())
 
-<<<<<<< HEAD
-    def __NewFile(self,app):
-=======
     def _NewFile(self ,app ):
->>>>>>> 4b5dfca31c1cc38a1fb075f375b020f6976f1e64
         self.show()
 
     def createButton(self, text, member):
