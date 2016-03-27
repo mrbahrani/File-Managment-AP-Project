@@ -170,8 +170,10 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.pushButton_2.setText(_translate("MainWindow", "Back", None))
+        self.pushButton_2.setShortcut(_translate("MainWindow", "Alt+Left", None))
         self.pushButton.setText(_translate("MainWindow", "Up", None))
         self.pushButton_3.setText(_translate("MainWindow", "Forward", None))
+        self.pushButton_3.setShortcut(_translate("MainWindow", "Alt+Right", None))
         self.label.setText(_translate("MainWindow", "Search", None))
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit", None))
