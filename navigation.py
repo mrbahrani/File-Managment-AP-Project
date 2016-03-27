@@ -58,7 +58,7 @@ def history_back(list_widget, index=here, history=history_list):
             index.append(index_num)
             list_widget.clear()
             print history[index_num][0]
-            if history[index_num][0] != "":
+            if history[index_num][0]:
                 listView((history[index_num][0] + "\\").replace("\\", "\\\\"), list_widget)
             else:
                 listView("", list_widget)
@@ -81,7 +81,10 @@ def history_forward(list_widget, index=here, history=history_list):
             index.append(index_num)
             list_widget.clear()
             print history[index_num][0]
-            listView((history[index[0]][0] + "\\").replace("\\", "\\\\"), list_widget)
+            if history[index[0]][0]:
+                listView((history[index[0]][0] + "\\").replace("\\", "\\\\"), list_widget)
+            else:
+                listView("", list_widget)
     except IndexError:
         return False
 
