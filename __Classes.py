@@ -99,7 +99,7 @@ class Directory(object):
             self.name = strAdrs
         try:
             if strAdrs.split("\\")[-1]:
-                self.parent = strAdrs.split("\\")[-3]
+                self.parent = strAdrs.split("\\")[-2]
             else:
                 self.parent = ""
         except IndexError:

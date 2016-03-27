@@ -29,6 +29,10 @@ def add_here(directory_path, h_list=history_list, here_index=here):
         index = here_index[0]
         for element_index in range(len(h_list) - 1, 0, -1):
             if h_list[element_index][1] == directory.parent:
+                print "---------------------------------"
+                print h_list[element_index][1]
+                print directory.parent
+                print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
                 for element in range(len(h_list) - 1, element_index - 1, -1):
                     h_list.pop()
                 here_index.pop()
@@ -57,7 +61,9 @@ def history_back(list_widget, index=here, history=history_list):
             index.pop()
             index.append(index_num)
             list_widget.clear()
-            print history[index_num][0]
+            print ">>>>>>>>>>>>>>>>>>>>>>>>>> BACK <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+            print here
+            print history
             if history[index_num][0]:
                 listView((history[index_num][0] + "\\").replace("\\", "\\\\"), list_widget)
             else:
@@ -80,7 +86,9 @@ def history_forward(list_widget, index=here, history=history_list):
             index.pop()
             index.append(index_num)
             list_widget.clear()
-            print history[index_num][0]
+            print ">>>>>>>>>>>>>>>>>>>>>>>>>> FORWARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+            print here
+            print history
             if history[index[0]][0]:
                 listView((history[index[0]][0] + "\\").replace("\\", "\\\\"), list_widget)
             else:
@@ -98,4 +106,4 @@ def index_distance(index=here, history=history_list):
     :param index:int
     :param history:list
     """
-    return len(history) - index
+    return len(history) - index[0]
