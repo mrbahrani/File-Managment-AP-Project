@@ -44,8 +44,12 @@ def listView(full_path, list_view):
     :param list_view:obj
     """
     try:
-        dir_list = get_directories(full_path)
-        files_list = get_files(full_path)
+        if full_path == "":
+            dir_list = drivers()
+            files_list = []
+        else:
+            dir_list = get_directories(full_path)
+            files_list = get_files(full_path)
         if dir_list:
             for it in dir_list:
                 item = QtGui.QListWidgetItem(list_view)

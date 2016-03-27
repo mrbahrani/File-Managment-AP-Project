@@ -10,6 +10,7 @@ List of functions:
 4.index_distance
 """
 from __Classes import Directory
+from visual import listView
 history_list = [["", ""]]                           # History container
 here = [0]                                    # The index of current directory
 
@@ -20,47 +21,62 @@ def add_here(directory_path, h_list=history_list, here_index=here):
     add_here(directory_path[, h_list=history_list])
     :param directory_path:str
     :param h_list:list
+    :param here_index:list
     """
     directory = Directory(directory_path)
     try:
-        parent_lindex =[h_list.index(x) for x in h_list if x[1] == directory.parent][-1]
-        if h_list[parent_lindex][0] != directory_path:
-            for remover in range(parent_lindex, len(h_list)):
-                h_list.pop(remover + 1)
-    except IndexError:
-        pass
-    finally:
-        h_list += [[(directory_path + "\\").replace("\\\\", "\\"), directory.parent + ""]]
-        index_placeholder = here_index[0]
+        # print h_list
+        index = here_index[0]
+        for element_index in range(len(h_list) - 1, 0, -1):
+            if h_list[element_index][1] == directory.parent:
+                for element in range(len(h_list) - 1, element_index - 1, -1):
+                    h_list.pop()
+                here_index.pop()
+                h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
+                here_index.append(len(h_list) - 1)
+                return
+        h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
         here_index.pop()
-        here_index.append(index_placeholder + 1)
+        here_index.append(index + 1)
+
+    except Exception as e:
+        print e
 
 
-
-def history_back(index=here, history=history_list):
+def history_back(list_widget, index=here, history=history_list):
     """
     |This function returns a step back from current index of history as a list
     history_back([index=here])
+    :param list_widget:QListWidget
     :param index:int
     :param history:list
     """
     try:
-        index -= 1
-        return history[index]
+        if index[0]:
+            index_num = index[0] - 1
+            index.pop()
+            index.append(index_num)
+            list_widget.clear()
+            listView(history[index_num][0], list_widget)
     except IndexError:
-        return False
+        return 'index error'
 
 
-def history_forward(index=here, history=history_list):
+def history_forward(list_widget, index=here, history=history_list):
     """
     |This function returns a step forward from current index of history as a list
     history_forward([index=here])
+    :param list_widget:QListWidget
     :param index:int
     :param history:list
     """
     try:
-        index += 1
-        return history[index]
+        if index[0] < len(history) - 1:
+            index_num = index[0] + 1
+            index.pop()
+            index.append(index_num)
+            list_widget.clear()
+            listView((history[index[0]][0] + "\\").replace("\\", "\\\\"), list_widget)
     except IndexError:
         return False
 

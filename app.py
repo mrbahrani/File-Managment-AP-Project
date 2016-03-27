@@ -40,25 +40,9 @@ class MainWindow(QtGui.QMainWindow):
             list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
             list_widget_item.setIcon(QtGui.QIcon('icons\\mycomputer.ico'))
             list_widget_item.setText(driver)
-        #for i in listdir('C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\'):
-         #   list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
-          #  list_widget_item.setText(i)
-           # if isdir("C:\\Users\\Ali_IUST\\Music\\Pink Floyd\\"+ i):
-            #    list_widget_item.setIcon(self.icon)
-            #else:
-             #   list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
-        # for i in listdir('E:\\Music\\'):
-        #     list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
-        #     list_widget_item.setText(i)
-        #     if isdir('E:\\Music\\' + i):
-        #         list_widget_item.setIcon(self.icon)
-        #     else:
-        #         list_widget_item.setIcon(QtGui.QIcon(file_icon(i)))
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
-        # print '**************************'
-        # print history_list[-1]
-        self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+        self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
 
     def add_actions(self):
         """
@@ -69,6 +53,9 @@ class MainWindow(QtGui.QMainWindow):
         # self.ui.actionNewFile.triggered.connect(self.NewFile)
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
+        # self.ui.pushButton_3.clicked.connect(self.forward)
+        self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui.listView))
+        self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui.listView))
 
     def selected_saver(self, item, selected_item_list=selected_item):
         """

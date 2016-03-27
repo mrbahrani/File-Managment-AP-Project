@@ -122,11 +122,6 @@ def mHelpAcAbout_triggered():
    msg.setText('<b>This is program was developed as the first AP Project.</b>'
                '<br> Git Repository:<a href="https://github.com/mrbahrani/File-Managment-AP-Project">'
                'https://github.com/mrbahrani/File-Managment-AP-Project</a>')
-   #msg.setInformativeText("This is additional information")
-   #msg.setWindowTitle("MessageBox demo")
-   #msg.setDetailedText("The details are as follows:")
-   #msg.setStandardButtons(QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
-   #msg.buttonClicked.connect(msgbtn)
    msg.exec_()
 
 
@@ -158,9 +153,6 @@ def list_Dclicked(*args):
     :param args:
     :return:
     """
-    # print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-
-
     if not (args[0]):
         curDir = Directory(args[1])
         args[2].clear()
@@ -172,11 +164,5 @@ def list_Dclicked(*args):
         listView(curDir.fullAddress + "\\",args[2])
         add_here(curDir.fullAddress)
     else:
-        curFile =File(args[0]+ "\\" +args[1])
-        # print(curFile.fullPath,"->kir<-")
+        curFile =File(args[0] + "\\" +args[1])
         curFile.openf()
-    # print history_list
-
-
-
-
