@@ -93,19 +93,20 @@ class File(object):
 class Directory(object):
     def __init__(self, strAdrs):
         self.fullAddress = strAdrs
+        self.list_address = self.fullAddress.split("\\")
+        print self.list_address
         if strAdrs.split("\\")[-1]:
             self.name = strAdrs.split("\\")[-1]
         else:
             self.name = strAdrs
-        try:
-            if strAdrs.split("\\")[-1]:
-                self.parent = strAdrs.split("\\")[-2]
-            else:
-                self.parent = ""
-        except IndexError:
-            self.parent = ""
-        self.children = list()
-
+        self.parent = ""
+        if len(self.list_address) > 2:
+            for counter in range(len(self.list_address) - 2, -1, -1):
+                print "##########################"
+                print self.list_address[counter]
+                if self.list_address[counter]:
+                    self.parent = self.list_address[counter]
+                    break
     def openf(self):
         file_list = []
         for filename in listdir(self.fullAddress):
