@@ -34,6 +34,8 @@ class MainWindow(QtGui.QMainWindow):
             tree_widget_item.setText(0, driver[0])
             tree_widget_item.setIcon(0, self.icon)
             tree_widget_item.setIcon(1, self.icon)
+            tree_widget_item.dir = driver[0]+":\\"
+            tree_widget_item.isUsed =False
 
             treeView(driver, tree_widget_item)
         for driver in drivers():
@@ -42,7 +44,19 @@ class MainWindow(QtGui.QMainWindow):
             list_widget_item.setText(driver)
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
+<<<<<<< HEAD
         self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+=======
+        self.ui.treeWidget.itemExpanded.connect(treeWidget_itemExpanded)
+        print '**************************'
+        print history_list[-1]
+        self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+        self.ui.pushButton.clicked.connect(self.up)
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Enter or QtCore.Qt.Key_Return:
+            self.ui.listView.itemActivated.connect(lambda: list_Dclicked(history_list[-1][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+                           
+>>>>>>> c99dbc668f76fcaba0e6f09e2f0d74d93e59d9b4
 
     def add_actions(self):
         """
@@ -70,7 +84,14 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.lineEdit.setText(selected_item[0])
 
     def treeWidget_itemClicked(self, itemList, selected_item):
-        self.ui.lineEdit.setText(itemList.text(selected_item))
+        self.ui.lineEdit.setText(self.ui.treeWidget.currentItem().dir)
+        self.ui.listView.clear()
+        listView(self.ui.treeWidget.currentItem().dir, self.ui.listView)
+
+    def up(self,h_list=history_list):
+        self.ui.lineEdit.setText(h_list[-1][0])
+        self.ui.listView.clear()
+        listView(h_list[-1][0],self.ui.listView)
 
     def start_show(self, app):
         self.show()

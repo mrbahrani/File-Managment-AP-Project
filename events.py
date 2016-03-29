@@ -142,6 +142,10 @@ def btnBack_clicked():
 def btnUp_clicked():
     pass
 
+def enter(*args):
+    pass
+    
+
 
 def list_Dclicked(*args):
     """
@@ -169,5 +173,18 @@ def list_Dclicked(*args):
         # print args[0] + "\\" +args[1]
         curFile =File(args[0] + "\\" +args[1])
         curFile.openf()
+<<<<<<< HEAD
     print "*********************************************"
     print history_list
+=======
+
+
+def treeWidget_itemExpanded(expanded):
+    children = expanded.childCount()
+    for it in range(children):
+        child = expanded.child(it)
+        treeView(child.dir, child)
+
+
+
+>>>>>>> c99dbc668f76fcaba0e6f09e2f0d74d93e59d9b4

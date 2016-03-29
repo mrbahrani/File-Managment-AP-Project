@@ -24,18 +24,24 @@ def file_icon(file_name):
 def treeView(fullPath,qwtIt):
     #This function visualizes the tree view of the directories
     try:
-        dirList= get_directories(fullPath)
-        if bool(dirList):
-            for it in dirList:
-                i = QtGui.QTreeWidgetItem()
-                i.setText(0,it)
-                qwtIt.addChild(i)
+        if not qwtIt.isUsed:
+            dirList= get_directories(fullPath)
+            if bool(dirList):
+                for it in dirList:
+                    icon = QtGui.QIcon('icons/folder.ico')
+                    i = QtGui.QTreeWidgetItem()
+                    i.setText(0,it)
+                    i.setIcon(0,icon)
+                    i.dir = fullPath+it+"\\"
+                    i.isUsed = False
+                    qwtIt.addChild(i)
 
     except WindowsError:
         print("Accsess denied")
-    except Exception:
+    except Exception, e:
         print("An unwanted exception occurred!!")
-
+        print e
+    qwtIt.isUsed = True
 
 def listView(full_path, list_view):
     """
