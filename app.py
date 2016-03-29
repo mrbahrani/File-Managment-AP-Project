@@ -80,6 +80,7 @@ class MainWindow(QtGui.QMainWindow):
     def treeWidget_itemClicked(self, itemList, selected_item):
         self.ui.lineEdit.setText(self.ui.treeWidget.currentItem().dir)
         self.ui.listView.clear()
+        add_here(self.ui.treeWidget.currentItem().dir)
         listView(self.ui.treeWidget.currentItem().dir, self.ui.listView)
 
     def up(self,h_list=history_list):
