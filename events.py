@@ -90,7 +90,7 @@ def paste_action(current_directory, list_widget, memory_list=memory):
             else:
                 file_object = File(memory_list[1])
                 file_object.cut(current_directory)
-    listView(current_directory, list_widget)
+        listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
 
 
 def delete_action(item, current_directory, list_widget):
@@ -101,12 +101,13 @@ def delete_action(item, current_directory, list_widget):
     """
     if item:
         if isdir(current_directory + item):
-            directory = Directory(current_directory + item)
+            directory = Directory(current_directory + "\\" + item)
             directory.delete()
         else:
-            file_object = File(current_directory + item)
+            file_object = File(current_directory + "\\" + item)
             file_object.delete()
-    listView(current_directory, list_widget)
+
+    listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
 
 
 def mEditAcUndo_triggered():
@@ -173,18 +174,12 @@ def list_Dclicked(*args):
         # print args[0] + "\\" +args[1]
         curFile =File(args[0] + "\\" +args[1])
         curFile.openf()
-<<<<<<< HEAD
-    print "*********************************************"
-    print history_list
-=======
-
+    # print "****"
+    # print history_list
+    # print here
 
 def treeWidget_itemExpanded(expanded):
     children = expanded.childCount()
     for it in range(children):
         child = expanded.child(it)
         treeView(child.dir, child)
-
-
-
->>>>>>> c99dbc668f76fcaba0e6f09e2f0d74d93e59d9b4

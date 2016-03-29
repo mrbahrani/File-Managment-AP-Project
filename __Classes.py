@@ -9,6 +9,8 @@ import sys
 class File(object):
     def __init__(self, strAdrs):
         self.fullPath = strAdrs
+        print "******************************************"
+        print self.fullPath
         self.__existence()
         self.__reachable()
         self.type = strAdrs.split(".")[-1]
@@ -212,14 +214,8 @@ class New_File(QtGui.QDialog):
         if comboBox.findText(comboBox.currentText()) == -1:
             comboBox.addItem(comboBox.currentText())
 
-<<<<<<< HEAD
-
     def _NewFile(self ,app ):
-
-=======
-    def _NewFile(self ,app ):
->>>>>>> c99dbc668f76fcaba0e6f09e2f0d74d93e59d9b4
-        self.show()
+            self.show()
 
     def createButton(self, text, member):
         button = QtGui.QPushButton(text)
