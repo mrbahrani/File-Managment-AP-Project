@@ -7,6 +7,7 @@ from funcs import *
 from visual import *
 from navigation import *
 from os.path import isdir
+
 from events import *
 import sys
 # add_here('\\')
@@ -19,6 +20,7 @@ class MainWindow(QtGui.QMainWindow):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
         self.ui = Ui_MainWindow()
+        self.New_File = New_File()
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
@@ -58,7 +60,7 @@ class MainWindow(QtGui.QMainWindow):
         """
         self.ui.actionCopy.triggered.connect(self.copy)
         self.ui.actionCut.triggered.connect(self.cut)
-        # self.ui.actionNewFile.triggered.connect(self.NewFile)
+        self.ui.actionNewFile.triggered.connect(self.NewFile)
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
         # self.ui.pushButton_3.clicked.connect(self.forward)
@@ -99,6 +101,9 @@ class MainWindow(QtGui.QMainWindow):
         :param item:list
         """
         copy_action(item[0], history_list[here[0]][0])
+
+    def NewFile(self):
+        self.New_File._NewFile(self)
 
     def cut(self, action, item=selected_item):
         """

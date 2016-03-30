@@ -1,4 +1,4 @@
-from os import rename, access, remove, R_OK, F_OK, startfile, listdir
+from os import rename, access, remove, R_OK, F_OK, startfile, listdir , mkdir
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
 from shutil import rmtree, copy2, copytree
@@ -154,6 +154,7 @@ class New_File(QtGui.QDialog):
         super(New_File, self).__init__(parent)
         
         self.browseButton = self.createButton("&Browse...", self.browse)
+        self.quitButton = self.createButton("&Quit",self.quit)
         self.findButton = self.createButton("&Create", self.create)
 
         
@@ -169,6 +170,7 @@ class New_File(QtGui.QDialog):
         self.filesFoundLabel = QtGui.QLabel()
         buttonsLayout = QtGui.QHBoxLayout()
         buttonsLayout.addWidget(self.findButton)
+        buttonsLayout.addWidget(self.quitButton)       
         mainLayout = QtGui.QGridLayout()
         mainLayout.addWidget(fileLabel, 0, 0)
         mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
@@ -177,14 +179,17 @@ class New_File(QtGui.QDialog):
         mainLayout.addWidget(directoryLabel, 2, 0)
         mainLayout.addWidget(self.directoryComboBox, 2, 1)
         mainLayout.addWidget(self.browseButton, 2, 2)
-        mainLayout.addWidget(self.filesFoundLabel, 4, 0)
-        mainLayout.addLayout(buttonsLayout, 5, 0, 1, 3)
+        mainLayout.addWidget(self.filesFoundLabel, 3, 0)
+        mainLayout.addLayout(buttonsLayout, 4, 0, 1, 3)
         self.setLayout(mainLayout)
 
         self.create()
         
         self.setWindowTitle("Create_New_File")
         self.resize(500, 300)
+
+    def quit(self):
+        sys.exit()
 
     def browse(self):
         directory = QtGui.QFileDialog.getExistingDirectory(self, "Create_New_File",
@@ -194,6 +199,7 @@ class New_File(QtGui.QDialog):
                 self.directoryComboBox.addItem(directory)
             self.directoryComboBox.setCurrentIndex(self.directoryComboBox.findText(directory))
 
+    
     def create(self):
         Name = self.fileComboBox.currentText()
         Type = self.textComboBox.currentText()
@@ -205,11 +211,15 @@ class New_File(QtGui.QDialog):
         
         self.item_list = [str(Name), str(Type) , str(Path)]
         item_list = self.item_list
-        
-        if self.item_list[0] and self.item_list[1] and self.item_list[-1]:
-            file = open(str(self.item_list[-1] + '/' + self.item_list[0] + '.' + self.item_list[1]), 'w')
-            file.close() 
-    
+
+        if self.item_list[1]:
+            if self.item_list[0] and self.item_list[-1]:
+                file = open(str(self.item_list[-1] + '/' + self.item_list[0] + '.' + self.item_list[1]), 'w')
+                file.close() 
+        else:
+            if self.item_list[0] and self.item_list[-1]:
+                mkdir(self.item_list[-1] + '/' + self.item_list[0])
+
     def updateComboBox(self,comboBox):
         if comboBox.findText(comboBox.currentText()) == -1:
             comboBox.addItem(comboBox.currentText())
