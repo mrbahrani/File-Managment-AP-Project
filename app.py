@@ -86,10 +86,13 @@ class MainWindow(QtGui.QMainWindow):
         listView(self.ui.treeWidget.currentItem().dir, self.ui.listView)
 
     def up(self,h_list=history_list):
-        self.ui.lineEdit.setText(h_list[-1][0])
-        self.ui.listView.clear()
-        listView(h_list[-1][0],self.ui.listView)
-
+        try:
+            here[0] -= 1
+            self.ui.lineEdit.setText(history_list[here[0]][0])
+            self.ui.listView.clear()
+            listView(history_list[here[0]][0],self.ui.listView)
+        except  IndexError :
+            return False
     def start_show(self, app):
         self.show()
         sys.exit(app.exec_())
