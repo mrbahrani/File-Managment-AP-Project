@@ -54,12 +54,11 @@ def listView(full_path, list_view):
     """
     try:
         if full_path == "":
+            print 1
             dir_list = drivers()
             files_list = []
-        elif type(full_path) == list and not len(full_path):
-            dir_list = full_path
-            files_list = []
-        elif type(full_path) == list:
+        elif type(full_path) == list and type(full_path[0]) == list:
+            print 3
             dir_list, files_list = [], []
             for element in full_path:
                 if isdir(element[0]):
@@ -68,9 +67,16 @@ def listView(full_path, list_view):
                     files_list += [element[0]]
             dir_list = remove_equals(dir_list)
             files_list = remove_equals(files_list)
+        elif type(full_path) == list:
+            print 2
+            dir_list = full_path
+            files_list = get_files(full_path[0])
         else:
+            print 4
             dir_list = get_directories(full_path)
             files_list = get_files(full_path)
+        print "*****"
+        print dir_list
         if dir_list:
             for it in dir_list:
                 item = QtGui.QListWidgetItem(list_view)

@@ -137,6 +137,8 @@ class MainWindow(QtGui.QMainWindow, New_File):
     def search(self, item):
         add_here(history_list[here[0]][0])
         result = search(str(item), history_list[here[0]][0])
+        print "result"
+        print result
         if not result:
             result = step_by_step_search(str(item), history_list[here[0]][0])
         self.ui.listView.clear()
