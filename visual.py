@@ -2,6 +2,8 @@ from __Classes import *
 from DefaultUI import *
 from PyQt4 import QtGui
 from funcs import *
+from os.path import isdir
+from funcs import remove_equals
 
 
 def file_icon(file_name):
@@ -54,9 +56,18 @@ def listView(full_path, list_view):
         if full_path == "":
             dir_list = drivers()
             files_list = []
-        elif type(full_path) == list:
+        elif type(full_path) == list and not len(full_path):
             dir_list = full_path
             files_list = []
+        elif type(full_path) == list:
+            dir_list, files_list = [], []
+            for element in full_path:
+                if isdir(element[0]):
+                    dir_list += [element[0]]
+                else:
+                    files_list += [element[0]]
+            dir_list = remove_equals(dir_list)
+            files_list = remove_equals(files_list)
         else:
             dir_list = get_directories(full_path)
             files_list = get_files(full_path)

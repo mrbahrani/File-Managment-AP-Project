@@ -135,22 +135,14 @@ class MainWindow(QtGui.QMainWindow, New_File):
         delete_action(item[0], history_list[here[0]][0], self.ui.listView)
 
     def search(self, item):
-        # print "-------------------"
-        # print history_list[here[0]][0]
-        # print history_list
-        # print "____________________________________________________"
         add_here(history_list[here[0]][0])
         result = search(str(item), history_list[here[0]][0])
-        # if not result:
-        #     result = step_by_step_search(str(item), selected_item[0])
+        if not result:
+            result = step_by_step_search(str(item), history_list[here[0]][0])
         self.ui.listView.clear()
         listView(result, self.ui.listView)
         if result:
             add_here("*\\*", history_list, here, "*")
-        # print "******************"
-        # print result
-        # print history_list
-        # print here
 
     def NewFile(self):
         self.New_File._NewFile(self)

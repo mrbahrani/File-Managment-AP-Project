@@ -25,7 +25,6 @@ def get_directories(path_address):
         if isdir(path_address+ "\\" +checker):
             result += [checker]
     return result
-# print get_directories("C:\\")
 
 
 def get_files(path_address):
@@ -50,7 +49,7 @@ def remove_equals(main_list):
     """
     length = len(main_list)
     counter = 0
-    while length - counter:
+    while length - counter > 0:
         number = main_list.count(main_list[counter])
         if number - 1:
             for step_counter in range(number - 1):

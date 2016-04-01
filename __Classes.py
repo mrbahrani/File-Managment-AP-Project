@@ -110,8 +110,7 @@ class Directory(object):
                 if self.list_address[counter]:
                     self.parent = self.list_address[counter]
                     break
-        # print self.parent
-        # print ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+
     def openf(self):
         file_list = []
         for filename in listdir(self.fullAddress):
