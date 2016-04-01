@@ -21,6 +21,7 @@ class MainWindow(QtGui.QMainWindow, New_File):
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
         self.New_File = New_File()
         self.ui = Ui_MainWindow()
+        self.New_File = New_File()
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
@@ -88,10 +89,15 @@ class MainWindow(QtGui.QMainWindow, New_File):
         add_here(self.ui.treeWidget.currentItem().dir)
         listView(self.ui.treeWidget.currentItem().dir, self.ui.listView)
 
-    def up(self, h_list=history_list):
-        self.ui.lineEdit.setText(h_list[here[0]][0])
-        self.ui.listView.clear()
-        listView(h_list[here[0]][0], self.ui.listView)
+
+    def up(self,h_list=history_list):
+        try:
+            here[0] -= 1
+            self.ui.lineEdit.setText(history_list[here[0]][0])
+            self.ui.listView.clear()
+            listView(history_list[here[0]][0],self.ui.listView)
+        except  IndexError :
+            return False
 
     def start_show(self, app):
         self.show()
@@ -104,6 +110,9 @@ class MainWindow(QtGui.QMainWindow, New_File):
         :param item:list
         """
         copy_action(item[0], history_list[here[0]][0])
+
+    def NewFile(self):
+        self.New_File._NewFile(self)
 
     def cut(self, action, item=selected_item):
         """
