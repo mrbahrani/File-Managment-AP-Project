@@ -13,6 +13,7 @@
 from os import listdir
 from funcs import drivers
 from os.path import isdir
+from funcs import remove_equals
 search_list = []                                        # This list contains search results
 
 
@@ -27,9 +28,11 @@ def return_equals(directory, word, result=search_list):
 
     """
     try:
+        print directory
         directories = listdir(directory)
     except WindowsError:
         directories = []
+        print "Failed"
     if "$Recycle.Bin" in directories:
         directories.remove("$Recycle.Bin")
     if "*\\*" in directories:
@@ -90,16 +93,22 @@ def search(word, current_directory, search_result_list=search_list):
             if element == word:
                 results.append((current_directory + "\\" + element))
         if results:
-            return results
+            return remove_equals(search_result_list)
         else:
             # return "No matching item found"
-            return []
+            for element in files:
+                return_equals(current_directory, word)
+
+            return remove_equals(search_result_list)
     else:
         for cleaner in range(len(search_result_list)):
             search_result_list.pop()
         for driver in drivers():
             return_equals(driver, word)
-        return search_list
+        for result_element in range(0, len(search_result_list) - 3):
+                    if search_result_list[result_element] == search_result_list[result_element + 1]:
+                        search_result_list.pop(result_element + 1)
+        return remove_equals(search_result_list)
 
 
 def step_by_step_search(word, current_directory, search_result_list=search_list):

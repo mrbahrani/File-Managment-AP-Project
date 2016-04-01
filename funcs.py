@@ -40,3 +40,21 @@ def get_files(path_address):
         if isfile(path_address + "\\" +checker):
             result += [checker]
     return result
+
+
+def remove_equals(main_list):
+    """
+    | This function gets a list and return that with just different elements
+    :param main_list:list
+    :return list
+    """
+    length = len(main_list)
+    counter = 0
+    while length - counter:
+        number = main_list.count(main_list[counter])
+        if number - 1:
+            for step_counter in range(number - 1):
+                main_list.remove(main_list[counter])
+        length = len(main_list)
+        counter += 1
+    return main_list

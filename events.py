@@ -171,9 +171,9 @@ def list_Dclicked(*args):
         # print args[0] + "\\" +args[1]
         curFile =File(args[0] + "\\" +args[1])
         curFile.openf()
-    print "***********"
-    print history_list
-    print "XXXXXXXXXXXXXXXXXXXXXXXXX"
+    # print "***********"
+    # print history_list
+    # print "XXXXXXXXXXXXXXXXXXXXXXXXX"
 
 def treeWidget_itemExpanded(expanded):
     children = expanded.childCount()
