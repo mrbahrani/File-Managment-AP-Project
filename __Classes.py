@@ -9,8 +9,8 @@ import sys
 class File(object):
     def __init__(self, strAdrs):
         self.fullPath = strAdrs
-        # print "******************************************"
-        # print self.fullPath
+        print "******************************************"
+        print self.fullPath
         self.__existence()
         self.__reachable()
         self.type = strAdrs.split(".")[-1]
@@ -58,25 +58,29 @@ class File(object):
         :param self : Object
         :param second_path: str
         """
-        try:
-            rename(self.fullPath, second_path)
-            self.delete()
-        except WindowsError:
-            error_show('The second directory path is invalid', 'listener must add')
-        except Exception:
-            error_show("An Error happened, please restart the app.", 'listener must add')
+        # try:
+        self.copy(second_path)
+        self.delete()
+        # except WindowsError:
+        #     print second_path
+        #     error_show('The second directory path is invalid', 'listener must add')
+        #
+        # except Exception as e:
+        #     print second_path
+        #     print e
+        #     error_show("An Error happened, please restart the app.", 'listener must add')
 
     def delete(self):
         """
         | This method deletes current file.
         :param self: Obj
         """
-        try:
-            remove(self.fullPath)
-        except WindowsError:
-            error_show('The path is invalid', 'listener must add')
-        except Exception:
-            error_show("An Error happened, please restart the app.", 'listener must add')
+        # try:
+        remove(self.fullPath)
+        # except WindowsError:
+        #     error_show('The path is invalid', 'listener must add')
+        # except Exception:
+        #     error_show("An Error happened, please restart the app.", 'listener must add')
 
     def rename(self, new_name):
         """

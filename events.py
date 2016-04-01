@@ -41,7 +41,7 @@ def copy_action(file_name, current_directory, memory_list=memory):
             for element_index in range(len(memory_list)):
                 memory_list.pop()
         memory_list.append(0)
-        memory_list.append(current_directory + file_name)
+        memory_list.append(current_directory + "\\" + file_name)
     # print memory
     # print "______________________________________________________________________"
 
@@ -60,7 +60,7 @@ def cut_action(file_name, current_directory, memory_list=memory):
             for element_index in range(len(memory_list)):
                 memory_list.pop()
         memory_list.append(1)
-        memory_list.append(current_directory + file_name)
+        memory_list.append(current_directory + "\\" + file_name)
 
 
 def paste_action(current_directory, list_widget, memory_list=memory):

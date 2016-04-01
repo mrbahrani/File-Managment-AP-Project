@@ -12,4 +12,5 @@ def error_show(error_msg, listener):
     :param error_msg: string
     :param listener: QtLabel
     """
-    listener.setText(error_msg)
+    # listener.setText(error_msg)
+    pass
