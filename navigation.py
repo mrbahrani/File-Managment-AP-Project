@@ -15,7 +15,7 @@ history_list = [["", ""]]                           # History container
 here = [0]                                    # The index of current directory
 
 
-def add_here(directory_path, h_list=history_list, here_index=here):
+def add_here(directory_path, h_list=history_list, here_index=here, parent=None):
     """
     |This void function adds current directory to the history list in a very confusing way!
     add_here(directory_path[, h_list=history_list])
@@ -29,17 +29,20 @@ def add_here(directory_path, h_list=history_list, here_index=here):
         index = here_index[0]
         for element_index in range(len(h_list) - 1, 0, -1):
             if h_list[element_index][1] == directory.parent:
-                print "---------------------------------"
-                print h_list[element_index][1]
-                print directory.parent
-                print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                # print "---------------------------------"
+                # print h_list[element_index][1]
+                # print directory.parent
+                # print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
                 for element in range(len(h_list) - 1, element_index - 1, -1):
                     h_list.pop()
                 here_index.pop()
                 h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
                 here_index.append(len(h_list) - 1)
                 return
-        h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
+        if parent is None:
+            h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
+        else:
+            h_list.append([directory_path.replace('\\\\', '\\'), "*"])
         here_index.pop()
         here_index.append(index + 1)
 

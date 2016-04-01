@@ -9,8 +9,8 @@ import sys
 class File(object):
     def __init__(self, strAdrs):
         self.fullPath = strAdrs
-        print "******************************************"
-        print self.fullPath
+        # print "******************************************"
+        # print self.fullPath
         self.__existence()
         self.__reachable()
         self.type = strAdrs.split(".")[-1]
@@ -96,6 +96,7 @@ class Directory(object):
     def __init__(self, strAdrs):
         self.fullAddress = strAdrs
         self.list_address = self.fullAddress.split("\\")
+        print ":::::::::::::::::::::::::::::::::::::::::::"
         print self.list_address
         if strAdrs.split("\\")[-1]:
             self.name = strAdrs.split("\\")[-1]
@@ -104,11 +105,13 @@ class Directory(object):
         self.parent = ""
         if len(self.list_address) > 2:
             for counter in range(len(self.list_address) - 2, -1, -1):
-                print "##########################"
-                print self.list_address[counter]
+                # print "##########################"
+                # print self.list_address[counter]
                 if self.list_address[counter]:
                     self.parent = self.list_address[counter]
                     break
+        print self.parent
+        print ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
     def openf(self):
         file_list = []
         for filename in listdir(self.fullAddress):

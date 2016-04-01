@@ -43,6 +43,7 @@ def treeView(fullPath,qwtIt):
         print e
     qwtIt.isUsed = True
 
+
 def listView(full_path, list_view):
     """
     This function visualizes the list view of the directories
@@ -52,6 +53,9 @@ def listView(full_path, list_view):
     try:
         if full_path == "":
             dir_list = drivers()
+            files_list = []
+        elif type(full_path) == list:
+            dir_list = full_path
             files_list = []
         else:
             dir_list = get_directories(full_path)

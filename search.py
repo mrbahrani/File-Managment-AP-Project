@@ -26,14 +26,22 @@ def return_equals(directory, word, result=search_list):
     :param result:list
 
     """
-    directories = listdir(directory)
+    try:
+        directories = listdir(directory)
+    except WindowsError:
+        directories = []
+    if "$Recycle.Bin" in directories:
+        directories.remove("$Recycle.Bin")
+    if "*\\*" in directories:
+        directories.remove("*\\*")
+    # print directories
     for element in directories:
         if not element:
             continue
         elif element == word:
             result.append(directory + "\\" + element)
-        elif isdir(directory + element):
-            return_equals((directory + element).replace("\\", "\\\\"), word)
+        elif isdir(directory + "\\" + element):
+            return_equals(directory + "\\" + element + "\\", word)
 
 
 def return_equals_step_by_step(directory, word, result=search_list):
@@ -50,14 +58,18 @@ def return_equals_step_by_step(directory, word, result=search_list):
 
     """
     directories = listdir(directory)
+    if "$Recycle.Bin" in directories:
+        directories.remove("$Recycle.Bin")
+    if "*" in directories:
+        directories.remove("*")
     for element in directories:
         index_start = element.find(word)
         if not element:
             continue
         elif index_start != -1:
             result.append([directory + "\\" + element, index_start, index_start + len(word)])
-        elif isdir(directory + element):
-            return_equals((directory + element).replace("\\", "\\\\"), word)
+        elif isdir(directory + " \\" + element):
+            return_equals((directory + "\\" + element).replace("\\", "\\\\"), word)
 
 
 def search(word, current_directory, search_result_list=search_list):
@@ -76,11 +88,12 @@ def search(word, current_directory, search_result_list=search_list):
         files = listdir(current_directory)
         for element in files:
             if element == word:
-                results.append(current_directory + element)
+                results.append((current_directory + "\\" + element))
         if results:
             return results
         else:
-            return "No matching item found"
+            # return "No matching item found"
+            return []
     else:
         for cleaner in range(len(search_result_list)):
             search_result_list.pop()

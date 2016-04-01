@@ -22,7 +22,7 @@ def get_directories(path_address):
     includes = listdir(path_address)
     result = []
     for checker in includes:
-        if isdir(path_address+checker):
+        if isdir(path_address+ "\\" +checker):
             result += [checker]
     return result
 # print get_directories("C:\\")
@@ -37,6 +37,6 @@ def get_files(path_address):
     includes = listdir(path_address)
     result = []
     for checker in includes:
-        if isfile(path_address+checker):
+        if isfile(path_address + "\\" +checker):
             result += [checker]
     return result

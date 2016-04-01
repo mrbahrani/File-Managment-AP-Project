@@ -36,9 +36,6 @@ def copy_action(file_name, current_directory, memory_list=memory):
     :param current_directory:str
     :param memory_list:list
     """
-    # print '****'
-    # print type(file_name)
-    # print type(current_directory)
     if file_name:
         if len(memory_list):
             for element_index in range(len(memory_list)):
@@ -145,16 +142,12 @@ def btnUp_clicked():
 
 def enter(*args):
     pass
-    
 
 
 def list_Dclicked(*args):
     """
-
     :param args:0.current address,1.file name(+format),2.list widget
     :return:
-    """
-    """
     :param args:
     :return:
     """
@@ -164,19 +157,23 @@ def list_Dclicked(*args):
         # print curDir.fullAddress
         listView(curDir.fullAddress, args[2])
         add_here(args[1])
+    elif args[0] == "*\\*":
+        args[2].clear()
+        listView(args[1], args[2])
+        add_here(args[1])
     elif isdir(args[0] + "\\" + args[1]):
         curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
         # print curDir.fullAddress
-        listView(curDir.fullAddress + "\\",args[2])
+        listView(curDir.fullAddress + "\\", args[2])
         add_here(curDir.fullAddress)
     else:
         # print args[0] + "\\" +args[1]
         curFile =File(args[0] + "\\" +args[1])
         curFile.openf()
-    # print "****"
-    # print history_list
-    # print here
+    print "***********"
+    print history_list
+    print "XXXXXXXXXXXXXXXXXXXXXXXXX"
 
 def treeWidget_itemExpanded(expanded):
     children = expanded.childCount()

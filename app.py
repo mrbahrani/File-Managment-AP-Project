@@ -7,6 +7,7 @@ from funcs import *
 from visual import *
 from navigation import *
 from os.path import isdir
+from search import search, step_by_step_search
 from events import *
 import sys
 # add_here('\\')
@@ -14,10 +15,11 @@ import sys
 selected_item = [""]
 
 
-class MainWindow(QtGui.QMainWindow):
+class MainWindow(QtGui.QMainWindow, New_File):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
+        self.New_File = New_File()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.add_actions()
@@ -45,7 +47,9 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
         self.ui.treeWidget.itemExpanded.connect(treeWidget_itemExpanded)
-        self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+        if history_list[here[0]][0] != "*":
+            self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+
         self.ui.pushButton.clicked.connect(self.up)
 
     # def keyPressEvent(self, event):
@@ -58,12 +62,13 @@ class MainWindow(QtGui.QMainWindow):
         """
         self.ui.actionCopy.triggered.connect(self.copy)
         self.ui.actionCut.triggered.connect(self.cut)
-        # self.ui.actionNewFile.triggered.connect(self.NewFile)
+        self.ui.actionNewFile.triggered.connect(self.NewFile)
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
         # self.ui.pushButton_3.clicked.connect(self.forward)
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui.listView))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui.listView))
+        self.ui.lineEdit_2.textChanged.connect(self.search)
 
     def selected_saver(self, item, selected_item_list=selected_item):
         """
@@ -83,10 +88,10 @@ class MainWindow(QtGui.QMainWindow):
         add_here(self.ui.treeWidget.currentItem().dir)
         listView(self.ui.treeWidget.currentItem().dir, self.ui.listView)
 
-    def up(self,h_list=history_list):
-        self.ui.lineEdit.setText(h_list[-1][0])
+    def up(self, h_list=history_list):
+        self.ui.lineEdit.setText(h_list[here[0]][0])
         self.ui.listView.clear()
-        listView(h_list[-1][0],self.ui.listView)
+        listView(h_list[here[0]][0], self.ui.listView)
 
     def start_show(self, app):
         self.show()
@@ -120,6 +125,26 @@ class MainWindow(QtGui.QMainWindow):
         self.ui.listView.clear()
         delete_action(item[0], history_list[here[0]][0], self.ui.listView)
 
+    def search(self, item):
+        print "-------------------"
+        print history_list[here[0]][0]
+        print history_list
+        print "____________________________________________________"
+        add_here(history_list[here[0]][0])
+        result = search(str(item), history_list[here[0]][0])
+        # if not result:
+        #     result = step_by_step_search(str(item), selected_item[0])
+        self.ui.listView.clear()
+        listView(result, self.ui.listView)
+        if result:
+            add_here("*\\*", history_list, here, "*")
+        # print "******************"
+        # print result
+        # print history_list
+        # print here
+
+    def NewFile(self):
+        self.New_File._NewFile(self)
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
