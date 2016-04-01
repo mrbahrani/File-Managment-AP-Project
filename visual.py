@@ -14,8 +14,8 @@ def file_icon(file_name):
     """
     file_type = file_name.split('.')[-1].lower()
     # print file_type
-    icons_types = [['mkv', 'mp4', 'avi', 'f4v', 'icons/movie.ico'], ['mp3', 'flac', 'wav', 'icons/music.ico']]
     icons_types += [['docx, doc', 'icons/word.ico'], ['jpg', 'jpeg', 'gif', 'ttf', 'ico', 'png', 'icons/picture.ico']]
+    icons_types = [['mkv', 'mp4', 'avi', 'f4v', 'flv', 'icons/movie.ico'], ['mp3', 'flac', 'wav', 'icons/music.ico']]
     icons_types += ['zip', 'rar', 'gzip', 'icons/zip.ico']
     for checker in icons_types:
         if file_type in checker:
