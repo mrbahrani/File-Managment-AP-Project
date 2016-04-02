@@ -67,8 +67,8 @@ class MainWindow(QtGui.QMainWindow, New_File):
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
         # self.ui.pushButton_3.clicked.connect(self.forward)
-        self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui.listView))
-        self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui.listView))
+        self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui))
+        self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui))
         self.ui.lineEdit_2.textChanged.connect(self.search)
 
     def selected_saver(self, item, selected_item_list=selected_item):
@@ -92,7 +92,6 @@ class MainWindow(QtGui.QMainWindow, New_File):
 
     def up(self,h_list=history_list):
         try:
-            print h_list
             this_dir = history_list[here[0]][0]
             list_dir = this_dir.split("\\")
             p_dir = ""

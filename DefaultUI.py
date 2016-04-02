@@ -174,6 +174,7 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "Up", None))
         self.pushButton_3.setText(_translate("MainWindow", "Forward", None))
         self.pushButton_3.setShortcut(_translate("MainWindow", "Alt+Right", None))
+        self.pushButton.setShortcut(_translate("MainWindow", "Alt+Up", None))
         self.label.setText(_translate("MainWindow", "Search", None))
         self.menuFile.setTitle(_translate("MainWindow", "File", None))
         self.menuEdit.setTitle(_translate("MainWindow", "Edit", None))

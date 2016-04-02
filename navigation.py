@@ -50,7 +50,7 @@ def add_here(directory_path, h_list=history_list, here_index=here, parent=None):
         print e
 
 
-def history_back(list_widget, index=here, history=history_list):
+def history_back(ui, index=here, history=history_list):
     """
     |This function returns a step back from current index of history as a list
     history_back([index=here])
@@ -63,19 +63,21 @@ def history_back(list_widget, index=here, history=history_list):
             index_num = index[0] - 1
             index.pop()
             index.append(index_num)
-            list_widget.clear()
+            ui.listView.clear()
             print ">>>>>>>>>>>>>>>>>>>>>>>>>> BACK <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
             print here
             print history
             if history[index_num][0]:
-                listView((history[index_num][0] + "\\").replace("\\", "\\\\"), list_widget)
+                listView( history[index_num][0] + "\\", ui.listView)
+                ui.lineEdit.setText(history[index_num][0] + "\\")
             else:
-                listView("", list_widget)
+                listView("", ui.listView)
+                ui.lineEdit.setText("")
     except IndexError:
         return 'index error'
 
 
-def history_forward(list_widget, index=here, history=history_list):
+def history_forward(ui, index=here, history=history_list):
     """
     |This function returns a step forward from current index of history as a list
     history_forward([index=here])
@@ -88,14 +90,16 @@ def history_forward(list_widget, index=here, history=history_list):
             index_num = index[0] + 1
             index.pop()
             index.append(index_num)
-            list_widget.clear()
+            ui.listView.clear()
             print ">>>>>>>>>>>>>>>>>>>>>>>>>> FORWARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
             print here
             print history
             if history[index[0]][0]:
-                listView((history[index[0]][0] + "\\").replace("\\", "\\\\"), list_widget)
+                listView(history[index[0]][0] + "\\", ui.listView)
+                ui.lineEdit.setText(history[index[0]][0] + "\\")
             else:
-                listView("", list_widget)
+                listView("", ui.listView)
+                ui.lineEdit.setText("")
     except IndexError:
         return False
 
