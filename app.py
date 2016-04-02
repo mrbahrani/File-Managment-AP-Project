@@ -49,7 +49,7 @@ class MainWindow(QtGui.QMainWindow, New_File):
         self.ui.listView.itemClicked.connect(self.selected_saver)
         self.ui.treeWidget.itemExpanded.connect(treeWidget_itemExpanded)
         if history_list[here[0]][0] != "*":
-            self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+            self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
 
         self.ui.pushButton.clicked.connect(self.up)
 
