@@ -7,6 +7,7 @@ from funcs import *
 from visual import *
 from navigation import *
 from os.path import isdir
+
 from search import search, step_by_step_search
 from events import *
 import sys
@@ -52,7 +53,6 @@ class MainWindow(QtGui.QMainWindow, New_File):
             self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
 
         self.ui.pushButton.clicked.connect(self.up)
-
     # def keyPressEvent(self, event):
     #     if event.key() == QtCore.Qt.Key_Enter or QtCore.Qt.Key_Return:
     #           self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
@@ -70,7 +70,7 @@ class MainWindow(QtGui.QMainWindow, New_File):
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui))
         self.ui.lineEdit_2.textChanged.connect(self.search)
-
+        #self.ui.contextMenuEvent("d")
     def selected_saver(self, item, selected_item_list=selected_item):
         """
         | This method saves text of selected item into the selected_item list
