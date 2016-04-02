@@ -92,10 +92,16 @@ class MainWindow(QtGui.QMainWindow, New_File):
 
     def up(self,h_list=history_list):
         try:
-            here[0] -= 1
-            self.ui.lineEdit.setText(history_list[here[0]][0])
+            print h_list
+            this_dir = history_list[here[0]][0]
+            list_dir = this_dir.split("\\")
+            p_dir = ""
+            for i in range(len(list_dir)-2):
+                p_dir = p_dir + list_dir[i] + "\\"
+            add_here(p_dir)
+            self.ui.lineEdit.setText(p_dir)
             self.ui.listView.clear()
-            listView(history_list[here[0]][0],self.ui.listView)
+            listView(p_dir,self.ui.listView)
         except  IndexError :
             return False
 
