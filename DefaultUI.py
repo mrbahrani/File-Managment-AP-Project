@@ -167,16 +167,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def contextMenuEvent(self,event):
-        self.menu = QtGui.QMenu(self)
-        pr_action = QtGui.QAction("pr",self)
-        pr_action.triggered.connect(self.Pr)
-        self.menu.addAction(pr_action)
-        self.menu.popup(QtGui.QCursor.pos())
-
-    def Pr(self):
-        print "ssssssss"
-
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow", None))
         self.pushButton_2.setText(_translate("MainWindow", "Back", None))

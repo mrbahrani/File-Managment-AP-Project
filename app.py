@@ -52,10 +52,34 @@ class MainWindow(QtGui.QMainWindow, New_File):
         if history_list[here[0]][0] != "*":
             self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
 
-        self.ui.pushButton.clicked.connect(self.up)
+        #self.ui.pushButton.clicked.connect(self.up)
+        self.ui.pushButton.clicked.connect(lambda : self.ui.contextMenuEvent())
     # def keyPressEvent(self, event):
     #     if event.key() == QtCore.Qt.Key_Enter or QtCore.Qt.Key_Return:
     #           self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+
+    def contextMenuEvent(self , event):
+        self.menu = QtGui.QMenu(self)
+        copy_actio = QtGui.QAction("Copy",self)
+        copy_actio.triggered.connect(self.copy)
+        self.menu.addAction(copy_actio)
+
+        cut_actio = QtGui.QAction("Cut",self)
+        cut_actio.triggered.connect(self.cut)
+        self.menu.addAction(cut_actio)
+
+        paste_actio = QtGui.QAction("Paste",self)
+        paste_actio.triggered.connect(self.paste)
+        self.menu.addAction(paste_actio)
+
+        delete_actio = QtGui.QAction("Delete",self)
+        delete_actio.triggered.connect(self.delete)
+        self.menu.addAction(delete_actio)
+
+        self.menu.popup(QtGui.QCursor.pos())
+
+    def Pr(self):
+        print "sssss"
 
     def add_actions(self):
         """
