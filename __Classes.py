@@ -122,7 +122,7 @@ class Directory(object):
         return file_list
         
     def copy(self, dest):
-        dest += self.fullAddress.split("\\")[-1]
+        dest += "\\" + self.fullAddress.split("\\")[-1]
         copytree(self.fullAddress, dest)
 
     def cut(self, dest):
