@@ -93,8 +93,9 @@ class MainWindow(QtGui.QMainWindow, New_File):
         # self.ui.pushButton_3.clicked.connect(self.forward)
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui))
-        self.ui.lineEdit_2.textChanged.connect(self.search)
-        #self.ui.contextMenuEvent("d")
+        self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
+
+
     def selected_saver(self, item, selected_item_list=selected_item):
         """
         | This method saves text of selected item into the selected_item list
@@ -105,7 +106,7 @@ class MainWindow(QtGui.QMainWindow, New_File):
         selected_item_list.pop()
         selected_item_list.append(str(item.text()))
         # print type(selected_item[0])
-        self.ui.lineEdit.setText(selected_item[0])
+        # self.ui.lineEdit.setText(selected_item[0])
 
     def treeWidget_itemClicked(self, itemList, selected_item):
         self.ui.lineEdit.setText(self.ui.treeWidget.currentItem().dir)

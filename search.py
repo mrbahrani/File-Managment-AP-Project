@@ -14,67 +14,93 @@ from os import listdir
 from funcs import drivers
 from os.path import isdir
 from funcs import remove_equals
+from threading import Thread
 search_list = []                                        # This list contains search results
+threads_list = []
 
 
-def return_equals(directory, word, result=search_list):
-    """
-    | This void function saves all including files and directories with same name with word to the search_list list.
-    return_equals(directory, word[, result=search_list])
-    :rtype: object
-    :param directory:str
-    :param word:str
-    :param result:list
+class StepSearch(Thread):
+    def __init__(self, directory, word):
+        super(StepSearch, self).__init__()
+        self.directory = directory
+        self.word = word
 
-    """
-    try:
-        directories = listdir(directory)
-    except WindowsError:
-        directories = []
-    if "$Recycle.Bin" in directories:
-        directories.remove("$Recycle.Bin")
-    if "*\\*" in directories:
-        directories.remove("*\\*")
-    # print directories
-    for element in directories:
-        if not element:
-            continue
-        elif element == word:
-            result.append(directory + "\\" + element)
-        elif isdir(directory + "\\" + element):
-            return_equals(directory + "\\" + element + "\\", word)
+    def return_equals_step_by_step(self, directory, word, result=search_list):
+        """
+        | This void function saves all including files and directories with same name with word to the search_list list
+        | With below pattern:
+        | [directory or file path, start of index of matched case in file or directory name,end of index of matched case in
+        | file or directory name].
+        return_equals_step_by_step(directory, word[, result=search_list])
+        :rtype: object
+        :param directory:str
+        :param word:str
+        :param result:list
+
+        """
+        try:
+            directories = listdir(directory)
+        except WindowsError:
+            directories = []
+        if "$Recycle.Bin" in directories:
+            directories.remove("$Recycle.Bin")
+        if "*\\*" in directories:
+            directories.remove("*\\*")
+        for element in directories:
+            element = element.lower()
+            word_index = element.find(word)
+            if not element:
+                continue
+            elif word_index + 1:
+                result.append([directory + "\\" + element, word_index, word_index + len(word)])
+            elif isdir(directory + "\\" + element):
+                thread_obj = StepSearch(directory + "\\" + element + "\\", word)
+                threads_list.append(thread_obj)
+                thread_obj.start()
+                thread_obj.join()
+
+    def run(self):
+        self.return_equals_step_by_step(self.directory, self.word)
 
 
-def return_equals_step_by_step(directory, word, result=search_list):
-    """
-    | This void function saves all including files and directories with same name with word to the search_list list
-    | With below pattern:
-    | [directory or file path, start of index of matched case in file or directory name,end of index of matched case in
-    | file or directory name].
-    return_equals_step_by_step(directory, word[, result=search_list])
-    :rtype: object
-    :param directory:str
-    :param word:str
-    :param result:list
+class CompleteSearch(Thread):
+    def __init__(self, directory, word):
+        super(CompleteSearch, self).__init__()
+        self.directory = directory
+        self.word = word
 
-    """
-    try:
-        directories = listdir(directory)
-    except WindowsError:
-        directories = []
-    if "$Recycle.Bin" in directories:
-        directories.remove("$Recycle.Bin")
-    if "*\\*" in directories:
-        directories.remove("*\\*")
-    for element in directories:
-        element = element.lower()
-        word_index = element.find(word)
-        if not element:
-            continue
-        elif word_index + 1:
-            result.append([directory + "\\" + element, word_index, word_index + len(word)])
-        elif isdir(directory + "\\" + element):
-            return_equals_step_by_step(directory + "\\" + element + "\\", word)
+    def return_equals(self, directory, word, result=search_list):
+        """
+        | This void function saves all including files and directories with same name with word to the search_list list.
+        return_equals(directory, word[, result=search_list])
+        :rtype: object
+        :param directory:str
+        :param word:str
+        :param result:list
+
+        """
+        try:
+            directories = listdir(self.directory)
+        except WindowsError:
+            directories = []
+        if "$Recycle.Bin" in directories:
+            directories.remove("$Recycle.Bin")
+        if "*\\*" in directories:
+            directories.remove("*\\*")
+        # print directories
+        for element in directories:
+            if not element:
+                continue
+            elif element == self.word:
+                result.append(directory + "\\" + element)
+            elif isdir(directory + "\\" + element):
+                thread_obj = CompleteSearch(directory + "\\" + element, self.word)
+                threads_list.append(thread_obj)
+                thread_obj.start()
+                thread_obj.join()
+
+    def run(self):
+        self.return_equals(self.directory, self.word)
 
 
 def search(word, current_directory, search_result_list=search_list):
@@ -99,14 +125,16 @@ def search(word, current_directory, search_result_list=search_list):
         else:
             # return "No matching item found"
             for element in files:
-                return_equals(current_directory, word)
+                searcher_object = CompleteSearch(current_directory + element, word)
+                searcher_object.start()
 
             return remove_equals(search_result_list)
     else:
         for cleaner in range(len(search_result_list)):
             search_result_list.pop()
         for driver in drivers():
-            return_equals(driver, word)
+            searcher_object = CompleteSearch(driver, word)
+            searcher_object.start()
         return remove_equals(search_result_list)
 
 
@@ -139,13 +167,16 @@ def step_by_step_search(word, current_directory, search_result_list=search_list)
             return remove_equals(search_result_list)
         else:
             # return "No matching item found"
-            for element in files:
-                return_equals_step_by_step(current_directory, word)
+            searcher_obj = StepSearch(current_directory, word)
+            searcher_obj.start()
+            searcher_obj.join()
             return remove_equals(search_result_list)
     else:
         for cleaner in range(len(search_result_list)):
             search_result_list.pop()
+
         for driver in drivers():
-            return_equals_step_by_step(driver, word)
+            searcher_obj = StepSearch(driver, word)
+            searcher_obj.start()
         return remove_equals(search_result_list)
 
