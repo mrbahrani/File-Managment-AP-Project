@@ -53,10 +53,12 @@ class MainWindow(QtGui.QMainWindow, New_File):
             self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
 
         #self.ui.pushButton.clicked.connect(self.up)
-        self.ui.pushButton.clicked.connect(lambda : self.ui.contextMenuEvent())
-    # def keyPressEvent(self, event):
-    #     if event.key() == QtCore.Qt.Key_Enter or QtCore.Qt.Key_Return:
-    #           self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
+        self.ui.pushButton.clicked.connect(lambda: self.ui.contextMenuEvent())
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Return:
+            if self.ui.listView.currentItem():
+                list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit)
 
     def contextMenuEvent(self , event):
 

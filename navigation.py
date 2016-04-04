@@ -64,9 +64,6 @@ def history_back(ui, index=here, history=history_list):
             index.pop()
             index.append(index_num)
             ui.listView.clear()
-            print ">>>>>>>>>>>>>>>>>>>>>>>>>> BACK <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-            print here
-            print history
             if history[index_num][0]:
                 listView( history[index_num][0] + "\\", ui.listView)
                 ui.lineEdit.setText(history[index_num][0] + "\\")
@@ -91,9 +88,6 @@ def history_forward(ui, index=here, history=history_list):
             index.pop()
             index.append(index_num)
             ui.listView.clear()
-            print ">>>>>>>>>>>>>>>>>>>>>>>>>> FORWARD <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-            print here
-            print history
             if history[index[0]][0]:
                 listView(history[index[0]][0] + "\\", ui.listView)
                 ui.lineEdit.setText(history[index[0]][0] + "\\")
