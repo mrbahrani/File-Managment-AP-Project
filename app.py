@@ -59,7 +59,18 @@ class MainWindow(QtGui.QMainWindow, New_File):
     #           self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView))
 
     def contextMenuEvent(self , event):
+
         self.menu = QtGui.QMenu(self)
+
+        open_actio = QtGui.QAction("Open",self)
+        open_actio.triggered.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
+        self.menu.addAction(open_actio)
+
+        if isdir( str(history_list[here[0]][0]) + "\\" + str(selected_item[0]) ) :
+            open_innew_actio = QtGui.QAction("Open in new window",self)
+            open_innew_actio.triggered.connect(self.copy)
+            self.menu.addAction(open_innew_actio)
+
         copy_actio = QtGui.QAction("Copy",self)
         copy_actio.triggered.connect(self.copy)
         self.menu.addAction(copy_actio)
@@ -76,10 +87,12 @@ class MainWindow(QtGui.QMainWindow, New_File):
         delete_actio.triggered.connect(self.delete)
         self.menu.addAction(delete_actio)
 
+        rename_actio = QtGui.QAction("Rename",self)
+        rename_actio.triggered.connect(self.copy)
+        self.menu.addAction(rename_actio)
+
         self.menu.popup(QtGui.QCursor.pos())
 
-    def Pr(self):
-        print "sssss"
 
     def add_actions(self):
         """
