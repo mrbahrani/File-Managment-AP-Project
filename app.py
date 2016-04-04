@@ -16,13 +16,14 @@ import sys
 selected_item = [""]
 
 
-class MainWindow(QtGui.QMainWindow, New_File):
+class MainWindow(QtGui.QMainWindow, New_File,New_Dir):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
         self.New_File = New_File()
         self.ui = Ui_MainWindow()
         self.New_File = New_File()
+        self.New_Dir = New_Dir()
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
@@ -103,6 +104,7 @@ class MainWindow(QtGui.QMainWindow, New_File):
         self.ui.actionCopy.triggered.connect(self.copy)
         self.ui.actionCut.triggered.connect(self.cut)
         self.ui.actionNewFile.triggered.connect(self.NewFile)
+        self.ui.actionNewDir.triggered.connect(self.NewDir)
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
         # self.ui.pushButton_3.clicked.connect(self.forward)
@@ -155,9 +157,7 @@ class MainWindow(QtGui.QMainWindow, New_File):
         :param item:list
         """
         copy_action(item[0], history_list[here[0]][0])
-
-    def NewFile(self):
-        self.New_File._NewFile(self)
+        
 
     def cut(self, action, item=selected_item):
         """
@@ -177,7 +177,7 @@ class MainWindow(QtGui.QMainWindow, New_File):
 
     def delete(self, action, item=selected_item):
         self.ui.listView.clear()
-        delete_action(item[0], history_list[here[0]][0], self.ui.listView)
+        delete_action(item[0], history_list[here[0]][0], serlf.ui.listView)
 
     def search(self, item):
         add_here(history_list[here[0]][0])
@@ -190,6 +190,9 @@ class MainWindow(QtGui.QMainWindow, New_File):
         listView(result, self.ui.listView)
         if result:
             add_here("*\\*", history_list, here, "*")
+
+    def NewDir(self):
+        self.New_Dir._NewDir(self)
 
     def NewFile(self):
         self.New_File._NewFile(self)
