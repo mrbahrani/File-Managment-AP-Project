@@ -48,8 +48,9 @@ class File(object):
         dest : new file's address
         """
         try:
-            copy2(self.fullPath, dest)
-            self.fullPath = dest
+            if self.name not in listdir(dest):
+                copy2(self.fullPath, dest)
+                self.fullPath = dest
         except Exception as e:
             print ("An exception ocurred")
 
@@ -59,17 +60,8 @@ class File(object):
         :param self : Object
         :param second_path: str
         """
-        # try:
         self.copy(second_path)
         self.delete()
-        # except WindowsError:
-        #     print second_path
-        #     error_show('The second directory path is invalid', 'listener must add')
-        #
-        # except Exception as e:
-        #     print second_path
-        #     print e
-        #     error_show("An Error happened, please restart the app.", 'listener must add')
 
     def delete(self):
         """
@@ -123,8 +115,12 @@ class Directory(object):
         return file_list
         
     def copy(self, dest):
-        dest += "\\" + self.fullAddress.split("\\")[-1]
-        copytree(self.fullAddress, dest)
+        try:
+            if self.name not in listdir(dest):
+                dest += "\\" + self.fullAddress.split("\\")[-1]
+                copytree(self.fullAddress, dest)
+        except Exception as e:
+            print e
 
     def cut(self, dest):
         self.copy(dest)
