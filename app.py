@@ -37,6 +37,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.memory_list = []
         self.list = list()
         self.list_ = list()
+
+        self.dragOver = False
         
         self.setAcceptDrops(True)
         self.ui.listView.setDragEnabled(True)
@@ -52,9 +54,16 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
-            event.acceptProposedAction()
+         #   event.acceptProposedAction()
+        #else:
+            #print event
+            #self.ui.listView.dragEnterEvsent(event)
+            event.setAccepted(True)
+            self.dragOver = True
+            self.update()
         else:
-          super(MainWindow, self).dragEnterEvsent(event)
+            print selected_item[0]
+            event.setAccepted(False)
 
     def dragMoveEvent(self, event):
         super(MainWindow, self).dragMoveEvent(event)
@@ -64,6 +73,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.list_ = list()
         self.memory_list = []
         if event.mimeData().hasUrls():
+            print event.mimeData().urls()
             for url in event.mimeData().urls():
                 self.list.append(str(url.path()))
             event.acceptProposedAction()
