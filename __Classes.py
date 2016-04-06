@@ -16,7 +16,8 @@ class File(object):
         self.type = strAdrs.split(".")[-1]
         self.name = strAdrs.split("\\")[-1][:]
         self.Jname = strAdrs.split(".")[0]
-        self.parent = strAdrs.split("\\")[-2]
+        if len(strAdrs.split("\\")) > 1:
+          self.parent = strAdrs.split("\\")[-2]
 
     def __existence(self):
         """

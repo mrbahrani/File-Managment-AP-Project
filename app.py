@@ -28,6 +28,43 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
+        
+        self.memory_list = []
+        self.list = list()
+        self.list_ = list()
+        
+        self.setAcceptDrops(True)
+        self.ui.listView.setDragEnabled(True)
+        self.ui.listView.setDragDropMode(QtGui.QAbstractItemView.InternalMove)
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+        else:
+          super(MainWindow, self).dragEnterEvsent(event)
+
+    def dragMoveEvent(self, event):
+        super(MainWindow, self).dragMoveEvent(event)
+
+    def dropEvent(self, event):
+        self.list = list()
+        self.list_ = list()
+        self.memory_list = []
+        if event.mimeData().hasUrls():
+            for url in event.mimeData().urls():
+                self.list.append(str(url.path()))
+                print self.list , 21
+            event.acceptProposedAction()
+            self.list_ = self.list[0].split('/')
+            print self.list_ ,self.list
+                                                                                     
+            self.copy_action_(self.list_[-1],(self.list[0])[2:])
+
+            self.paste_action_(history_list[here[0]][0], self.ui.listView)
+            
+        else:
+            self.ui.listView.dropEvent(event)    
+ 
 
 
     def setup(self):
@@ -200,6 +237,39 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
 
     def NewFile(self):
         self.New_File._NewFile(self)
+
+    def copy_action_(self ,file_name, current_directory):
+        """
+        | This function saves a list of files those must copy to another directory to the memory list
+        copy_action(files_names, current_directory[, memory_list=memory])
+        :param file_name:str
+        :param current_directory:str
+        :param memory_list:list
+        """
+        self.memory_list = [0 , self.list[0][1:]]
+        print self.memory_list , file_name , current_directory , 1234
+        if file_name:
+            return self.memory_list
+
+    def paste_action_(self ,current_directory, list_widget):
+        # print "PASTE"
+        """
+        | This function will paste(copy or cut) all elements are in the memory list.
+        paste(current_directory[, memory_list=memory])
+        :param current_directory:str
+        :param list_widget:QListWidget
+        :param memory_list:list
+        """
+        print self.memory_list , current_directory , 516165
+        #memory_list[1] = ((memory_list[-1].split('\\'))[0])
+        if self.memory_list:
+            if not self.memory_list[0]:
+                if isdir(self.memory_list[1]):
+                    directory = Directory(self.memory_list[1])
+                    directory.copy(current_directory)
+                else:
+                    file_object = File(self.memory_list[1])
+                    file_object.copy(current_directory)    
 
     def User(self):
         self.User_D._User(self)
