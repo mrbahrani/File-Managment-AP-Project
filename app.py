@@ -16,7 +16,7 @@ import sys
 selected_item = [""]
 
 
-class MainWindow(QtGui.QMainWindow, New_File,New_Dir):
+class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
@@ -24,6 +24,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir):
         self.ui = Ui_MainWindow()
         self.New_File = New_File()
         self.New_Dir = New_Dir()
+        self.User_D= User_D()
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
@@ -62,37 +63,39 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir):
                 list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit)
 
     def contextMenuEvent(self , event):
-
+        print selected_item
         self.menu = QtGui.QMenu(self)
+        if selected_item[0] != "" :
+            open_actio = QtGui.QAction("Open",self)
+            open_actio.triggered.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
+            self.menu.addAction(open_actio)
 
-        open_actio = QtGui.QAction("Open",self)
-        open_actio.triggered.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
-        self.menu.addAction(open_actio)
+            if isdir( str(history_list[here[0]][0]) + "\\" + str(selected_item[0]) ) :
+                open_innew_actio = QtGui.QAction("Open in new window",self)
+                open_innew_actio.triggered.connect(self.copy)
+                self.menu.addAction(open_innew_actio)
 
-        if isdir( str(history_list[here[0]][0]) + "\\" + str(selected_item[0]) ) :
-            open_innew_actio = QtGui.QAction("Open in new window",self)
-            open_innew_actio.triggered.connect(self.copy)
-            self.menu.addAction(open_innew_actio)
+            copy_actio = QtGui.QAction("Copy",self)
+            copy_actio.triggered.connect(self.copy)
+            self.menu.addAction(copy_actio)
 
-        copy_actio = QtGui.QAction("Copy",self)
-        copy_actio.triggered.connect(self.copy)
-        self.menu.addAction(copy_actio)
-
-        cut_actio = QtGui.QAction("Cut",self)
-        cut_actio.triggered.connect(self.cut)
-        self.menu.addAction(cut_actio)
+            cut_actio = QtGui.QAction("Cut",self)
+            cut_actio.triggered.connect(self.cut)
+            self.menu.addAction(cut_actio)
 
         paste_actio = QtGui.QAction("Paste",self)
         paste_actio.triggered.connect(self.paste)
         self.menu.addAction(paste_actio)
 
-        delete_actio = QtGui.QAction("Delete",self)
-        delete_actio.triggered.connect(self.delete)
-        self.menu.addAction(delete_actio)
+        if selected_item[0] != "" :
 
-        rename_actio = QtGui.QAction("Rename",self)
-        rename_actio.triggered.connect(self.copy)
-        self.menu.addAction(rename_actio)
+            delete_actio = QtGui.QAction("Delete",self)
+            delete_actio.triggered.connect(self.delete)
+            self.menu.addAction(delete_actio)
+
+            rename_actio = QtGui.QAction("Rename",self)
+            rename_actio.triggered.connect(self.copy)
+            self.menu.addAction(rename_actio)
 
         self.menu.popup(QtGui.QCursor.pos())
 
@@ -105,6 +108,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir):
         self.ui.actionCut.triggered.connect(self.cut)
         self.ui.actionNewFile.triggered.connect(self.NewFile)
         self.ui.actionNewDir.triggered.connect(self.NewDir)
+        self.ui.actionSingUp.triggered.connect(self.User)
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
         # self.ui.pushButton_3.clicked.connect(self.forward)
@@ -196,6 +200,9 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir):
 
     def NewFile(self):
         self.New_File._NewFile(self)
+
+    def User(self):
+        self.User_D._User(self)
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
