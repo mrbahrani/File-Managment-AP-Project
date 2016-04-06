@@ -48,7 +48,7 @@ class File(object):
         dest : new file's address
         """
         try:
-            if self.name not in listdir(dest):
+            if self.name not in listdir(dest) and dest != "*\\*":
                 copy2(self.fullPath, dest)
                 self.fullPath = dest
         except Exception as e:
@@ -116,7 +116,7 @@ class Directory(object):
         
     def copy(self, dest):
         try:
-            if self.name not in listdir(dest):
+            if self.name not in listdir(dest) and dest != "*\\*":
                 dest += "\\" + self.fullAddress.split("\\")[-1]
                 copytree(self.fullAddress, dest)
         except Exception as e:

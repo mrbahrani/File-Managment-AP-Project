@@ -227,9 +227,9 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         print result
         if not result:
             result = step_by_step_search(str(item), history_list[here[0]][0])
-        self.ui.listView.clear()
-        listView(result, self.ui.listView)
         if result:
+            self.ui.listView.clear()
+            listView(result, self.ui.listView)
             add_here("*\\*", history_list, here, "*")
 
     def NewDir(self):
