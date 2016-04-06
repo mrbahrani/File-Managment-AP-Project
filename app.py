@@ -90,6 +90,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.treeWidget.itemExpanded.connect(treeWidget_itemExpanded)
         if history_list[here[0]][0] != "*":
             self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
+        self.ui.listView.itemClicked.connect(self.selected_saver)
 
         #self.ui.pushButton.clicked.connect(self.up)
         self.ui.pushButton.clicked.connect(lambda: self.ui.contextMenuEvent())
@@ -162,7 +163,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
          :param selected_item_list:list
         """
         selected_item_list.pop()
-        selected_item_list.append(str(item.text()))
+        selected_item_list.append(str(item.text())
         # print type(selected_item[0])
         # self.ui.lineEdit.setText(selected_item[0])
 
