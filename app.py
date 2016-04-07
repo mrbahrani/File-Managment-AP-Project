@@ -92,8 +92,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
         self.ui.listView.itemClicked.connect(self.selected_saver)
 
-        #self.ui.pushButton.clicked.connect(self.up)
-        self.ui.pushButton.clicked.connect(lambda: self.ui.contextMenuEvent())
+        self.ui.pushButton.clicked.connect(self.up)
+        #self.ui.pushButton.clicked.connect(lambda: self.ui.contextMenuEvent())
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return:
@@ -146,7 +146,10 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.actionCut.triggered.connect(self.cut)
         self.ui.actionNewFile.triggered.connect(self.NewFile)
         self.ui.actionNewDir.triggered.connect(self.NewDir)
-        self.ui.actionSingUp.triggered.connect(self.User)
+        self.ui.actionSingUp.triggered.connect(lambda : self.User("SingUp"))
+        self.ui.actionLogin.triggered.connect(lambda : self.User("Login"))
+        #self.ui.actionLogin.triggered.connect(self.User)
+        #self.ui.actionLogin.triggered.connect(self.User)
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
         # self.ui.pushButton_3.clicked.connect(self.forward)
@@ -272,8 +275,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
                     file_object = File(self.memory_list[1])
                     file_object.copy(current_directory)    
 
-    def User(self):
-        self.User_D._User(self)
+    def User(self , action):
+        self.User_D._User(self ,action)
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
