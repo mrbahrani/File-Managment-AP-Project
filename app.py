@@ -56,10 +56,10 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         if event.mimeData().hasUrls():
             for url in event.mimeData().urls():
                 self.list.append(str(url.path()))
-                print self.list , 21
+                # print self.list , 21
             event.acceptProposedAction()
             self.list_ = self.list[0].split('/')
-            print self.list_ ,self.list
+            # print self.list_ ,self.list
                                                                                      
             self.copy_action_(self.list_[-1],(self.list[0])[2:])
 
@@ -95,8 +95,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
         self.ui.listView.itemClicked.connect(self.selected_saver)
 
-        #self.ui.pushButton.clicked.connect(self.up)
-        self.ui.pushButton.clicked.connect(lambda: self.ui.contextMenuEvent())
+        self.ui.pushButton.clicked.connect(self.up)
+        #self.ui.pushButton.clicked.connect(lambda: self.ui.contextMenuEvent())
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return:
@@ -104,7 +104,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
                 list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit)
 
     def contextMenuEvent(self , event):
-        print selected_item
+        # print selected_item
         self.menu = QtGui.QMenu(self)
         if selected_item[0] != "" :
             open_actio = QtGui.QAction("Open",self)
@@ -140,7 +140,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
 
         self.menu.popup(QtGui.QCursor.pos())
 
-
     def add_actions(self):
         """
         | This method adds all slots of actions of menu bar elements
@@ -149,14 +148,16 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.actionCut.triggered.connect(self.cut)
         self.ui.actionNewFile.triggered.connect(self.NewFile)
         self.ui.actionNewDir.triggered.connect(self.NewDir)
-        self.ui.actionSingUp.triggered.connect(self.User)
+        self.ui.actionSingUp.triggered.connect(lambda : self.User("SingUp"))
+        self.ui.actionLogin.triggered.connect(lambda : self.User("Login"))
+        #self.ui.actionLogin.triggered.connect(self.User)
+        #self.ui.actionLogin.triggered.connect(self.User)
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
         # self.ui.pushButton_3.clicked.connect(self.forward)
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui))
         self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
-
 
     def selected_saver(self, item, selected_item_list=selected_item):
         """
@@ -167,7 +168,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         """
         selected_item_list.pop()
         selected_item_list.append(str(item.text()))
-        # print type(selected_item[0])
+        # print selected_item[0]
         # self.ui.lineEdit.setText(selected_item[0])
 
     def treeWidget_itemClicked(self, itemList, selected_item):
@@ -222,15 +223,20 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
 
     def delete(self, action, item=selected_item):
         self.ui.listView.clear()
-        delete_action(item[0], history_list[here[0]][0], serlf.ui.listView)
+        delete_action(item[0], history_list[here[0]][0], self.ui.listView)
 
     def search(self, item):
         add_here(history_list[here[0]][0])
-        result = search(str(item), history_list[here[0]][0])
-        print "result"
-        print result
+        if history_list[here[0]][0] != "*\\*":
+            result = search(str(item), history_list[here[0]][0])
+        else:
+            result = search(str(item), history_list[here[0] - 1][0])
+        # print "WHOLE result"
+        # print result
         if not result:
             result = step_by_step_search(str(item), history_list[here[0]][0])
+        # print "kojoloo result"
+        # print result
         if result:
             self.ui.listView.clear()
             listView(result, self.ui.listView)
@@ -251,7 +257,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         :param memory_list:list
         """
         self.memory_list = [0 , self.list[0][1:]]
-        print self.memory_list , file_name , current_directory , 1234
+        # print self.memory_list , file_name , current_directory , 1234
         if file_name:
             return self.memory_list
 
@@ -264,7 +270,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         :param list_widget:QListWidget
         :param memory_list:list
         """
-        print self.memory_list , current_directory , 516165
+        # print self.memory_list , current_directory , 516165
         #memory_list[1] = ((memory_list[-1].split('\\'))[0])
         if self.memory_list:
             if not self.memory_list[0]:
@@ -275,8 +281,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
                     file_object = File(self.memory_list[1])
                     file_object.copy(current_directory)    
 
-    def User(self):
-        self.User_D._User(self)
+    def User(self , action):
+        self.User_D._User(self ,action)
 
 class Updator(QtCore.QThread):
     def __init__(self,MainWindow):

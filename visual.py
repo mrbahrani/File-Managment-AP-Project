@@ -55,18 +55,18 @@ def listView(full_path, list_view):
     """
     lLock.acquire()
     try:
-        print "KIR"
-        print full_path
+        # print "KIR"
+        # print full_path
         if full_path == "":
-            print 1
+            # print 1
             dir_list = drivers()
             files_list = []
         elif type(full_path) == list and not full_path:
-            print 2
+            # print 2
             dir_list = full_path
             files_list = get_files("")
         elif type(full_path) == list and type(full_path[0]) == list:
-            print 3
+            # print 3
             dir_list, files_list = [], []
             for element in full_path:
                 if isdir(element[0]):
@@ -75,12 +75,19 @@ def listView(full_path, list_view):
                     files_list += [element[0]]
             dir_list = remove_equals(dir_list)
             files_list = remove_equals(files_list)
+        elif type(full_path) == list:
+            dir_list, files_list = [], []
+            for element in full_path:
+                if isdir(element):
+                    dir_list.append(element)
+                else:
+                    files_list.append(element)
         else:
-            print 4
+            # print 4
             dir_list = get_directories(full_path)
             files_list = get_files(full_path)
-        print "*****"
-        print dir_list
+        # print "*****"
+        # print dir_list
         if dir_list:
             for it in dir_list:
                 item = QtGui.QListWidgetItem(list_view)
