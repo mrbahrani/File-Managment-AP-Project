@@ -185,4 +185,4 @@ def step_by_step_search(word, current_directory, search_result_list=search_list)
 
 def search(word, current_directory):
     if word[0] == '[' and word[-1] == ']':
-        
+        pass
