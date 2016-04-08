@@ -54,6 +54,7 @@ def validate_user(user_name, password):
     | If yes, returns True, Else reurns False
     :param user_name:str
     :param password:str
+    :return boolean
     """
     connection_obj = connect_db()
     with connection_obj:
@@ -65,8 +66,35 @@ def validate_user(user_name, password):
         return False
 
 
-def change_ready_state(new_state):
+def change_ready_state(user_name, password, new_state):
+    """
+    |This function changes ready state of the user_name;
+    |0 is equal to "Not ready for sharing" and 1 is equal to "I'm ready. Let's share!"
+    :param user_name:str
+    :param password:str
+    :param new_state:int
+    """
     connection_obj = connect_db()
     with connection_obj:
-        cursot = connection_obj.cursor()
-        
+        cursor = connection_obj.cursor()
+        query = ((new_state, user_name, password), )
+        execute = cursor.executemany("UPDATE user SET ready_state = ? WHERE user_name = ? AND password = ?", query)
+        connection_obj.commit()
+
+
+def order(provider):
+    """
+    | This function sends an order request to the provider and if that be ready, gets it's server id and port number.
+    | And if that not be ready, returns False.
+    :param provider
+    :return tuple|boolean
+    """
+    connection_obj = connect_db()
+    with connection_obj:
+        cursor = connection_obj.cursor()
+        execute = cursor.execute("SELECT ready_state FROM user WHERE user_name = " + provider)
+        state = execute.fetchall()
+        if state:
+            execute = cursor.execute("SELECT server_id, port FROM users WHERE user_name = " + provider)
+            return execute.fetchall()
+        return False
