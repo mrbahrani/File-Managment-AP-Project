@@ -4,8 +4,8 @@ from PyQt4 import QtGui
 from funcs import *
 from os.path import isdir
 from funcs import remove_equals
-
-
+from threading import Lock
+lLock = Lock()
 def file_icon(file_name):
     """
     | This function returns proper icon path for file type
@@ -25,6 +25,7 @@ def file_icon(file_name):
 
 def treeView(fullPath,qwtIt):
     #This function visualizes the tree view of the directories
+    lLock.acquire()
     try:
         if not qwtIt.isUsed:
             dirList= get_directories(fullPath)
@@ -44,7 +45,7 @@ def treeView(fullPath,qwtIt):
         print("An unwanted exception occurred!!")
         print e
     qwtIt.isUsed = True
-
+    lLock.release()
 
 def listView(full_path, list_view):
     """
@@ -52,6 +53,7 @@ def listView(full_path, list_view):
     :param full_path:str
     :param list_view:obj
     """
+    lLock.acquire()
     try:
         print "KIR"
         print full_path
@@ -95,6 +97,7 @@ def listView(full_path, list_view):
 
     except WindowsError:
         print("Access denied")
+    lLock.release()
     # except Exception as e:
     #     print("An unwanted exception ocurred!!")
     #     print e

@@ -7,6 +7,7 @@ from funcs import *
 from visual import *
 from navigation import *
 from os.path import isdir
+from time import sleep
 
 from search import search, step_by_step_search
 from events import *
@@ -17,6 +18,7 @@ selected_item = [""]
 
 
 class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
+    index = 1
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
@@ -28,6 +30,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
+
         
         self.memory_list = []
         self.list = list()
@@ -275,7 +278,69 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
     def User(self):
         self.User_D._User(self)
 
+class Updator(QtCore.QThread):
+    def __init__(self,MainWindow):
+        super(Updator,self).__init__()
+        self.MainWindow = MainWindow
+    def run(self):
+
+        oldList = list()
+        newListF= list()
+        newListD= list()
+        while True:
+            sleep(0.01)
+            lLock.acquire()
+            if history_list[here[0]][0]=="":
+                newListD = list()
+                newListF = list()
+            else:
+                newListD = get_directories(history_list[here[0]][0])
+                newListF = get_files(history_list[here[0]][0])
+            ctr = self.MainWindow.ui.listView.count()
+            for itr in range(ctr):
+                oldList += [str(self.MainWindow.ui.listView.item(itr).text())]
+            # *********************************
+            for itrF in newListF:
+                if not (itrF in oldList):
+                    item = QtGui.QListWidgetItem()
+                    item.setText(itrF)
+                    icon = QtGui.QIcon(file_icon(itrF))
+                    item.setIcon(icon)
+                    print oldList,"*****"
+                    self.MainWindow.ui.listView.addItem(item)
+            for itrD in newListD:
+                if not (itrD in oldList):
+                    item = QtGui.QListWidgetItem()
+                    item.setText(itrD)
+                    icon = QtGui.QIcon("icons\\folder.ico")
+                    item.setIcon(icon)
+                    self.MainWindow.ui.listView.addItem(item)
+            # *********************************
+            if history_list[here[0]][0]=="":
+                newListD = list()
+                newListF = list()
+            else:
+                newListD = get_directories(history_list[here[0]][0])
+                newListF = get_files(history_list[here[0]][0])
+            ommitList = list()
+            for itr in oldList:
+                if not (itr in newListD+newListF):
+                    ommitList += [itr]
+            num_of_items = self.MainWindow.ui.listView.count()
+            holder = 0
+            while holder <num_of_items:
+                if str(self.MainWindow.ui.listView.item(holder).text()) in ommitList:
+                    self.MainWindow.ui.listView.takeItem(holder)
+                    num_of_items -=1
+                else:
+                    holder +=1
+            # *********************************
+            oldList = list()
+            lLock.release()
+
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     Win = MainWindow()
+    updator = Updator(Win)
+    updator.start()
     Win.start_show(app)

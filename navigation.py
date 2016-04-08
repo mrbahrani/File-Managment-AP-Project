@@ -11,9 +11,10 @@ List of functions:
 """
 from __Classes import Directory
 from visual import listView
-history_list = [["", ""]]                           # History container
+history_list = [["", ""]]# History container
+curFileList = list()
+curDirList = list()
 here = [0]                                    # The index of current directory
-
 
 def add_here(directory_path, h_list=history_list, here_index=here, parent=None):
     """
