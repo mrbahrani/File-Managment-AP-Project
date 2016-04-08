@@ -31,18 +31,19 @@ def create_cash_table():
     connection_obj.close()
 
 
-def add_new_user(user_name, password, server_id, port):
+def add_new_user(user_name, password, server_id, port, ready_state):
     """
     | This void function adds a new user to the users table.
     :param user_name:str
     :param password:str
     :param server_id:str
     :param port:id
+    :param ready_state:int
     """
     connection_obj = connect_db()
     cursor = connection_obj.cursor()
-    query = ((user_name, password, server_id, port),)
-    cursor.executemany("INSERT INTO users(user_name,password,server_id,port)VALUES(?,?,?,?)", query)
+    query = ((user_name, password, server_id, port, ready_state),)
+    cursor.executemany("INSERT INTO users(user_name,password,server_id,port,ready_state)VALUES(?,?,?,?,?)", query)
     connection_obj.commit()
     connection_obj.close()
 
@@ -62,3 +63,10 @@ def validate_user(user_name, password):
         if saved_password[0] == password:
             return True
         return False
+
+
+def change_ready_state(new_state):
+    connection_obj = connect_db()
+    with connection_obj:
+        cursot = connection_obj.cursor()
+        
