@@ -323,7 +323,7 @@ class Updator(QtCore.QThread):
                     self.MainWindow.ui.listView.addItem(item)
             # *********************************
             if history_list[here[0]][0]=="":
-                newListD = list()
+                newListD = drivers()
                 newListF = list()
             else:
                 newListD = get_directories(history_list[here[0]][0])
@@ -350,3 +350,4 @@ if __name__ == "__main__":
     updator = Updator(Win)
     updator.start()
     Win.start_show(app)
+    updator.terminate()
