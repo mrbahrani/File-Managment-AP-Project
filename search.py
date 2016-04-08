@@ -15,6 +15,7 @@ from funcs import drivers
 from os.path import isdir
 from funcs import remove_equals
 from threading import Thread
+from string import uppercase, lowercase
 search_list = []                                        # This list contains search results
 threads_list = []
 
@@ -52,8 +53,11 @@ class StepSearch(Thread):
             if not element:
                 continue
             elif word_index + 1:
+                print directory + "\\" + element
                 result.append([directory + "\\" + element, word_index, word_index + len(word)])
             elif isdir(directory + "\\" + element):
+                print "Again"
+                print directory + "\\" + element
                 thread_obj = StepSearch(directory + "\\" + element + "\\", word)
                 threads_list.append(thread_obj)
                 thread_obj.start()
@@ -103,7 +107,7 @@ class CompleteSearch(Thread):
         self.return_equals(self.directory, self.word)
 
 
-def search(word, current_directory, search_result_list=search_list):
+def complete_search(word, current_directory, search_result_list=search_list):
     """
     | This function returns search results of files and directories with same name of word.
     | First current directory searches and if there is any result, will return as a list
@@ -119,16 +123,14 @@ def search(word, current_directory, search_result_list=search_list):
         files = listdir(current_directory)
         for element in files:
             if element == word:
-                results.append((current_directory + "\\" + element))
-        if results:
-            return remove_equals(search_result_list)
+                search_result_list.append(current_directory + "\\" + element)
         else:
             # return "No matching item found"
             for element in files:
                 searcher_object = CompleteSearch(current_directory + element, word)
                 searcher_object.start()
+        return remove_equals(search_result_list)
 
-            return remove_equals(search_result_list)
     else:
         for cleaner in range(len(search_result_list)):
             search_result_list.pop()
@@ -162,15 +164,15 @@ def step_by_step_search(word, current_directory, search_result_list=search_list)
         for element in files:
             word_index = element.find(word)
             if word_index + 1:
-                results.append([current_directory + "\\" + element, word_index, word_index + len(word)])
-        if results:
-            return remove_equals(search_result_list)
-        else:
-            # return "No matching item found"
-            searcher_obj = StepSearch(current_directory, word)
-            searcher_obj.start()
-            searcher_obj.join()
-            return remove_equals(search_result_list)
+                print current_directory + "\\" + element
+                search_result_list.append([current_directory + "\\" + element, word_index, word_index + len(word)])
+
+            else:
+                # return "No matching item found"
+                searcher_obj = StepSearch(current_directory, word)
+                searcher_obj.start()
+                searcher_obj.join()
+        return remove_equals(search_result_list)
     else:
         for cleaner in range(len(search_result_list)):
             search_result_list.pop()
@@ -180,3 +182,7 @@ def step_by_step_search(word, current_directory, search_result_list=search_list)
             searcher_obj.start()
         return remove_equals(search_result_list)
 
+
+def search(word, current_directory):
+    if word[0] == '[' and word[-1] == ']':
+        

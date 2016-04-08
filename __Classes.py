@@ -9,8 +9,8 @@ import sys
 class File(object):
     def __init__(self, strAdrs):
         self.fullPath = strAdrs
-        print "******************************************"
-        print self.fullPath
+        # print "******************************************"
+        # print self.fullPath
         self.__existence()
         self.__reachable()
         self.type = strAdrs.split(".")[-1]
@@ -279,7 +279,7 @@ class New_Dir(QtGui.QDialog):
         
         self.item_list = [str(Name)]
         item_list = self.item_list
-        print self.item_list[0]
+        # print self.item_list[0]
         if self.item_list[0]:
             pass
             #mkdir(self.item_list[-1] + '/' + self.item_list[0])

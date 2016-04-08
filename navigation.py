@@ -27,19 +27,19 @@ def add_here(directory_path, h_list=history_list, here_index=here, parent=None):
     try:
         # print h_list
         index = here_index[0]
-        for element_index in range(len(h_list) - 1, 0, -1):
-            if h_list[element_index][1] == directory.parent:
-                # print "---------------------------------"
-                # print h_list[element_index][1]
-                # print directory.parent
-                # print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                for element in range(len(h_list) - 1, element_index - 1, -1):
-                    h_list.pop()
-                here_index.pop()
-                h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
-                here_index.append(len(h_list) - 1)
-                return
         if parent is None:
+            for element_index in range(len(h_list) - 1, 0, -1):
+                if h_list[element_index][1] == directory.parent:
+                    # print "---------------------------------"
+                    # print h_list[element_index][1]
+                    # print directory.parent
+                    # print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                    for element in range(len(h_list) - 1, element_index - 1, -1):
+                        h_list.pop()
+                    here_index.pop()
+                    h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
+                    here_index.append(len(h_list) - 1)
+                    return
             h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
         else:
             h_list.append([directory_path.replace('\\\\', '\\'), "*"])
@@ -59,7 +59,7 @@ def history_back(ui, index=here, history=history_list):
     :param history:list
     """
     try:
-        if index[0]:
+        if index[0] and history[index[0] - 1] != "*\\*":
             index_num = index[0] - 1
             index.pop()
             index.append(index_num)
@@ -83,7 +83,7 @@ def history_forward(ui, index=here, history=history_list):
     :param history:list
     """
     try:
-        if index[0] < len(history) - 1:
+        if index[0] < len(history) - 1 and history[index[0] + 1] != "*\\*":
             index_num = index[0] + 1
             index.pop()
             index.append(index_num)
