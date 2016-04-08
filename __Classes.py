@@ -159,7 +159,7 @@ class New_File(QtGui.QDialog):
         self.path = ''
         
         self.browseButton = self.createButton("&Browse...", self.browse)
-        self.quitButton = self.createButton("&Quit",self.quit)
+        self.quitButton = self.createButton("&Quit",self.close)
         self.findButton = self.createButton("&Create", self.create)
 
         
@@ -193,8 +193,6 @@ class New_File(QtGui.QDialog):
         self.setWindowTitle("Create_New_File")
         self.resize(200, 200)
 
-    def quit(self):
-        sys.exit()
 
     def browse(self):
         directory = QtGui.QFileDialog.getExistingDirectory(self, "Create_New_File",
@@ -250,7 +248,7 @@ class New_Dir(QtGui.QDialog):
 
         self.path = ''
         
-        self.quitButton = self.createButton("&Quit",self.quit)
+        self.quitButton = self.createButton("&Quit",self.close)
         self.findButton = self.createButton("&Create", self.create)
 
         
@@ -274,8 +272,6 @@ class New_Dir(QtGui.QDialog):
         self.setWindowTitle("Create New Dir")
         self.resize(200, 200)
 
-    def quit(self):
-        sys.exit()
 
            
     def create(self):
@@ -307,18 +303,18 @@ class User_D(QtGui.QDialog):
 
         self.path = ''
 
-        #self.browseButton = self.createButton("&Browse...", self.browse)
-        self.quitButton = self.createButton("&Quit",self.quit)
+
+        self.quitButton = self.createButton("&Quit",self.close)
         self.SingButton = self.createButton("&SingUp", self.create)
 
 
         self.fileComboBox = self.createLineEdit()
         self.textComboBox = self.createLineEdit()
-        #self.directoryComboBox = self.createComboBox(self.path)
+
 
         fileLabel = QtGui.QLabel("Userame:")
         textLabel = QtGui.QLabel("Password:")
-        #directoryLabel = QtGui.QLabel("In directory:")
+
 
 
         self.filesFoundLabel = QtGui.QLabel()
@@ -330,9 +326,6 @@ class User_D(QtGui.QDialog):
         mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
         mainLayout.addWidget(textLabel, 1, 0)
         mainLayout.addWidget(self.textComboBox, 1, 1, 1, 2)
-        #mainLayout.addWidget(directoryLabel, 2, 0)
-        #mainLayout.addWidget(self.directoryComboBox, 2, 1)
-        #mainLayout.addWidget(self.browseButton, 2, 2)
         mainLayout.addWidget(self.filesFoundLabel, 3, 0)
         mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
         self.setLayout(mainLayout)
@@ -342,40 +335,7 @@ class User_D(QtGui.QDialog):
         self.setWindowTitle("SignUp")
         self.resize(200, 200)
 
-    def quit(self):
-        sys.exit()
-    '''
-    def browse(self):
-        directory = QtGui.QFileDialog.getExistingDirectory(self, "Create_New_File",
-                QtCore.QDir.currentPath())
-        if directory:
-            if self.directoryComboBox.findText(directory) == -1:
-                self.directoryComboBox.addItem(directory)
-            self.directoryComboBox.setCurrentIndex(self.directoryComboBox.findText(directory))
-    '''
-    '''
-    def create(self):
-        Name = self.fileComboBox.text()
-        Type = self.textComboBox.text()
-        Path = self.directoryComboBox.currentText()
 
-        self.updateComboBox(self.directoryComboBox)
-
-        self.item_list = [str(Name), str(Type) , str(Path)]
-        item_list = self.item_list
-
-        if self.item_list[1]:
-            if self.item_list[0] and self.item_list[-1]:
-                file = open(str(self.item_list[-1] + '/' + self.item_list[0] + '.' + self.item_list[1]), 'w')
-                file.close()
-        else:
-            if self.item_list[0] and self.item_list[-1]:
-                mkdir(self.item_list[-1] + '/' + self.item_list[0])
-
-    def updateComboBox(self,comboBox):
-        if comboBox.findText(comboBox.currentText()) == -1:
-            comboBox.addItem(comboBox.currentText())
-    '''
     def _User(self ,app , action ):
             self.SingButton.setText(action)
             self.show()
@@ -384,13 +344,7 @@ class User_D(QtGui.QDialog):
         button = QtGui.QPushButton(text)
         button.clicked.connect(member)
         return button
-    '''
-    def createComboBox(self, text=""):
-        comboBox = QtGui.QComboBox()
-        comboBox.setEditable(True)
-        comboBox.addItem(text)
-        return comboBox
-    '''
+
     def createLineEdit(self, text=""):
         line = QtGui.QLineEdit()
         return line
