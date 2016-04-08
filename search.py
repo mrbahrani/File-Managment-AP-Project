@@ -21,6 +21,10 @@ threads_list = []
 
 
 class StepSearch(Thread):
+    """
+    | This class is Thread class children.The return_equals_step_by_step stores all files and directories those are in
+    | or into the included directories of that with name contained word string. or returns the result
+    """
     def __init__(self, directory, word):
         super(StepSearch, self).__init__()
         self.directory = directory
@@ -68,6 +72,10 @@ class StepSearch(Thread):
 
 
 class CompleteSearch(Thread):
+    """
+    | This class is Thread class children.The return_equals stores all files and directories those are in
+    | or into the included directories of that with name equals word string. or returns the result
+    """
     def __init__(self, directory, word):
         super(CompleteSearch, self).__init__()
         self.directory = directory
@@ -107,7 +115,7 @@ class CompleteSearch(Thread):
         self.return_equals(self.directory, self.word)
 
 
-def complete_search(word, current_directory, search_result_list=search_list):
+def search(word, current_directory, search_result_list=search_list):
     """
     | This function returns search results of files and directories with same name of word.
     | First current directory searches and if there is any result, will return as a list
@@ -183,6 +191,6 @@ def step_by_step_search(word, current_directory, search_result_list=search_list)
         return remove_equals(search_result_list)
 
 
-def search(word, current_directory):
+def search_s(word, current_directory):
     if word[0] == '[' and word[-1] == ']':
         pass
