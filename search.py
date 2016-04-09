@@ -193,4 +193,41 @@ def step_by_step_search(word, current_directory, search_result_list=search_list)
 
 def search_s(word, current_directory):
     if word[0] == '[' and word[-1] == ']':
-        pass
+        order_word = word[1:len(word)-1].split()
+        if current_directory:
+            try:
+                files = listdir(current_directory)
+            except WindowsError:
+                return
+            for element in files:
+                pointer = 0
+                is_word=True
+                if order_word[0][0] == "^":
+                    if element[pointer:pointer+len(order_word[0])-1] == order_word[0][1:] :
+                        return True
+                else:
+                    for opp in order_word:
+                        if len(opp) == 3 and opp[1]=="-" :
+                            if (ord(element[pointer]) > ord(opp[0])) and (ord(element[pointer]) < ord(opp[2])):
+                                pointer += 1
+                            else :
+                                is_word = False
+                                break
+                        elif opp[0] == "?" :
+                            if element[pointer:pointer+len(opp)-1] == opp[1:] :
+                                is_word = False
+                                break
+                            else :
+                                pointer += len(opp) - 1
+                        elif opp[0] == "*" :
+                            pointer += 1
+
+                        else:
+                            if element[pointer:pointer+len(opp)] == opp :
+                                pointer += len(opp)
+                            else :
+                                is_word = False
+                                break
+                if is_word :
+                    return True
+
