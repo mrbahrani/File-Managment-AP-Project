@@ -288,15 +288,16 @@ class Updator(QtCore.QThread):
     def __init__(self,MainWindow):
         super(Updator,self).__init__()
         self.MainWindow = MainWindow
+
     def run(self):
 
         oldList = list()
         newListF= list()
         newListD= list()
         while True:
-            sleep(0.01)
+            sleep(0.05)
             lLock.acquire()
-            if history_list[here[0]][0]=="":
+            if history_list[here[0]][0] == "":
                 newListD = list()
                 newListF = list()
             else:
@@ -306,6 +307,8 @@ class Updator(QtCore.QThread):
             for itr in range(ctr):
                 oldList += [str(self.MainWindow.ui.listView.item(itr).text())]
             # *********************************
+            if newListF is None:
+                return
             for itrF in newListF:
                 if not (itrF in oldList):
                     item = QtGui.QListWidgetItem()

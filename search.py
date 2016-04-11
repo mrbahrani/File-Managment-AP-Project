@@ -57,11 +57,11 @@ class StepSearch(Thread):
             if not element:
                 continue
             elif word_index + 1:
-                print directory + "\\" + element
+                # print directory + "\\" + element
                 result.append([directory + "\\" + element, word_index, word_index + len(word)])
             elif isdir(directory + "\\" + element):
-                print "Again"
-                print directory + "\\" + element
+                # print "Again"
+                # print directory + "\\" + element
                 thread_obj = StepSearch(directory + "\\" + element + "\\", word)
                 threads_list.append(thread_obj)
                 thread_obj.start()

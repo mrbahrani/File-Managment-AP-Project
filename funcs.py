@@ -19,6 +19,8 @@ def get_directories(path_address):
     :param path_address:str
     :return list
     """
+    if path_address == "*\\*":
+        return
     includes = listdir(path_address)
     result = []
     for checker in includes:
@@ -33,6 +35,8 @@ def get_files(path_address):
     :param path_address:str
     :return list
     """
+    if path_address == "*\\*":
+        return
     includes = listdir(path_address)
     result = []
     for checker in includes:
