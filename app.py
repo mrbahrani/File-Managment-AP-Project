@@ -115,13 +115,13 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return:
             if self.ui.listView.currentItem():
-                list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit)
+                list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit, self.window_index)
 
     def contextMenuEvent(self , event):
         # print selected_item
         self.menu = QtGui.QMenu(self)
         if selected_item[0] != "" :
-            open_actio = QtGui.QAction("Open",self)
+            open_actio = QtGui.QAction("Open", self)
             open_actio.triggered.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
             self.menu.addAction(open_actio)
 
@@ -169,8 +169,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
         # self.ui.pushButton_3.clicked.connect(self.forward)
-        self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui))
-        self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui))
+        self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui, self.window_index))
+        self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui, self.window_index))
         self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
 
     def selected_saver(self, item, selected_item_list=selected_item):
