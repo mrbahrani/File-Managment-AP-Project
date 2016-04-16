@@ -66,19 +66,18 @@ def validate_user(user_name, password):
         return False
 
 
-def change_ready_state(user_name, password, new_state):
+def change_ready_state(user_name, new_state):
     """
     |This function changes ready state of the user_name;
     |0 is equal to "Not ready for sharing" and 1 is equal to "I'm ready. Let's share!"
     :param user_name:str
-    :param password:str
     :param new_state:int
     """
     connection_obj = connect_db()
     with connection_obj:
         cursor = connection_obj.cursor()
-        query = ((new_state, user_name, password), )
-        execute = cursor.executemany("UPDATE user SET ready_state = ? WHERE user_name = ? AND password = ?", query)
+        query = ((new_state, user_name), )
+        execute = cursor.executemany("UPDATE user SET ready_state = ? WHERE user_name = ?", query)
         connection_obj.commit()
 
 

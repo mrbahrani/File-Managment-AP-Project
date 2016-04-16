@@ -66,7 +66,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         if event.mimeData().hasUrls():
             for url in event.mimeData().urls():
                 self.list.append(str(url.path()))
-                # print self.list , 21
             event.acceptProposedAction()
             self.list_ = self.list[0].split('/')
             # print self.list_ ,self.list
@@ -77,8 +76,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             
         else:
             self.ui.listView.dropEvent(event)    
- 
-
 
     def setup(self):
         self.ui.treeWidget.setHeaderLabels(["Directories"])
@@ -110,7 +107,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.listView.itemClicked.connect(self.selected_saver)
 
         self.ui.pushButton.clicked.connect(self.up)
-        #self.ui.pushButton.clicked.connect(lambda: self.ui.contextMenuEvent())
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return:
