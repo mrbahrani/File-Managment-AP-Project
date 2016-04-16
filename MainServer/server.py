@@ -10,8 +10,8 @@ The rules of sending strings:
 6. Search request starts with 4. The pattern is like : 4|userName|provider_username|word.
 7. Copy request starts with 5.The pattern is like : 5|userName|provider_username|file_path|distance.
 8. Cut request starts with 6.The pattern is like : 6|userName|provider_username|file_path|distance.
-7. Delete request starts with 7.The pattern is like : 7|userName|provider_username|file_path.
-7. Rename starts with 8.The pattern is like : 8|userName|provider_username|file_path|new name.
+9. Delete request starts with 7.The pattern is like : 7|userName|provider_username|file_path.
+10. Rename starts with 8.The pattern is like : 8|userName|provider_username|file_path|new name.
 """
 import socket
 from db import *
@@ -31,6 +31,6 @@ while 1:
             client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
             client_socket.close()
             break
-        logged_in_users.append(request_list[1])                   # Added user name in logged_in_users list if is valid
+        logged_in_users.append(request_list[1][1])                   # Added user name in logged_in_users list if is valid
     elif request_list[1] in logged_in_users:
         pass

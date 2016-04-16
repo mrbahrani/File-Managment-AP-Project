@@ -207,7 +207,7 @@ def search_s(word, current_directory):
                         return True
                 else:
                     for opp in order_word:
-                        if len(opp) == 3 and opp[1]=="-" :
+                        if len(opp) == 3 and opp[1] == "-":
                             if (ord(element[pointer]) > ord(opp[0])) and (ord(element[pointer]) < ord(opp[2])):
                                 pointer += 1
                             else :

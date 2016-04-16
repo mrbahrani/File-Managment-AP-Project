@@ -18,20 +18,22 @@ selected_item = [""]
 
 
 class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
-    index = 1
+    index = 0
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
+        self.window_index = MainWindow.index
+        MainWindow.increase_index()
+        self.prepare_lists()
         self.New_File = New_File()
         self.ui = Ui_MainWindow()
         self.New_File = New_File()
         self.New_Dir = New_Dir()
-        self.User_D= User_D()
+        self.User_D = User_D()
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
-
-        
         self.memory_list = []
         self.list = list()
         self.list_ = list()
@@ -39,6 +41,14 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.setAcceptDrops(True)
         self.ui.listView.setDragEnabled(True)
         self.ui.listView.setDragDropMode(QtGui.QAbstractItemView.InternalMove)
+
+    @staticmethod
+    def increase_index():
+        MainWindow.index += 1
+
+    def prepare_lists(self):
+        here.append([0])
+        history_list.append([["", ""]])
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
@@ -91,8 +101,12 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
         self.ui.treeWidget.itemExpanded.connect(treeWidget_itemExpanded)
-        if history_list[here[0]][0] != "*":
-            self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
+        print "KIR KIR KIR"
+        print history_list
+        print here
+        print self.window_index
+        if history_list[self.window_index][here[self.window_index][0]][0] != "*":
+            self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit, self.window_index))
         self.ui.listView.itemClicked.connect(self.selected_saver)
 
         self.ui.pushButton.clicked.connect(self.up)
@@ -174,7 +188,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
     def treeWidget_itemClicked(self, itemList, selected_item):
         self.ui.lineEdit.setText(self.ui.treeWidget.currentItem().dir)
         self.ui.listView.clear()
-        add_here(self.ui.treeWidget.currentItem().dir)
+        add_here(self.ui.treeWidget.currentItem().dir, self.window_index)
         listView(self.ui.treeWidget.currentItem().dir, self.ui.listView)
 
 
@@ -185,7 +199,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             p_dir = ""
             for i in range(len(list_dir)-2):
                 p_dir = p_dir + list_dir[i] + "\\"
-            add_here(p_dir)
+            add_here(p_dir, self.window_index)
             self.ui.lineEdit.setText(p_dir)
             self.ui.listView.clear()
             listView(p_dir,self.ui.listView)
@@ -226,7 +240,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         delete_action(item[0], history_list[here[0]][0], self.ui.listView)
 
     def search(self, item):
-        add_here(history_list[here[0]][0])
+        print "SEARCH"
+        add_here(history_list[here[0]][0], self.window_index)
         if history_list[here[0]][0] != "*\\*":
             result = search(str(item), history_list[here[0]][0])
         else:
@@ -236,11 +251,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         if not result:
             result = step_by_step_search(str(item), history_list[here[0]][0])
         # print "kojoloo result"
-        # print result
+        print result
         if result:
             self.ui.listView.clear()
             listView(result, self.ui.listView)
-            add_here("*\\*", history_list, here, "*")
+            add_here("*\\*", self.window_index)
 
     def NewDir(self):
         self.New_Dir._NewDir(self)
@@ -285,27 +300,32 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.User_D._User(self ,action)
 
 class Updator(QtCore.QThread):
-    def __init__(self,MainWindow):
+    def __init__(self, MainWindow):
         super(Updator,self).__init__()
         self.MainWindow = MainWindow
 
     def run(self):
-
         oldList = list()
         newListF= list()
         newListD= list()
         while True:
             sleep(0.05)
+            if history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0] == "*\\*":
+                continue
             lLock.acquire()
-            if history_list[here[0]][0] == "":
+            if history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0] == "":
                 newListD = list()
                 newListF = list()
             else:
-                newListD = get_directories(history_list[here[0]][0])
-                newListF = get_files(history_list[here[0]][0])
+                newListD = get_directories(history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0])
+                newListF = get_files(history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0])
             ctr = self.MainWindow.ui.listView.count()
             for itr in range(ctr):
-                oldList += [str(self.MainWindow.ui.listView.item(itr).text())]
+                try:
+                    oldList += [str(self.MainWindow.ui.listView.item(itr).text())]
+                except UnicodeEncodeError as e:
+                    print "UNICODE ERROR"
+                    print e
             # *********************************
             if newListF is None:
                 return
@@ -325,12 +345,12 @@ class Updator(QtCore.QThread):
                     item.setIcon(icon)
                     self.MainWindow.ui.listView.addItem(item)
             # *********************************
-            if history_list[here[0]][0]=="":
+            if history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0]=="":
                 newListD = drivers()
                 newListF = list()
             else:
-                newListD = get_directories(history_list[here[0]][0])
-                newListF = get_files(history_list[here[0]][0])
+                newListD = get_directories(history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0])
+                newListF = get_files(history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0])
             ommitList = list()
             for itr in oldList:
                 if not (itr in newListD+newListF):
