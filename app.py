@@ -200,7 +200,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
 
     def up(self,h_list=history_list):
         try:
-            this_dir = history_list[here[0]][0]
+            this_dir = history_list[self.window_index][here[self.window_index][0]][0]
             list_dir = this_dir.split("\\")
             p_dir = ""
             for i in range(len(list_dir)-2):
