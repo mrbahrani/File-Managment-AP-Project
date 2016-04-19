@@ -12,20 +12,24 @@ The rules of sending strings:
 8. Cut request starts with 6.The pattern is like : 6|userName|provider_username|file_path|distance.
 9. Delete request starts with 7.The pattern is like : 7|userName|provider_username|file_path.
 10. Rename starts with 8.The pattern is like : 8|userName|provider_username|file_path|new name.
+11 . get file request starts with 9. the pattern is like : 9|userName|Provider_username|file_path
 """
 import socket
 from db import *
 logged_in_users = []
+# print socket.gethostname()
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = str([l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 80)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0])
+host = socket.gethostname()
 port = 6985
 socket_obj.bind((host, port))
 socket_obj.listen(10)
-while 1:
+while True:
+    print 1
     client_socket, address = socket_obj.accept()
     request = client_socket.recv(1024)
     request_list = request.split("|")
     request_type = request_list[0]
+    print request, request_list, request_type
     if not request_type:
         is_valid = validate_user(request[1], request[2])
         if not is_valid:
