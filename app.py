@@ -9,7 +9,7 @@ from navigation import *
 from os.path import isdir
 from time import sleep
 
-from search import search, step_by_step_search
+from search import search, search_list
 from events import *
 import sys
 # add_here('\\')
@@ -251,16 +251,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
 
     def search(self, item):
         print "SEARCH"
-        add_here(history_list[here[0]][0], self.window_index)
-        if history_list[here[0]][0] != "*\\*":
-            result = search(str(item), history_list[here[0]][0])
+        add_here(history_list[self.window_index][here[self.window_index][0]][0], self.window_index)
+        if history_list[self.window_index][here[self.window_index][0]][0] != "*\\*":
+            result = search(str(item), history_list[self.window_index][here[self.window_index][0]][0])
         else:
-            result = search(str(item), history_list[here[0] - 1][0])
-        # print "WHOLE result"
-        # print result
-        if not result:
-            result = step_by_step_search(str(item), history_list[here[0]][0])
-        # print "kojoloo result"
+            result = search(str(item), history_list[self.window_index][here[self.window_index][0] - 1][0])
         print result
         if result:
             self.ui.listView.clear()
