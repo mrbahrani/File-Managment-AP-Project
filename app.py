@@ -82,9 +82,9 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             self.list_ = self.list[0].split('/')
             # print self.list_ ,self.list
                                                                                      
-            self.copy_action_(self.list_[-1],(self.list[0])[2:])
+            self.copy_action_(self.list_[-1], (self.list[0])[2:])
 
-            self.paste_action_(history_list[here[0]][0], self.ui.listView)
+            self.paste_action_(history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
             
         else:
             self.ui.listView.dropEvent(event)    
@@ -131,10 +131,10 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.menu = QtGui.QMenu(self)
         if selected_item[0] != "" :
             open_actio = QtGui.QAction("Open", self)
-            open_actio.triggered.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
+            open_actio.triggered.connect(lambda: list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
             self.menu.addAction(open_actio)
 
-            if isdir( str(history_list[here[0]][0]) + "\\" + str(selected_item[0]) ) :
+            if isdir(str(history_list[self.window_index][here[self.window_index][0]][0]) + "\\" + str(selected_item[0]) ) :
                 open_innew_actio = QtGui.QAction("Open in new window",self)
                 open_innew_actio.triggered.connect(self.copy)
                 self.menu.addAction(open_innew_actio)
@@ -226,7 +226,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         :param action:QAction
         :param item:list
         """
-        copy_action(item[0], history_list[here[0]][0])
+        copy_action(item[0], history_list[self.window_index][here[self.window_index][0]][0])
         
 
     def cut(self, action, item=selected_item):
@@ -235,7 +235,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         :param action:QAction
         :param item:list
         """
-        cut_action(item[0], history_list[here[0]][0])
+        cut_action(item[0], history_list[self.window_index][here[self.window_index][0]][0])
 
     def paste(self, action):
         """
@@ -243,11 +243,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         :param action:QAction
         """
         self.ui.listView.clear()                    # This line clears QListWidget
-        paste_action(history_list[here[0]][0], self.ui.listView)
+        paste_action(history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
     def delete(self, action, item=selected_item):
         self.ui.listView.clear()
-        delete_action(item[0], history_list[here[0]][0], self.ui.listView)
+        delete_action(item[0], history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
     def search(self, item):
         print "SEARCH"
