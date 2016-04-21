@@ -101,8 +101,6 @@ def listView(full_path, list_view):
                 item.setText(file_name)
                 icon = QtGui.QIcon(file_icon(file_name))
                 item.setIcon(icon)
-        return dir_list
-
 
     except WindowsError:
         print("Access denied")

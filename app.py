@@ -39,8 +39,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.list_ = list()
 
         self.dragOver = False
-
-
         
         self.setAcceptDrops(True)
         self.ui.listView.setDragEnabled(True)
@@ -121,10 +119,9 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.pushButton.clicked.connect(self.up)
 
     def keyPressEvent(self, event):
-        if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
+        if event.key() == QtCore.Qt.Key_Return:
             if self.ui.listView.currentItem():
                 list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit, self.window_index)
-        print history_list[self.window_index][here[self.window_index][0]][0]
 
     def contextMenuEvent(self , event):
         # print selected_item
@@ -204,7 +201,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
     def up(self,h_list=history_list):
         try:
             this_dir = history_list[self.window_index][here[self.window_index][0]][0]
-            print history_list[self.window_index][here[self.window_index][0]][0]
             list_dir = this_dir.split("\\")
             p_dir = ""
             for i in range(len(list_dir)-2):
@@ -213,7 +209,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             self.ui.lineEdit.setText(p_dir)
             self.ui.listView.clear()
             listView(p_dir,self.ui.listView)
-        except IndexError:
+        except  IndexError :
             return False
 
     def start_show(self, app):
@@ -363,11 +359,12 @@ class Updator(QtCore.QThread):
             num_of_items = self.MainWindow.ui.listView.count()
             holder = 0
             while holder <num_of_items:
-                if str(self.MainWindow.ui.listView.item(holder).text()) in ommitList:
-                    self.MainWindow.ui.listView.takeItem(holder)
-                    num_of_items -=1
-                else:
-                    holder +=1
+                if self.MainWindow.ui.listView.item(holder):
+                    if str(self.MainWindow.ui.listView.item(holder).text()) in ommitList:
+                        self.MainWindow.ui.listView.takeItem(holder)
+                        num_of_items -=1
+                    else:
+                        holder +=1
             # *********************************
             oldList = list()
             lLock.release()
