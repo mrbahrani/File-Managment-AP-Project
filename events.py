@@ -87,7 +87,8 @@ def paste_action(current_directory, list_widget, memory_list=memory):
             else:
                 file_object = File(memory_list[1])
                 file_object.cut(current_directory)
-        listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
+        if list_widget:
+            listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
 
 
 def delete_action(item, current_directory, list_widget):
@@ -103,8 +104,8 @@ def delete_action(item, current_directory, list_widget):
         else:
             file_object = File(current_directory + "\\" + item)
             file_object.delete()
-
-    listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
+    if list_widget:
+        listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
 
 
 def mEditAcUndo_triggered():

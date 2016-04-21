@@ -1,5 +1,6 @@
 import socket
 from events import *
+from search import search
 from os.path import isdir, isfile
 from os import listdir
 
@@ -33,69 +34,75 @@ def close(connection_obj):
     connection_obj.close()
 
 
-def send_files_list(path):
+def send_files_list(path_str):
     """
     | This function returns a string of all files and directories included in path directory.
     | All directories names start with '0' and all files names start with '1';
     | If the path is not a directory, returns '0|'
     :param path :str
     """
-    if isdir(path):
+    if isdir(path_str):
         # Adds all directories names to the final_string variable
-        final_string = "".join(['0' + element + "|" for element in listdir(path) if isdir(path + element)])
+        final_string = "".join(['0' + element + "|" for element in listdir(path_str) if isdir(path_str + element)])
         # Adds all files names to the final_string variable
-        final_string += "".join(['1' + element + "|" for element in listdir(path) if isfile(path + element)])
+        final_string += "".join(['1' + element + "|" for element in listdir(path_str) if isfile(path_str + element)])
         return final_string
     return "0|"
 
 
-def copy_file(path):
-    path_list = path.split("\\")
-    current_directory = "".join(path_list[:len(path_list)])
-    file_name = path_list[-1]
-    copy_action(file_name, current_directory, list)
-
-    return True
-
-
-def cut_file(path):
-    path_list = path.split("\\")
-    current_directory = "".join(path_list[:len(path_list)])
-    file_name = path_list[-1][7]
-    cut_action(file_name, current_directory, list)
-
-    return True
+def client_copy_file(start_path, destination_path):
+    """
+    | This function copies a file or directory from start_path to the destination_path and finally returns
+    |destination_path's files and directions with send_files_list function help.
+    :param start_path : str
+    :param destination_path :str
+    :return str
+    """
+    file_path_list = start_path.split('\\')
+    file_path = "".join(file_path_list[:len(file_path_list)])
+    copy_action(file_path_list[-1], file_path)
+    paste_action(destination_path, None)
+    return send_files_list(destination_path)
 
 
-def paste(path, list):
-    if list[0]:
-        paste_action(request[5], None, list)
-    else:
-        paste_action(request[6], None, list)
-
-    return True
-
-
-def delete_file(path):
-    path_list = path.split("\\")
-    current_directory = "".join(path_list[:len(path_list)])
-    if request[7]:
-        delete_action(path, current_directory, None)
-    return True
+def client_cut_file(start_path, destination_path):
+    """
+    | This function cuts a file or directory from start_path to the destination_path and finally returns
+    |destination_path's files and directions with send_files_list function help.
+    :param start_path : str
+    :param destination_path :str
+    :return str
+    """
+    file_path_list = start_path.split('\\')
+    file_path = "".join(file_path_list[:len(file_path_list)])
+    cut_action(file_path_list[-1], file_path)
+    paste_action(destination_path, None)
+    return send_files_list(destination_path)
 
 
-def rename_file(path):
-    pass
+def delete_file(element, element_path):
+    """
+    | This function deletes an element from element path and finally returns element_path's files and directions with
+    | send_files_list function help.
+    :param element :str
+    :param element_path :str
+    :return str
+    """
+    delete_action(element, element_path, None)
+    return send_files_list(element_path)
 
 
-def new_file(path):
-    pass
-
-
-def new_directory(path):
-    pass
-
-
-def response(conection, request_type):
-    while True: pass
-
+def client_search(path_str, word):
+    """
+    | This function searching the path_str with search function and returns result as a string.
+    | All directories names start with '0' and all files names start with '1'
+    :param path_str :str
+    :param word :str
+    :return str
+    """
+    search_result = search(word, path_str)
+    # Adds all directories names to the final_string variable
+    final_string = "".join(['0' + element + "|" for element in search_result if isdir(element)])
+    # Adds all files names to the final_string variable
+    final_string += "".join(['1' + element + "|" for element in search_result if isfile(element)])
+    return final_string

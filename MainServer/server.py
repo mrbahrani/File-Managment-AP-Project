@@ -8,11 +8,11 @@ The rules of sending strings:
 5. Getting file list from another user request starts with 3 .
     The pattern is like 3|userName|provider_username|directory path.
 6. Search request starts with 4. The pattern is like : 4|userName|provider_username|word.
-7. Copy request starts with 5.The pattern is like : 5|userName|provider_username|file_path|distance.
-8. Cut request starts with 6.The pattern is like : 6|userName|provider_username|file_path|distance.
-9. Delete request starts with 7.The pattern is like : 7|userName|provider_username|file_path.
+7. Copy request starts with 5.The pattern is like : 5|userName|provider_username|file_path|destination.
+8. Cut request starts with 6.The pattern is like : 6|userName|provider_username|file_path|destination.
+9. Delete request starts with 7.The pattern is like : 7|userName|provider_username|file_path|file_name.
 10. Rename starts with 8.The pattern is like : 8|userName|provider_username|file_path|new name.
-11 . get file request starts with 9. the pattern is like : 9|userName|Provider_username|file_path
+11. get file request starts with 9. the pattern is like : 9|userName|Provider_username|file_path
 """
 import socket
 from db import *
