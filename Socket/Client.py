@@ -1,22 +1,24 @@
 import socket
 from events import *
-from MainServer.server import *
-from app import *
-from visual import *
+from os.path import isdir, isfile
+from os import listdir
 
 file_list = ''
 memory = []
 memory_list = []
 list = []
 newpath = []
-main_ = MainWindow()
 
 
 def connect():
+    """
+    | This function creates a connection to the 192.168.85.69 ip and 6985 port and then returns the connection object
+    | If any exception throws, an error massage prints.
+    """
     try:
         socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        host = '192.168.85.69'
-        port = 6985
+        host = '192.168.85.69'                              # Server Ip address
+        port = 6985                                         # Server port number
         socket_obj.connect((host, port))
         return socket_obj
     except socket.error:
@@ -24,22 +26,27 @@ def connect():
 
 
 def close(connection_obj):
+    """
+    | This function gets a connection object and close that.
+    :param connection_obj :Socket object
+    """
     connection_obj.close()
 
 
-def send_file_list(path):
-    file_list = list(path)
-    newpath = listView(path, None)
-
-
-    return True
-
-
-def see_file(main):
-    if True:
-        main_
-
-    return True
+def send_files_list(path):
+    """
+    | This function returns a string of all files and directories included in path directory.
+    | All directories names start with '0' and all files names start with '1';
+    | If the path is not a directory, returns '0|'
+    :param path :str
+    """
+    if isdir(path):
+        # Adds all directories names to the final_string variable
+        final_string = "".join(['0' + element + "|" for element in listdir(path) if isdir(path + element)])
+        # Adds all files names to the final_string variable
+        final_string += "".join(['1' + element + "|" for element in listdir(path) if isfile(path + element)])
+        return final_string
+    return "0|"
 
 
 def copy_file(path):
@@ -67,6 +74,7 @@ def paste(path, list):
         paste_action(request[6], None, list)
 
     return True
+
 
 def delete_file(path):
     path_list = path.split("\\")
