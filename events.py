@@ -152,6 +152,7 @@ def list_Dclicked(*args):
     :param args:
     :return:
     """
+    lLock[args[4]].acquire()
     if not (args[0]):
         curDir = Directory(args[1])
         args[2].clear()
@@ -175,13 +176,15 @@ def list_Dclicked(*args):
     else:
         # print args[0] + "\\" +args[1]
         curFile =File(args[0] + "\\" +args[1])
+        print curFile.fullPath,"This"
         curFile.openf()
+    lLock[args[4]].release()
     # print "***********"
     # print history_list
     # print "XXXXXXXXXXXXXXXXXXXXXXXXX"
 
-def treeWidget_itemExpanded(expanded):
+def treeWidget_itemExpanded(expanded,index):
     children = expanded.childCount()
     for it in range(children):
         child = expanded.child(it)
-        treeView(child.dir, child)
+        treeView(child.dir, child,index)

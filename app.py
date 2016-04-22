@@ -8,6 +8,7 @@ from visual import *
 from navigation import *
 from os.path import isdir
 from time import sleep
+from copy import deepcopy,copy
 
 from search import search, search_list
 from events import *
@@ -37,6 +38,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.memory_list = []
         self.list = list()
         self.list_ = list()
+        lLock.append(Lock())
 
         self.dragOver = False
         
@@ -100,14 +102,14 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             tree_widget_item.dir = driver[0]+":\\"
             tree_widget_item.isUsed =False
 
-            treeView(driver, tree_widget_item)
+            treeView(driver, tree_widget_item,self.window_index)
         for driver in drivers():
             list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
             list_widget_item.setIcon(QtGui.QIcon('icons\\mycomputer.ico'))
             list_widget_item.setText(driver)
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
-        self.ui.treeWidget.itemExpanded.connect(treeWidget_itemExpanded)
+        self.ui.treeWidget.itemExpanded.connect(lambda item:treeWidget_itemExpanded(item,self.window_index) )
         print "KIR KIR KIR"
         print history_list
         print here
@@ -133,7 +135,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
 
             if isdir(str(history_list[self.window_index][here[self.window_index][0]][0]) + "\\" + str(selected_item[0]) ) :
                 open_innew_actio = QtGui.QAction("Open in new window",self)
-                open_innew_actio.triggered.connect(self.copy)
+                open_innew_actio.triggered.connect(lambda: newWindow(self))
                 self.menu.addAction(open_innew_actio)
 
             copy_actio = QtGui.QAction("Copy",self)
@@ -313,7 +315,7 @@ class Updator(QtCore.QThread):
             sleep(0.05)
             if history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0] == "*\\*":
                 continue
-            lLock.acquire()
+            lLock[self.MainWindow.window_index].acquire()
             if history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0] == "":
                 newListD = list()
                 newListF = list()
@@ -367,7 +369,22 @@ class Updator(QtCore.QThread):
                         holder +=1
             # *********************************
             oldList = list()
-            lLock.release()
+            lLock[self.MainWindow.window_index].release()
+
+def newWindow(pwin):
+    #newApp = QtGui.QApplication()
+    newWin = MainWindow()
+    history_list[newWin.window_index] = history_list[pwin.window_index][:]
+    newWin.ui.listView.clear()
+    add_here(str(history_list[pwin.window_index][here[pwin.window_index][0]][0]),newWin.window_index)
+    print history_list[newWin.window_index][here[newWin.window_index][0]],"Koon"
+    print history_list[newWin.window_index][here[newWin.window_index][0]][0], "Kos"
+    list_Dclicked(history_list[newWin.window_index][here[newWin.window_index][0]][0], str(pwin.ui.listView.currentItem().text())
+                  ,newWin.ui.listView,newWin.ui.lineEdit, newWin.window_index)
+    newWin.show()
+    #neU = Updator(newWin)
+    #neU.start()
+
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
