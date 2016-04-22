@@ -29,6 +29,9 @@ class CompleteSearch(Thread):
         super(CompleteSearch, self).__init__()
         self.directory = directory
         self.word = word
+        self.is_pattern=False
+        if self.word[0] == '[' and self.word[-1] == ']':
+            self.is_pattern= True
 
     def return_equals(self, directory, word, result=search_list):
         """
@@ -55,6 +58,27 @@ class CompleteSearch(Thread):
             word_index = element.find(word)
             if not element:
                 continue
+
+            elif self.is_pattern :
+                print "Starting Pattern Search"
+                if self.search_s(element) :
+                    result.append(directory + "\\" + element)
+
+                elif element.split('.')[-1] == "txt":
+                    print element.split('.')[-1]
+                    try:
+                        text_file = open(self.directory + "\\" + element, 'r')
+                        line = text_file.readline()
+                        while line:
+                            if search_s(line):
+                                result.append([self.directory + "\\" + element, ])
+                                break
+                            line = text_file.readline()
+                        text_file.close()
+                    except IOError:
+                        print 'kir'
+                        print
+
             elif element == self.word:
                 result.append(directory + "\\" + element)
             elif word_index + 1:
@@ -82,6 +106,39 @@ class CompleteSearch(Thread):
 
     def run(self):
         self.return_equals(self.directory, self.word)
+
+    def search_s(self, word2):
+
+        order_word = self.word[1:len(self.word)-1].split()
+
+        pointer = 0
+
+        if order_word[0][0] == "^":
+            if word2[pointer:pointer+len(order_word[0])-1] == order_word[0][1:] :
+                return True
+        else:
+            for opp in order_word:
+                if len(opp) == 3 and opp[1] == "-":
+                    if (ord(word2[pointer]) > ord(opp[0])) and (ord(word2[pointer]) < ord(opp[2])):
+                        pointer += 1
+                    else :
+                        return False
+                elif opp[0] == "?" :
+                    if word2[pointer:pointer+len(opp)-1] == opp[1:] :
+                        return False
+                    else :
+                        pointer += len(opp) - 1
+                elif opp[0] == "*" :
+                    pointer += 1
+
+                else:
+                    if word2[pointer:pointer+len(opp)] == opp :
+                        pointer += len(opp)
+                    else :
+                        return False
+        return True
+
+
 
 
 def search(word, current_directory, search_result_list=search_list):
