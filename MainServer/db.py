@@ -18,10 +18,10 @@ def connect_db():
     return connect('data//FileManager.db')
 
 
-def create_cash_table():
+def create_users_table():
     """
-    | This void function creates cash table if it not exists.
-    create_cash_table()
+    | This void function creates users table if it not exists.
+    create_users_table()
     """
     connection_obj = connect_db()
     cursor = connection_obj.cursor()
@@ -77,7 +77,7 @@ def change_ready_state(user_name, new_state):
     with connection_obj:
         cursor = connection_obj.cursor()
         query = ((new_state, user_name), )
-        execute = cursor.executemany("UPDATE user SET ready_state = ? WHERE user_name = ?", query)
+        execute = cursor.executemany("UPDATE users SET ready_state = ? WHERE user_name = ?", query)
         connection_obj.commit()
 
 

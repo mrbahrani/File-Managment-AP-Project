@@ -23,6 +23,7 @@ host = socket.gethostname()
 port = 6985
 socket_obj.bind((host, port))
 socket_obj.listen(10)
+create_users_table()
 while True:
     print 1
     client_socket, address = socket_obj.accept()
