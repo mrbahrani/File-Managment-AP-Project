@@ -7,25 +7,25 @@ The rules of sending strings:
 4. Changing state request starts with 2. The pattern hs like : 2|user_name|new_state
 5. Getting file list from another user request starts with 3 .
     The pattern is like 3|userName|provider_username|directory path.
-6. Search request starts with 4. The pattern is like : 4|userName|provider_username|word.
+6. Search request starts with 4. The pattern is like : 4|userName|provider_username|path|word.
 7. Copy request starts with 5.The pattern is like : 5|userName|provider_username|file_path|destination.
 8. Cut request starts with 6.The pattern is like : 6|userName|provider_username|file_path|destination.
 9. Delete request starts with 7.The pattern is like : 7|userName|provider_username|file_path|file_name.
 10. Rename starts with 8.The pattern is like : 8|userName|provider_username|file_path|new name.
 11. get file request starts with 9. the pattern is like : 9|userName|Provider_username|file_path
+12. gt search result starts with 10. The pattern is like : 10|userName|Provider_username|result_string
 """
 import socket
 from db import *
 logged_in_users = []
 # print socket.gethostname()
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = socket.gethostname()
+host = '192.168.69.85'
 port = 6985
 socket_obj.bind((host, port))
 socket_obj.listen(10)
 create_users_table()
 while True:
-    print 1
     client_socket, address = socket_obj.accept()
     request = client_socket.recv(1024)
     request_list = request.split("|")

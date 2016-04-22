@@ -18,7 +18,7 @@ import sys
 selected_item = [""]
 
 
-class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
+class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
     index = 0
 
     def __init__(self):
@@ -295,7 +295,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
                     file_object.copy(current_directory)    
 
     def User(self , action):
-        self.User_D._User(self ,action)
+        self.User_D._User(self,action)
 
 class Updator(QtCore.QThread):
     def __init__(self, winList):

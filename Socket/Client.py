@@ -3,6 +3,7 @@ from events import *
 from search import search
 from os.path import isdir, isfile
 from os import listdir
+from db import  get_setting_value
 
 file_list = ''
 memory = []
@@ -18,15 +19,23 @@ def connect():
     """
     try:
         socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        host = '192.168.85.69'                              # Server Ip address
-        port = 6985                                         # Server port number
+        database_server_ip = get_setting_value('main_server_ip')
+        database_server_port = get_setting_value('main_server_port')
+        if not database_server_ip:
+            host = '192.168.85.69'                              # Server Ip address
+        else:
+            host = database_server_ip
+        if not database_server_port:
+            port = 6985                                         # Server port number
+        else:
+            port = database_server_port
         socket_obj.connect((host, port))
         return socket_obj
     except socket.error:
         print 'pander'
 
 
-def close(connection_obj):
+def close_connection(connection_obj):
     """
     | This function gets a connection object and close that.
     :param connection_obj :Socket object
@@ -106,3 +115,13 @@ def client_search(path_str, word):
     # Adds all files names to the final_string variable
     final_string += "".join(['1' + element + "|" for element in search_result if isfile(element)])
     return final_string
+
+
+def send_result(result_string):
+    """
+    | This function sends result_string to the MainServer
+    :param result_string str
+    """
+    connection_obj = connect()
+    connection_obj.sendall(result_string)
+    close_connection(connection_obj)
