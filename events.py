@@ -157,6 +157,7 @@ def list_Dclicked(*args):
         curDir = Directory(args[1])
         args[2].clear()
         # print curDir.fullAddress
+        print curDir.fullAddress
         listView(curDir.fullAddress, args[2])
         add_here(args[1], args[4])
         args[3].setText(args[1])
@@ -176,6 +177,7 @@ def list_Dclicked(*args):
     else:
         # print args[0] + "\\" +args[1]
         curFile =File(args[0] + "\\" +args[1])
+        print curFile.fullPath
         curFile.openf()
     lLock[args[4]].release()
     # print "***********"

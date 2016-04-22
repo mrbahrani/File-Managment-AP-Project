@@ -298,9 +298,9 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.User_D._User(self ,action)
 
 class Updator(QtCore.QThread):
-    def __init__(self, MainWindow):
+    def __init__(self, winList):
         super(Updator,self).__init__()
-        self.MainWindow = MainWindow
+        self.winList = winList
 
     def run(self):
         oldList = list()
@@ -308,68 +308,73 @@ class Updator(QtCore.QThread):
         newListD= list()
         while True:
             sleep(0.05)
-            if history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0] == "*\\*":
-                continue
-            lLock[self.MainWindow.window_index].acquire()
-            if history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0] == "":
-                newListD = list()
-                newListF = list()
-            else:
-                newListD = get_directories(history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0])
-                newListF = get_files(history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0])
-            ctr = self.MainWindow.ui.listView.count()
-            for itr in range(ctr):
-                try:
-                    oldList += [str(self.MainWindow.ui.listView.item(itr).text())]
-                except UnicodeEncodeError as e:
-                    print "UNICODE ERROR"
+            for window in self.winList[1:2]:
+                print history_list[window.window_index][here[window.window_index][0]][0],"WIN",window.window_index
+                if history_list[window.window_index][here[window.window_index][0]][0] == "*\\*":
+                    continue
+                lLock[window.window_index].acquire()
+                if history_list[window.window_index][here[window.window_index][0]][0] == "":
+                    newListD = list()
+                    newListF = list()
+                else:
+                    newListD = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
+                    newListF = get_files(history_list[window.window_index][here[window.window_index][0]][0])
+                ctr = window.ui.listView.count()
+                for itr in range(ctr):
+                    try:
+                        oldList += [str(window.ui.listView.item(itr).text())]
+                    except UnicodeEncodeError as e:
+                        print "UNICODE ERROR"
             # *********************************
-            if newListF is None:
-                return
-            for itrF in newListF:
-                if not (itrF in oldList):
-                    item = QtGui.QListWidgetItem()
-                    item.setText(itrF)
-                    icon = QtGui.QIcon(file_icon(itrF))
-                    item.setIcon(icon)
-                    self.MainWindow.ui.listView.addItem(item)
-            for itrD in newListD:
-                if not (itrD in oldList):
-                    item = QtGui.QListWidgetItem()
-                    item.setText(itrD)
-                    icon = QtGui.QIcon("icons\\folder.ico")
-                    item.setIcon(icon)
-                    self.MainWindow.ui.listView.addItem(item)
+                if newListF is None:
+                    return
+                for itrF in newListF:
+                    if not (itrF in oldList):
+                        item = QtGui.QListWidgetItem()
+                        item.setText(itrF)
+                        icon = QtGui.QIcon(file_icon(itrF))
+                        item.setIcon(icon)
+                        window.ui.listView.addItem(item)
+                for itrD in newListD:
+                    if not (itrD in oldList):
+                        item = QtGui.QListWidgetItem()
+                        item.setText(itrD)
+                        icon = QtGui.QIcon("icons\\folder.ico")
+                        item.setIcon(icon)
+                        window.ui.listView.addItem(item)
             # *********************************
-            if history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0]=="":
-                newListD = drivers()
-                newListF = list()
-            else:
-                newListD = get_directories(history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0])
-                newListF = get_files(history_list[self.MainWindow.window_index][here[self.MainWindow.window_index][0]][0])
-            ommitList = list()
-            for itr in oldList:
-                if not (itr in newListD+newListF):
-                    ommitList += [itr]
-            num_of_items = self.MainWindow.ui.listView.count()
-            holder = 0
-            while holder <num_of_items:
-                if self.MainWindow.ui.listView.item(holder):
-                    if str(self.MainWindow.ui.listView.item(holder).text()) in ommitList:
-                        self.MainWindow.ui.listView.takeItem(holder)
-                        num_of_items -=1
-                    else:
-                        holder +=1
+                if history_list[window.window_index][here[window.window_index][0]][0]=="":
+                    newListD = drivers()
+                    newListF = list()
+                else:
+                    newListD = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
+                    newListF = get_files(history_list[window.window_index][here[window.window_index][0]][0])
+
+                ommitList = list()
+                for itr in oldList:
+                    if not (itr in newListD+newListF):
+                        ommitList += [itr]
+                num_of_items = window.ui.listView.count()
+                holder = 0
+                while holder <num_of_items:
+                    if window.ui.listView.item(holder):
+                        if str(window.ui.listView.item(holder).text()) in ommitList:
+                            window.ui.listView.takeItem(holder)
+                            num_of_items -=1
+                        else:
+                            holder +=1
             # *********************************
-            oldList = list()
-            lLock[self.MainWindow.window_index].release()
+                oldList = list()
+                lLock[window.window_index].release()
 
 def newWindow(pwin):
     #newApp = QtGui.QApplication()
     newWin = MainWindow()
-    history_list[newWin.window_index] = history_list[pwin.window_index][:]
+    windowList.append(newWin)
+    #history_list[newWin.window_index] = history_list[pwin.window_index][:]
     newWin.ui.listView.clear()
-    add_here(str(history_list[pwin.window_index][here[pwin.window_index][0]][0]),newWin.window_index)
+    history_list[newWin.window_index][here[newWin.window_index][0]][0] = history_list[pwin.window_index][here[pwin.window_index][0]][0]
+    #add_here(str(history_list[pwin.window_index][here[pwin.window_index][0]][0]),newWin.window_index)
     list_Dclicked(history_list[newWin.window_index][here[newWin.window_index][0]][0], str(pwin.ui.listView.currentItem().text())
                   ,newWin.ui.listView,newWin.ui.lineEdit, newWin.window_index)
     newWin.show()
@@ -380,7 +385,8 @@ def newWindow(pwin):
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     Win = MainWindow()
-    updator = Updator(Win)
+    windowList.append(Win)
+    updator = Updator(windowList)
     updator.start()
     Win.start_show(app)
     updator.terminate()
