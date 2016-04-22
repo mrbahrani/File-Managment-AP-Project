@@ -23,3 +23,21 @@ while 1:
         send_result('10|' + request_list[1] + "|" + request_list[2] + "|" + result)
         main_server.close()
         break
+    elif request_type == '5':                       # Copy request scope
+        result = client_copy_file(request_list[3], request_list[4])
+        send_result('11|' + request_list[1] + "|" + request_list[2] + "|" + request)
+        main_server.close()
+        break
+    elif request_type == '6':                       # Cut request scope
+        result = client_cut_file(request_list[3], request_list[4])
+        send_result('12|' + request_list[1] + "|" + request_list[2] + "|" + request)
+        main_server.close()
+        break
+    elif request_type == '7':                       # delete request scope
+        result = delete_file(request_list[3], request_list[4])
+        send_result('13|' + request_list[1] + "|" + request_list[2] + "|" + request)
+        main_server.close()
+        break
+    elif request_type == '8':                       # Rename request scope
+        pass
+    
