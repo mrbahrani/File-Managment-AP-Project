@@ -51,6 +51,7 @@ class CompleteSearch(Thread):
         # print directories
         for element in directories:
             element = element.lower()
+            word = word.lower()
             word_index = element.find(word)
             if not element:
                 continue
