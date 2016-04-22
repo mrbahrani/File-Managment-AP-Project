@@ -17,6 +17,7 @@ curDirList = list()
 here = []                                    # The index of current directory
 
 
+
 def add_here(directory_path, window_index,h_list=history_list, here_index=here, parent=None):
     """
     |This void function adds current directory to the history list in a very confusing way!

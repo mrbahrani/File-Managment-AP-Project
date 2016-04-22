@@ -64,7 +64,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             self.dragOver = True
             self.update()
         else:
-            print selected_item[0]
             event.setAccepted(False)
 
     def dragMoveEvent(self, event):
@@ -110,10 +109,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
         self.ui.treeWidget.itemExpanded.connect(lambda item:treeWidget_itemExpanded(item,self.window_index) )
-        print "KIR KIR KIR"
-        print history_list
-        print here
-        print self.window_index
         if history_list[self.window_index][here[self.window_index][0]][0] != "*":
             self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit, self.window_index))
         self.ui.listView.itemClicked.connect(self.selected_saver)
@@ -328,7 +323,6 @@ class Updator(QtCore.QThread):
                     oldList += [str(self.MainWindow.ui.listView.item(itr).text())]
                 except UnicodeEncodeError as e:
                     print "UNICODE ERROR"
-                    print e
             # *********************************
             if newListF is None:
                 return
@@ -338,7 +332,6 @@ class Updator(QtCore.QThread):
                     item.setText(itrF)
                     icon = QtGui.QIcon(file_icon(itrF))
                     item.setIcon(icon)
-                    print oldList,"*****"
                     self.MainWindow.ui.listView.addItem(item)
             for itrD in newListD:
                 if not (itrD in oldList):
@@ -377,8 +370,6 @@ def newWindow(pwin):
     history_list[newWin.window_index] = history_list[pwin.window_index][:]
     newWin.ui.listView.clear()
     add_here(str(history_list[pwin.window_index][here[pwin.window_index][0]][0]),newWin.window_index)
-    print history_list[newWin.window_index][here[newWin.window_index][0]],"Koon"
-    print history_list[newWin.window_index][here[newWin.window_index][0]][0], "Kos"
     list_Dclicked(history_list[newWin.window_index][here[newWin.window_index][0]][0], str(pwin.ui.listView.currentItem().text())
                   ,newWin.ui.listView,newWin.ui.lineEdit, newWin.window_index)
     newWin.show()

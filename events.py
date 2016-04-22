@@ -176,7 +176,6 @@ def list_Dclicked(*args):
     else:
         # print args[0] + "\\" +args[1]
         curFile =File(args[0] + "\\" +args[1])
-        print curFile.fullPath,"This"
         curFile.openf()
     lLock[args[4]].release()
     # print "***********"
