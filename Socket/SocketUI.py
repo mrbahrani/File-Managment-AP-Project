@@ -1,12 +1,24 @@
+from __Classes import *
 from DefaultUI import *
-from app import *
+from funcs import *
+from visual import *
+from navigation import *
+from os.path import isdir
+from time import sleep
+from copy import deepcopy,copy
+from Socket.Client import *
+from search import search, search_list
+from events import *
+import sys
+selected_item = [""]
 
-class SocketMainWindow(QtGui.QSocketMainWindow, New_File, New_Dir,User_D,User_S):
+
+class SocketMainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
     index = 0
 
     def __init__(self):
         super(SocketMainWindow, self).__init__()
-        self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
+        self.setWindowIcon(QtGui.QIcon('..\\icons\\mycomputer.ico'))
         self.window_index = SocketMainWindow.index
         SocketMainWindow.increase_index()
         self.prepare_lists()
@@ -79,7 +91,7 @@ class SocketMainWindow(QtGui.QSocketMainWindow, New_File, New_Dir,User_D,User_S)
         self.ui.treeWidget.setHeaderLabels(["Directories"])
         model0 = QtGui.QFileSystemModel()
         model0.setRootPath("/")
-        self.icon = QtGui.QIcon('icons/driver.ico')
+        self.icon = QtGui.QIcon('..\\icons\\driver.ico')
         for driver in drivers():
             tree_widget_item = QtGui.QTreeWidgetItem(self.ui.treeWidget)
             tree_widget_item.setText(0, driver[0])
@@ -91,7 +103,7 @@ class SocketMainWindow(QtGui.QSocketMainWindow, New_File, New_Dir,User_D,User_S)
             treeView(driver, tree_widget_item,self.window_index)
         for driver in drivers():
             list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
-            list_widget_item.setIcon(QtGui.QIcon('icons\\mycomputer.ico'))
+            list_widget_item.setIcon(QtGui.QIcon('..\\icons\\mycomputer.ico'))
             list_widget_item.setText(driver)
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
@@ -349,7 +361,7 @@ class Updator(QtCore.QThread):
                     if not (itrD in oldList):
                         item = QtGui.QListWidgetItem()
                         item.setText(itrD)
-                        icon = QtGui.QIcon("icons\\folder.ico")
+                        icon = QtGui.QIcon("..\\icons\\folder.ico")
                         item.setIcon(icon)
                         window.ui.listView.addItem(item)
             # *********************************
