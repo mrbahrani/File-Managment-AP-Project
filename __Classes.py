@@ -3,6 +3,7 @@ from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
 from shutil import rmtree, copy2, copytree
 from PyQt4 import QtCore, QtGui
+#from navigation import *
 import sys
 
 
@@ -243,10 +244,10 @@ class New_File(QtGui.QDialog):
         line = QtGui.QLineEdit()
         return line
 class New_Dir(QtGui.QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, path ,  parent=None):
         super(New_Dir, self).__init__(parent)
 
-        self.path = ''
+        self.path = path
         
         self.quitButton = self.createButton("&Quit",self.close)
         self.findButton = self.createButton("&Create", self.create)
@@ -267,22 +268,20 @@ class New_Dir(QtGui.QDialog):
         mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
         self.setLayout(mainLayout)
 
-        self.create()
+        self.create(self.path)
         
         self.setWindowTitle("Create New Dir")
         self.resize(200, 200)
 
-
            
-    def create(self):
+    def create(self, path):
         Name = self.fileComboBox.text()
-        
         self.item_list = [str(Name)]
         item_list = self.item_list
-        # print self.item_list[0]
+        print self.item_list , path
         if self.item_list[0]:
-            pass
-            #mkdir(self.item_list[-1] + '/' + self.item_list[0])
+            mkdir(path + '/' + self.item_list[0])
+
 
     def _NewDir(self ,app ):
         self.show()

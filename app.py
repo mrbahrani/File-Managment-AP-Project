@@ -30,7 +30,8 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
         self.New_File = New_File()
         self.ui = Ui_MainWindow()
         self.New_File = New_File()
-        self.New_Dir = New_Dir()
+        print history_list[self.window_index][here[self.window_index][0]][0]
+        self.New_Dir = New_Dir(history_list[self.window_index][here[self.window_index][0]][0])
         self.User_D = User_D()
         self.ui.setupUi(self)
         self.add_actions()
@@ -256,7 +257,9 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
             add_here("*\\*", self.window_index)
 
     def NewDir(self):
-        self.New_Dir._NewDir(self)
+        print "#######"
+        print history_list[self.window_index][here[self.window_index][0]][0]
+        self.New_Dir._NewDir(history_list[self.window_index][here[self.window_index][0]][0])
 
     def NewFile(self):
         self.New_File._NewFile(self)
@@ -275,7 +278,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
             return self.memory_list
 
     def paste_action_(self ,current_directory, list_widget):
-        # print "PASTE"
+        # prin1t "PASTE"
         """
         | This function will paste(copy or cut) all elements are in the memory list.
         paste(current_directory[, memory_list=memory])
@@ -296,6 +299,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
 
     def User(self , action):
         self.User_D._User(self,action)
+
 
 class Updator(QtCore.QThread):
     def __init__(self, winList):
