@@ -17,8 +17,8 @@ def create_settings_table():
     connection_obj = connect_db()
     cursor = connection_obj.cursor()
     connection_obj.commit()
-    cursor.execute('CREATE TABLE IF NOT EXISTS settings(id INTEGER AUTOINCREMENT UNSIGNED PRIMARY KEY,'
-                   'setting_name VARCHAR(255),setting_value VARCHAR(255)')
+    cursor.execute('CREATE TABLE IF NOT EXISTS settings(id INTEGER PRIMARY KEY AUTOINCREMENT,' +
+                   'setting_name TEXT,setting_value TEXT)')
     connection_obj.close()
 
 
@@ -30,10 +30,13 @@ def get_setting_value(setting_name):
     """
     connection_obj = connect_db()
     cursor = connection_obj.cursor()
-    execute = cursor.execute("SELECT password FROM users WHERE setting_name = '" + setting_name + "'")
+    execute = cursor.execute("SELECT setting_value FROM settings WHERE setting_name = '" + setting_name + "'")
     setting_value = execute.fetchall()
     connection_obj.close()
-    return setting_value[0]
+    try:
+        return setting_value[0]
+    except IndexError:
+        return ""
 
 
 def set_setting(setting_name, setting_value):
