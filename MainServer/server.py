@@ -39,17 +39,18 @@ while True:
         if not is_valid:
             client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
             client_socket.close()
-            break
         logged_in_users.append(request_list[1])                   # Added user name in logged_in_users list if is valid
+        client_socket.close()
     elif request_type == '1':
         add_new_user(request_list[1], request_list[2], request_list[3], request_list[4], request_list[5])
+        client_socket.close()
     elif request_list[1] in logged_in_users:
         if request_type == '2':
             change_ready_state(request_list[1], request_list[2])
+            client_socket.close()
         elif request_list[2] not in logged_in_users:
             client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
             client_socket.close()
-            break
         elif request_type == '5':
             pass
 
@@ -58,4 +59,3 @@ while True:
     else:
         client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
         client_socket.close()
-        break
