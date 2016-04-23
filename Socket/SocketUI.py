@@ -195,6 +195,7 @@ class SocketMainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
         # self.ui.lineEdit.setText(selected_item[0])
 
     def treeWidget_itemClicked(self, itemList, selected_item):
+        file_list_request("aboo","agooo",history_list[self.window_index][here[self.window_index][0]][0])
         self.ui.lineEdit.setText(self.ui.treeWidget.currentItem().dir)
         self.ui.listView.clear()
         add_here(self.ui.treeWidget.currentItem().dir, self.window_index)
@@ -239,6 +240,7 @@ class SocketMainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
         :param item:list
         """
         cut_action(item[0], history_list[self.window_index][here[self.window_index][0]][0])
+
 
     def paste(self, action):
         """

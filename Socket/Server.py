@@ -41,7 +41,8 @@ while 1:
     elif request_type == '8':                       # Rename request scope
         pass
     elif request_type == '9':                       # Get file request scope
-        pass
+        print request_list[-1]
+
     elif request_type == '10':                      # Get search result scope
         pass
     elif request_type == '11':                      # Get Copy result scope

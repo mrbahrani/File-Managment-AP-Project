@@ -124,3 +124,30 @@ def send_result(result_string):
     connection_obj = connect()
     connection_obj.sendall(result_string)
     close_connection(connection_obj)
+
+
+def file_list_request(username,provider_username,directory):
+
+    send_result("3|"+username+"|"+provider_username+"|"+directory)
+
+
+def search_request(username,provider_username,path,word):
+    send_result("4|"+username+"|"+provider_username+"|"+path+"|"+word )
+
+
+def copy_request(username,provider_username,file_path,destination):
+    send_result("5|"+username+"|"+provider_username+"|"+file_path+"|"+destination )
+
+
+def cut_request(username,provider_username,file_path,destination):
+    send_result("6|"+username+"|"+provider_username+"|"+file_path+"|"+destination )
+
+
+def delete_request(username,provider_username,file_path,file_name):
+    send_result("7|"+username+"|"+provider_username+"|"+file_path+"|"+file_name )
+
+
+def rename_request(username,provider_username,file_path,new_name):
+    send_result("8|"+username+"|"+provider_username+"|"+file_path+"|"+new_name )
+
+
