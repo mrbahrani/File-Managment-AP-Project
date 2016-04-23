@@ -254,7 +254,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
         self.ui.listView.clear()
         delete_action(item[0], history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
-    def rename(self):
+    def rename(self ):
         self.Rename.rename_()
 
     def search(self, item):

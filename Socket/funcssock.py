@@ -18,8 +18,13 @@ def clientListView(final_string,listView):
         new.setText(dirItem)
         icon = QtGui.QIcon('icons/folder.ico')
         new.setIcon(icon)
+
     for fileItem in fileList:
         new = QtGui.QListWidgetItem(listView)
         new.setText(dirItem)
         icon =QtGui.QIcon(file_icon(fileItem))
         new.setIcon(icon)
+        result = []
+    result.append(dirList)
+    result.append(fileList)
+    return result
