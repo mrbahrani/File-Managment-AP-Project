@@ -10,6 +10,9 @@ from Socket.Client import *
 from search import search, search_list
 from events import *
 import sys
+from Client import *
+
+
 selected_item = [""]
 
 
