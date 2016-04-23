@@ -183,6 +183,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui, self.window_index))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui, self.window_index))
         self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
+        self.Rename_.RenameButton.clicked.connect(self.done_rename)
 
     def selected_saver(self, item, selected_item_list=selected_item):
         """
@@ -256,6 +257,16 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
 
     def rename(self ):
         self.Rename.rename_()
+
+    def done_rename(self, file_name , path):
+        if self.Rename_.item_list[0]:
+            item_list = self.Rename_.item_list[0]
+            if isdir(path):
+                P_dir = Directory(path)
+                P_dir.item_list.rename()
+            else:
+                P_dir = File(path)
+                P_dir.item_list.rename()
 
     def search(self, item):
         print "SEARCH"

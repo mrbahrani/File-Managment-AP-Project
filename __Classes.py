@@ -1,4 +1,5 @@
 from os import rename, access, remove, R_OK, F_OK, startfile, listdir , mkdir
+from os.path import isdir
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
 from shutil import rmtree, copy2, copytree
@@ -328,7 +329,7 @@ class User_D(QtGui.QDialog):
         mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
         self.setLayout(mainLayout)
 
-        #self.create()
+        self.create()
 
         self.setWindowTitle("SignUp")
         self.resize(200, 200)
@@ -484,14 +485,19 @@ class Rename_(QtGui.QDialog):
         mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
         self.setLayout(mainLayout)
 
-        #self.create()
+        self.create()
 
         self.setWindowTitle("Setting")
         self.resize(200, 200)
 
+    def create(self):
+
+        file_name = self.fileComboBox
+
+        self.item_list = [str(file_name)]
 
     def rename_(self):
-            self.show()
+        self.show()
 
     def createButton(self, text, member):
         button = QtGui.QPushButton(text)
