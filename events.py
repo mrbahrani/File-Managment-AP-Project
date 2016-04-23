@@ -168,16 +168,17 @@ def list_Dclicked(*args):
         args[3].setText(args[1])
 
     elif isdir(args[0] + "\\" + args[1]):
+        print args[0] + "\\" + args[1],"this"
         curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
-        # print curDir.fullAddress
+        #print curDir.fullAddress
         listView(curDir.fullAddress + "\\", args[2])
         add_here(curDir.fullAddress, args[4])
         args[3].setText(curDir.fullAddress)
     else:
-        # print args[0] + "\\" +args[1]
+        print args[0] + "\\" +args[1],"that"
         curFile =File(args[0] + "\\" +args[1])
-        print curFile.fullPath
+        print curFile.fullPath,
         curFile.openf()
     lLock[args[4]].release()
     # print "***********"

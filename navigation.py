@@ -52,6 +52,8 @@ def add_here(directory_path, window_index,h_list=history_list, here_index=here, 
         here_index[window_index].append(index + 1)
 
     except Exception as e:
+        print here,window_index,"Hi",h_list
+        print "I see"
         print e
 
 

@@ -309,7 +309,7 @@ class Updator(QtCore.QThread):
         while True:
             sleep(0.05)
             for window in self.winList[1:2]:
-                print history_list[window.window_index][here[window.window_index][0]][0],"WIN",window.window_index
+                #print history_list[window.window_index],"WIN",window.window_index
                 if history_list[window.window_index][here[window.window_index][0]][0] == "*\\*":
                     continue
                 lLock[window.window_index].acquire()
@@ -371,15 +371,22 @@ def newWindow(pwin):
     #newApp = QtGui.QApplication()
     newWin = MainWindow()
     windowList.append(newWin)
-    #history_list[newWin.window_index] = history_list[pwin.window_index][:]
+    dir = history_list[pwin.window_index][here[pwin.window_index][0]][0]+str(pwin.ui.listView.currentItem().text())
+    history_list[newWin.window_index][0] = [dir,str(pwin.ui.listView.currentItem().text())]
+    print history_list[newWin.window_index]
+    #here[newWin.window_index] =[1]
+        #history_list[pwin.window_index][here[pwin.window_index][0]]
+    lLock[newWin.window_index+1].acquire()
     newWin.ui.listView.clear()
-    history_list[newWin.window_index][here[newWin.window_index][0]][0] = history_list[pwin.window_index][here[pwin.window_index][0]][0]
+    #history_list[newWin.window_index][here[newWin.window_index][0]][0] = history_list[pwin.window_index][here[pwin.window_index][0]][0]
     #add_here(str(history_list[pwin.window_index][here[pwin.window_index][0]][0]),newWin.window_index)
-    list_Dclicked(history_list[newWin.window_index][here[newWin.window_index][0]][0], str(pwin.ui.listView.currentItem().text())
-                  ,newWin.ui.listView,newWin.ui.lineEdit, newWin.window_index)
+    #list_Dclicked(history_list[newWin.window_index][here[newWin.window_index][0]][0], str(pwin.ui.listView.currentItem().text())
+    #              ,newWin.ui.listView,newWin.ui.lineEdit, newWin.window_index)
+    listView(history_list[newWin.window_index][0][0],newWin.ui.listView)
     newWin.show()
     #neU = Updator(newWin)
     #neU.start()
+    lLock[newWin.window_index+1].release()
 
 
 if __name__ == "__main__":
