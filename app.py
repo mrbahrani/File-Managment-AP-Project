@@ -125,7 +125,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
         self.menu = QtGui.QMenu(self)
         if selected_item[0] != "" :
             open_actio = QtGui.QAction("Open", self)
-            open_actio.triggered.connect(lambda: list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
+            open_actio.triggered.connect(lambda: list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit, self.window_index))
             self.menu.addAction(open_actio)
 
             if isdir(str(history_list[self.window_index][here[self.window_index][0]][0]) + "\\" + str(selected_item[0]) ) :
