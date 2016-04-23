@@ -40,4 +40,17 @@ while 1:
         break
     elif request_type == '8':                       # Rename request scope
         pass
-    
+    elif request_type == '9':                       # Get file request scope
+        pass
+    elif request_type == '10':                      # Get search result scope
+        pass
+    elif request_type == '11':                      # Get Copy result scope
+        pass
+    elif request_type == '12':                      # Get Cut result scope
+        pass
+    elif request_type == '13':                      # Get delete result scope
+        pass
+    else:
+        main_server.sendall('0|')                           # If the request is not valid 0|
+        main_server.close()
+        break

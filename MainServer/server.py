@@ -15,7 +15,7 @@ The rules of sending strings:
 11. get file request starts with 9. the pattern is like : 9|userName|Provider_username|file_path
 12. get search result starts with 10. The pattern is like : 10|userName|Provider_username|result_string
 13. Get Copy result starts with 11. The pattern is like : 11|userName|provider_username|result_string
-14. Get Copy result starts with 12. The pattern is like : 12|userName|provider_username|result_string
+14. Get Cut result starts with 12. The pattern is like : 12|userName|provider_username|result_string
 15. Get Delete result starts with 13. The pattern is like : 13|userName|provider_username|result_string
 """
 import socket
