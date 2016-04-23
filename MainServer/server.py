@@ -35,7 +35,7 @@ while True:
     request_type = request_list[0]
     print request, request_list, request_type
     if request_type == '0':
-        is_valid = validate_user(request[1], request[2])
+        is_valid = validate_user(request_list[1], request_list[2])
         if not is_valid:
             client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
             client_socket.close()
