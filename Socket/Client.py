@@ -3,14 +3,14 @@ from events import *
 from search import search
 from os.path import isdir, isfile
 from os import listdir
-from db import  get_setting_value
+from db import get_setting_value,create_settings_table
 
 file_list = ''
 memory = []
 memory_list = []
 list = []
 newpath = []
-
+create_settings_table()
 
 def connect():
     """
