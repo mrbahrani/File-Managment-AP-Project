@@ -139,8 +139,6 @@ class CompleteSearch(Thread):
         return True
 
 
-
-
 def search(word, current_directory, search_result_list=search_list):
     """
     | This function returns search results of files and directories with same name of word.
@@ -152,6 +150,9 @@ def search(word, current_directory, search_result_list=search_list):
     :param search_result_list:list
     :return list
     """
+    if search_result_list:
+        for counter in range(len(search_result_list)):
+            search_result_list.pop()
     if current_directory:
         searcher_object = CompleteSearch(current_directory, word)
         searcher_object.start()
