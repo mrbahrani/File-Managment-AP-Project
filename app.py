@@ -9,7 +9,7 @@ from navigation import *
 from os.path import isdir
 from time import sleep
 from copy import deepcopy,copy
-
+from Socket.Client import *
 from search import search, search_list
 from events import *
 import sys
@@ -18,7 +18,7 @@ import sys
 selected_item = [""]
 
 
-class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
+class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
     index = 0
 
     def __init__(self):
@@ -31,14 +31,17 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
         self.ui = Ui_MainWindow()
         self.New_File = New_File()
         print history_list[self.window_index][here[self.window_index][0]][0]
-        self.New_Dir = New_Dir(history_list[self.window_index][here[self.window_index][0]][0])
+        self.New_Dir = New_Dir()
+        self.Rename = Rename_()
         self.User_D = User_D()
+        self.User_S = User_S()
+        self.User_C = User_C()
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
         self.memory_list = []
-        self.list = list()
-        self.list_ = list()
+        self.list = []
+        self.list_ = []
         lLock.append(Lock())
 
         self.dragOver = False
@@ -153,7 +156,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
             self.menu.addAction(delete_actio)
 
             rename_actio = QtGui.QAction("Rename",self)
-            rename_actio.triggered.connect(self.copy)
+            rename_actio.triggered.connect(self.rename)
             self.menu.addAction(rename_actio)
 
         self.menu.popup(QtGui.QCursor.pos())
@@ -172,7 +175,11 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
         #self.ui.actionLogin.triggered.connect(self.User)
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
+        #self.ui.actionRename.triggered.connect(self.rename)
+        self.ui.actionSetting.triggered.connect(self.Setting)
+        self.ui.actionConnect.triggered.connect(self.Connect)
         # self.ui.pushButton_3.clicked.connect(self.forward)
+        self.User_D.SingButton.clicked.connect(self.send_result_)
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui, self.window_index))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui, self.window_index))
         self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
@@ -222,7 +229,11 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
         """
         copy_action(item[0], history_list[self.window_index][here[self.window_index][0]][0])
         
-
+    def send_result_(self):
+        print self.User_D.item_list , 123456
+        if self.User_D.item_list[0] and self.User_D.item_list[1]:
+            send_result("0|" + self.User_D.item_list[0] + "|" + self.User_D.item_list[1])
+            print 1
     def cut(self, action, item=selected_item):
         """
         | This method calls cut_action function for selected item
@@ -243,6 +254,9 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
         self.ui.listView.clear()
         delete_action(item[0], history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
+    def rename(self):
+        self.Rename.rename_()
+
     def search(self, item):
         print "SEARCH"
         add_here(history_list[self.window_index][here[self.window_index][0]][0], self.window_index)
@@ -256,10 +270,19 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D):
             listView(result, self.ui.listView)
             add_here("*\\*", self.window_index)
 
+
+    def Setting(self):
+        self.User_S._Setting_()
+
+
+    def Connect(self):
+        self.User_C._Setting_C()
+
+
     def NewDir(self):
         print "#######"
         print history_list[self.window_index][here[self.window_index][0]][0]
-        self.New_Dir._NewDir(history_list[self.window_index][here[self.window_index][0]][0])
+        self.New_Dir._NewDir()
 
     def NewFile(self):
         self.New_File._NewFile(self)
@@ -307,9 +330,9 @@ class Updator(QtCore.QThread):
         self.winList = winList
 
     def run(self):
-        oldList = list()
-        newListF= list()
-        newListD= list()
+        oldList = []
+        newListF= []
+        newListD= []
         while True:
             sleep(0.05)
             for window in self.winList[1:2]:
@@ -318,8 +341,8 @@ class Updator(QtCore.QThread):
                     continue
                 lLock[window.window_index].acquire()
                 if history_list[window.window_index][here[window.window_index][0]][0] == "":
-                    newListD = list()
-                    newListF = list()
+                    newListD = []
+                    newListF = []
                 else:
                     newListD = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
                     newListF = get_files(history_list[window.window_index][here[window.window_index][0]][0])
@@ -349,12 +372,13 @@ class Updator(QtCore.QThread):
             # *********************************
                 if history_list[window.window_index][here[window.window_index][0]][0]=="":
                     newListD = drivers()
-                    newListF = list()
+                    newListF = []
                 else:
                     newListD = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
                     newListF = get_files(history_list[window.window_index][here[window.window_index][0]][0])
 
-                ommitList = list()
+                ommitList = []
+
                 for itr in oldList:
                     if not (itr in newListD+newListF):
                         ommitList += [itr]
@@ -368,7 +392,7 @@ class Updator(QtCore.QThread):
                         else:
                             holder +=1
             # *********************************
-                oldList = list()
+                oldList = []
                 lLock[window.window_index].release()
 
 def newWindow(pwin):
