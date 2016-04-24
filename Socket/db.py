@@ -39,7 +39,7 @@ def get_setting_value(setting_name):
         return ""
 
 
-def set_setting(setting_name, setting_value):
+def set_setting(setting_name_string, setting_value_string):
     """
     | This function sets a setting name and value.If that setting_name exists, updates it's value, Otherwise
     | Insert that to the table
@@ -48,10 +48,10 @@ def set_setting(setting_name, setting_value):
     """
     connection_obj = connect_db()
     cursor = connection_obj.cursor()
-    if get_setting_value(setting_name):
-        cursor.execute("UPDATE settings SET setting_value = '" +setting_value + "' WHERE setting_name = '" + setting_name +"'")
+    if get_setting_value(setting_name_string):
+        cursor.execute("UPDATE settings SET setting_value = '" +setting_value_string + "' WHERE setting_name = '" + setting_name_string +"'")
         cursor.commit()
     else:
-        cursor.execute('INSERT INTO settings(setting_name,setting_value) VALUES ( '+ 'setting_name' + ','+'setting_value' +')')
+        cursor.executemany('INSERT INTO settings VALUES (?,?)', ((setting_name_string, setting_value_string),))
         cursor.commit()
     connection_obj.close()

@@ -234,7 +234,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
     def send_result_(self):
         print self.User_D.item_list , 123456
         if self.User_D.item_list[0] and self.User_D.item_list[1]:
-            set_setting("user_name",self.User_D.item_list[0])
+            set_setting("user_name", self.User_D.item_list[0])
             send_result("0|" + self.User_D.item_list[0] + "|" + self.User_D.item_list[1])
             print 1
     def cut(self, action, item=selected_item):
