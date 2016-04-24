@@ -24,7 +24,7 @@ logged_in_users = []
 # print socket.gethostname()
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = '127.0.0.1'
-port = 6985
+port = 6585
 socket_obj.bind((host, port))
 socket_obj.listen(10)
 create_users_table()

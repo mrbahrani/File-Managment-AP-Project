@@ -15,7 +15,7 @@ def connect_db():
     | This function make a connection to the FileManager database and returns that;
     :return :sqlite3 connection object
     """
-    return connect('..//data//FileManager.db')
+    return connect('data//FileManager.db')
 
 
 def create_users_table():
