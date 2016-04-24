@@ -18,7 +18,6 @@ curDirList = list()
 here = []                                    # The index of current directory
 
 
-
 def add_here(directory_path, window_index,h_list=history_list, here_index=here, parent=None):
     """
     |This void function adds current directory to the history list in a very confusing way!
@@ -29,11 +28,15 @@ def add_here(directory_path, window_index,h_list=history_list, here_index=here, 
     :param here_index:list
     """
     directory = Directory(directory_path)
-    try:
+    # try:
         # print h_list
-        index = here_index[window_index][0]
-        if parent is None:
-            for element_index in range(len(h_list) - 1, 0, -1):
+    index = here_index[window_index][0]
+    if parent is None:
+        for element_index in range(len(h_list) - 1, 0, -1):
+            print 'kiri'
+            print range(len(h_list) - 1)
+            print h_list[window_index]
+            try:
                 if h_list[window_index][element_index][1] == directory.parent:
                     # print "---------------------------------"
                     # print h_list[element_index][1]
@@ -45,16 +48,21 @@ def add_here(directory_path, window_index,h_list=history_list, here_index=here, 
                     h_list[window_index].append([directory_path.replace('\\\\', '\\'), directory.parent])
                     here_index[window_index].append(len(h_list) - 1)
                     return
-            h_list[window_index].append([directory_path.replace('\\\\', '\\'), directory.parent])
-        else:
-            h_list[window_index].append([directory_path.replace('\\\\', '\\'), "*"])
-        here_index[window_index].pop()
-        here_index[window_index].append(index + 1)
+            except IndexError:
+                pass
+        h_list[window_index].append([directory_path.replace('\\\\', '\\'), directory.parent])
+    else:
+        h_list[window_index].append([directory_path.replace('\\\\', '\\'), "*"])
+    here_index[window_index].pop()
+    here_index[window_index].append(index + 1)
 
-    except Exception as e:
-        print here,window_index,"Hi",h_list
-        print "I see"
-        print e
+    # except Exception as e:
+    #     print directory_path
+    #     print here
+    #     print window_index
+    #     print h_list
+    #     print "I see"
+    #     print e
 
 
 def history_back(ui, window_index, index=here, history=history_list):
