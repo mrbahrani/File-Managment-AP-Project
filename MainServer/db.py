@@ -26,8 +26,8 @@ def create_users_table():
     connection_obj = connect_db()
     cursor = connection_obj.cursor()
     connection_obj.commit()
-    cursor.execute('CREATE TABLE IF NOT EXISTS users(id INTEGER AUTOINCREMENT UNSIGNED PRIMARY KEY,'
-                   'user_name TEXT,password TEXT,server_id TEXT,port UNSIGNED INT(4),ready_state INT(1)')
+    cursor.execute('CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT,'
+                   'user_name TEXT,password TEXT,server_id TEXT,port UNSIGNED INTEGER,ready_state INTEGER)')
     connection_obj.close()
 
 
