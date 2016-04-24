@@ -51,11 +51,20 @@ while True:
         elif request_list[2] not in logged_in_users:
             client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
             client_socket.close()
-        elif request_type == '5':
-            pass
-
-    elif request_type == '1':
-        add_new_user(request_list[1], request_list[2], request_list[3], int(request_list[4]), int(request_list[5]))
+        elif request_type in ['3', '4', '5', '6', '7', '8']:
+            request_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            request_server, request_port = order(request_list[2])
+            request_socket.connect((request_server, request_port))
+            request_socket.sendall(request)
+            request_socket.close()
+            client_socket.close()
+        elif request_type in ['9', '10', '11', '12', '13']:
+            request_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            request_server, request_port = order(request_list[1])
+            request_socket.connect((request_server, request_port))
+            request_socket.sendall(request)
+            request_socket.close()
+            client_socket.close()
     else:
         client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
         client_socket.close()
