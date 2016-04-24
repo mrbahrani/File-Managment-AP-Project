@@ -10,10 +10,12 @@ from Socket.Client import *
 from search import search, search_list
 from events import *
 import sys
+from db import *
 from Client import *
 
 
 selected_item = [""]
+username = get_setting_value("username")
 
 
 class SocketMainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
