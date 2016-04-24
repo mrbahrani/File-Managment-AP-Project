@@ -417,11 +417,11 @@ def newWindow(pwin):
     lLock[newWin.window_index+1].release()
 
 
-if __name__ == "__main__":
-    app = QtGui.QApplication(sys.argv)
-    Win = SocketMainWindow()
-    windowList.append(Win)
-    updator = Updator(windowList)
-    updator.start()
-    Win.start_show(app)
-    updator.terminate()
+# if __name__ == "__main__":
+#     app = QtGui.QApplication(sys.argv)
+#     Win = SocketMainWindow()
+#     windowList.append(Win)
+#     updator = Updator(windowList)
+#     updator.start()
+#     Win.start_show(app)
+#     updator.terminate()

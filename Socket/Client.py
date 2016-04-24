@@ -3,7 +3,7 @@ from events import *
 from search import search
 from os.path import isdir, isfile
 from os import listdir
-from db import get_setting_value,create_settings_table
+from db import get_setting_value, create_settings_table
 
 file_list = ''
 memory = []

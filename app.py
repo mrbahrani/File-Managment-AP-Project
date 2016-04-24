@@ -9,9 +9,9 @@ from navigation import *
 from os.path import isdir
 from time import sleep
 from copy import deepcopy,copy
-from Socket.Client import *
 from search import search, search_list
 from events import *
+from Socket.SocketUI import *
 import sys
 # add_here('\\')
 # add_here('E:\\Music\\')
@@ -183,7 +183,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui, self.window_index))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui, self.window_index))
         self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
-        self.Rename.RenameButton.clicked.connect(self.done_rename(selected_item, history_list[self.window_index][here[self.window_index][0]]))
+        # self.Rename.RenameButton.clicked.connect(self.done_rename(selected_item, history_list[self.window_index][here[self.window_index][0]]))
 
     def selected_saver(self, item, selected_item_list=selected_item):
         """
@@ -258,15 +258,15 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
     def rename(self ):
         self.Rename.rename_()
 
-    def done_rename(self, file_name , path):
-        if self.Rename.item_list[0]:
-            item_list = self.Rename.item_list[0]
-            if isdir(path):
-                P_dir = Directory(path)
-                P_dir.item_list.rename()
-            else:
-                P_dir = File(path)
-                P_dir.item_list.rename()
+    # def done_rename(self, kir, file_name , path):
+    #     if self.Rename.item_list[0]:
+    #         item_list = self.Rename.item_list[0]
+    #         if isdir(path):
+    #             P_dir = Directory(path)
+    #             P_dir.item_list.rename()
+    #         else:
+    #             P_dir = File(path)
+    #             P_dir.item_list.rename()
 
     def search(self, item):
         print "SEARCH"
