@@ -290,6 +290,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
 
     def Connect(self):
         self.User_C._Setting_C()
+        self.Us
 
 
     def NewDir(self):
