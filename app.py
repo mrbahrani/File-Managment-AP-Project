@@ -384,9 +384,9 @@ def updator():
                 newDirList = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
                 ctr = 0
                 num = window.ui.listView.count()
-                print "ctr ", ctr, " num ", num
+                #print "ctr ", ctr, " num ", num
                 while (ctr < num):
-                    print "ctr ", ctr, " num ", num
+                    #print "ctr ", ctr, " num ", num
                     if str(window.ui.listView.item(ctr).text()) not in newDirList + newFileList:
                         window.ui.listView.takeItem(ctr)
                         num -= 1

@@ -3,6 +3,9 @@ from Client import *
 from db import *
 import socket
 from funcssock import *
+
+#last_request_directory_list = []
+#last_request_directory_string_list=[]
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = '127.0.0.1'                                   # Gets server ip from data base
 port = get_setting_value('server_port')                                 # Gets server port from data base
@@ -10,8 +13,7 @@ port = 6888
 socket_obj.bind((host, port))
 socket_obj.listen(1)
 my_username = get_setting_value('user_name')
-last_request_directory_list = []
-last_request_directory_string_list=[]
+
 
 while 1:
     main_server, address = socket_obj.accept()

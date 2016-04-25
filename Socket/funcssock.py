@@ -7,6 +7,10 @@ from db import  get_setting_value
 from Client import *
 #from __Classes import *
 
+
+last_request_directory_list = []
+last_request_directory_string_list=[]
+
 provider_username_list = []
 
 

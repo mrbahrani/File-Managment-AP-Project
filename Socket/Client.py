@@ -151,4 +151,3 @@ def rename_request(username,provider_username,file_path,new_name):
     send_result("8|"+username+"|"+provider_username+"|"+file_path+"|"+new_name )
 
 
-connect()

@@ -152,7 +152,7 @@ def list_Dclicked(*args):
     :param args:
     :return:
     """
-    #print( args[1])
+    #print "argggg" ,args[1]
     if not (args[0]):
         curDir = Directory(args[1])
         args[2].clear()

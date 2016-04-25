@@ -13,7 +13,7 @@ from events import *
 import sys
 from db import *
 from Client import *
-#from Server import *
+#from Server import last_request_directory_string_list,last_request_directory_list
 from funcssock import *
 #from threading import Thread
 
