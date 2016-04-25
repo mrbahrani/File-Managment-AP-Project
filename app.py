@@ -116,7 +116,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             copy_actio = QtGui.QAction("Copy",self)
             copy_actio.triggered.connect(self.copy)
             self.menu.addAction(copy_actio)
-
             cut_actio = QtGui.QAction("Cut",self)
             cut_actio.triggered.connect(self.cut)
             self.menu.addAction(cut_actio)
