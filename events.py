@@ -88,7 +88,6 @@ def paste_action(current_directory, list_widget, memory_list=memory):
                 file_object = File(memory_list[1])
                 file_object.cut(current_directory)
         if list_widget is not None:
-            #*****if state is new
             listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
 
 
@@ -158,12 +157,12 @@ def list_Dclicked(*args):
         args[2].clear()
         # print curDir.fullAddress
         listView(curDir.fullAddress, args[2])
-        add_here(args[1])
+        add_here(args[1], args[4])
         args[3].setText(args[1])
     elif args[0] == "*\\*":
         args[2].clear()
         listView(args[1], args[2])
-        add_here(args[1])
+        add_here(args[1], args[4])
         args[3].setText(args[1])
 
     elif isdir(args[0] + "\\" + args[1]):
@@ -171,7 +170,7 @@ def list_Dclicked(*args):
         args[2].clear()
         # print curDir.fullAddress
         listView(curDir.fullAddress + "\\", args[2])
-        add_here(curDir.fullAddress)
+        add_here(curDir.fullAddress, args[4])
         args[3].setText(curDir.fullAddress)
     else:
         # print args[0] + "\\" +args[1]

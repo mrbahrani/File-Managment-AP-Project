@@ -11,11 +11,11 @@ List of functions:
 """
 from __Classes import Directory
 from visual import listView
-history_list = [["", ""]]                           # History container
-here = [0]                                    # The index of current directory
+history_list = []                           # History container
+here = []                                    # The index of current directory
 
 
-def add_here(directory_path, h_list=history_list, here_index=here, parent=None):
+def add_here(directory_path, window_index, h_list=history_list, here_index=here, parent=None):
     """
     |This void function adds current directory to the history list in a very confusing way!
     add_here(directory_path[, h_list=history_list])
@@ -24,33 +24,35 @@ def add_here(directory_path, h_list=history_list, here_index=here, parent=None):
     :param here_index:list
     """
     directory = Directory(directory_path)
-    try:
-        # print h_list
-        index = here_index[0]
-        if parent is None:
-            for element_index in range(len(h_list) - 1, 0, -1):
-                if h_list[element_index][1] == directory.parent:
-                    # print "---------------------------------"
-                    # print h_list[element_index][1]
-                    # print directory.parent
-                    # print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                    for element in range(len(h_list) - 1, element_index - 1, -1):
-                        h_list.pop()
-                    here_index.pop()
-                    h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
-                    here_index.append(len(h_list) - 1)
-                    return
-            h_list.append([directory_path.replace('\\\\', '\\'), directory.parent])
-        else:
-            h_list.append([directory_path.replace('\\\\', '\\'), "*"])
-        here_index.pop()
-        here_index.append(index + 1)
+    print 'KIR'
+    print directory_path
+    # try:
+    # print h_list
+    index = here_index[window_index][0]
+    if parent is None:
+        for element_index in range(len(h_list[window_index]) - 1, 0, -1):
+            if h_list[window_index][element_index][1] == directory.parent:
+                # print "---------------------------------"
+                # print h_list[element_index][1]
+                # print directory.parent
+                # print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+                for element in range(len(h_list[window_index]) - 1, element_index - 1, -1):
+                    h_list[window_index].pop()
+                here_index[window_index].pop()
+                h_list[window_index].append([directory_path.replace('\\\\', '\\'), directory.parent])
+                here_index[window_index].append(len(h_list[window_index]) - 1)
+                return
+        h_list[window_index].append([directory_path.replace('\\\\', '\\'), directory.parent])
+    else:
+        h_list[window_index].append([directory_path.replace('\\\\', '\\'), "*"])
+    here_index[window_index].pop()
+    here_index[window_index].append(index + 1)
 
-    except Exception as e:
-        print e
+    # except Exception as e:
+    #     print 'here exception'
 
 
-def history_back(ui, index=here, history=history_list):
+def history_back(ui, window_index, index=here, history=history_list):
     """
     |This function returns a step back from current index of history as a list
     history_back([index=here])
@@ -59,14 +61,14 @@ def history_back(ui, index=here, history=history_list):
     :param history:list
     """
     try:
-        if index[0] and history[index[0] - 1] != "*\\*":
-            index_num = index[0] - 1
-            index.pop()
-            index.append(index_num)
+        if index[0] and history[window_index][index[window_index][0] - 1] != "*\\*":
+            index_num = index[window_index][0] - 1
+            index[window_index].pop()
+            index[window_index].append(index_num)
             ui.listView.clear()
-            if history[index_num][0]:
-                listView( history[index_num][0] + "\\", ui.listView)
-                ui.lineEdit.setText(history[index_num][0] + "\\")
+            if history[window_index][index_num][0]:
+                listView(history[window_index][index_num][0] + "\\", ui.listView)
+                ui.lineEdit.setText(history[window_index][index_num][0] + "\\")
             else:
                 listView("", ui.listView)
                 ui.lineEdit.setText("")
@@ -74,7 +76,7 @@ def history_back(ui, index=here, history=history_list):
         return 'index error'
 
 
-def history_forward(ui, index=here, history=history_list):
+def history_forward(ui, window_index, index=here, history=history_list):
     """
     |This function returns a step forward from current index of history as a list
     history_forward([index=here])
@@ -83,28 +85,16 @@ def history_forward(ui, index=here, history=history_list):
     :param history:list
     """
     try:
-        if index[0] < len(history) - 1 and history[index[0] + 1] != "*\\*":
-            index_num = index[0] + 1
-            index.pop()
-            index.append(index_num)
+        if index[window_index][0] < len(history[window_index]) - 1 and history[window_index][index[window_index][0] + 1] != "*\\*":
+            index_num = index[window_index][0] + 1
+            index[window_index].pop()
+            index[window_index].append(index_num)
             ui.listView.clear()
-            if history[index[0]][0]:
-                listView(history[index[0]][0] + "\\", ui.listView)
-                ui.lineEdit.setText(history[index[0]][0] + "\\")
+            if history[window_index][index[window_index][0]][0]:
+                listView(history[window_index][index[window_index][0]][0] + "\\", ui.listView)
+                ui.lineEdit.setText(history[window_index][index[window_index][0]][0] + "\\")
             else:
                 listView("", ui.listView)
                 ui.lineEdit.setText("")
     except IndexError:
         return False
-
-
-def index_distance(index=here, history=history_list):
-    """
-    | This function returns the distance between current directory and end of the history list.
-    | If it return 0, There is no forward directory
-    | And if it return the length of history_list, there is no backward directory
-    index_distance([index=here][, history=history_list])
-    :param index:int
-    :param history:list
-    """
-    return len(history) - index[0]
