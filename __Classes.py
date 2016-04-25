@@ -363,29 +363,22 @@ class User_S(QtGui.QDialog):
         super(User_S, self).__init__()
 
         self.path = ''
-
-
         self.quitButton = self.createButton("&Quit",self.close)
         self.SingButton = self.createButton("&Ok", self.create)
-
-
-        self.fileComboBox = self.createLineEdit()
+        # self.fileComboBox = self.createLineEdit()
         self.textComboBox = self.createLineEdit()
         self.text1ComboBox = self.createLineEdit()
-
-
-        fileLabel = QtGui.QLabel("Username")
+        # fileLabel = QtGui.QLabel("Username")
         textLabel = QtGui.QLabel("Server ip")
         text1Label = QtGui.QLabel("Server Port")
-
-
+        self.server, self.port = "", 0
         self.filesFoundLabel = QtGui.QLabel()
         buttonsLayout = QtGui.QHBoxLayout()
         buttonsLayout.addWidget(self.SingButton)
         buttonsLayout.addWidget(self.quitButton)
         mainLayout = QtGui.QGridLayout()
-        mainLayout.addWidget(fileLabel, 0, 0)
-        mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
+        # mainLayout.addWidget(fileLabel, 0, 0)
+        # mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
         mainLayout.addWidget(textLabel, 1, 0)
         mainLayout.addWidget(self.textComboBox, 1, 1, 1, 2)
         mainLayout.addWidget(text1Label, 2, 0)
@@ -405,13 +398,16 @@ class User_S(QtGui.QDialog):
 
     def createButton(self, text, member):
         button = QtGui.QPushButton(text)
-        button.clicked.connect(member)
+        # button.clicked.connect(self.member)
         return button
 
     def createLineEdit(self, text=""):
         line = QtGui.QLineEdit()
         return line
 
+    def member(self):
+        self.server =  self.textComboBox.text()
+        self.port = self.text1ComboBox.text()
 
 class User_C(QtGui.QDialog):
     def __init__(self):

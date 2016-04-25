@@ -17,7 +17,7 @@ def create_settings_table():
     connection_obj = connect_db()
     cursor = connection_obj.cursor()
     connection_obj.commit()
-    cursor.execute('CREATE TABLE IF NOT EXISTS settings(id INTEGER PRIMARY KEY AUTOINCREMENT,' +
+    cursor.execute('CREATE TABLE IF NOT EXISTS settings(id INTEGER PRIMARY KEY,' +
                    'setting_name TEXT,setting_value TEXT)')
     connection_obj.close()
 
@@ -47,11 +47,22 @@ def set_setting(setting_name_string, setting_value_string):
     :param setting_value str
     """
     connection_obj = connect_db()
-    cursor = connection_obj.cursor()
-    if get_setting_value(setting_name_string):
-        cursor.execute("UPDATE settings SET setting_value = '" +setting_value_string + "' WHERE setting_name = '" + setting_name_string +"'")
-        cursor.commit()
-    else:
-        cursor.executemany('INSERT INTO settings VALUES (?,?)', ((setting_name_string, setting_value_string),))
-        cursor.commit()
-    connection_obj.close()
+    with connection_obj:
+        cursor = connection_obj.cursor()
+        last_id = cursor.lastrowid
+        if get_setting_value(setting_name_string):
+            cursor.execute("UPDATE settings SET setting_value = '" +setting_value_string + "' WHERE setting_name = '" + setting_name_string +"'")
+        else:
+            row_ids = cursor.execute('SELECT id FROM settings')
+            row_ids = row_ids.fetchall()
+            print row_ids
+            row_id = max([id_num[0] for id_num in row_ids]) + 1
+            print 'kir'
+            print setting_name_string
+            print setting_value_string
+            print row_id
+            print type(setting_name_string)
+            print type(setting_value_string)
+            print type(row_id)
+            cursor.executemany('INSERT INTO settings(setting_name, setting_value) VALUES (?,?)', ((setting_name_string, setting_value_string),))
+        print cursor.execute('SELECT * FROM settings').fetchall()
