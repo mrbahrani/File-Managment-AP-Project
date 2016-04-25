@@ -13,7 +13,7 @@ from events import *
 import sys
 from db import *
 from Client import *
-from Server import *
+#from Server import *
 from funcssock import *
 #from threading import Thread
 
