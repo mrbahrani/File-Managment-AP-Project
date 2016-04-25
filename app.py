@@ -11,7 +11,7 @@ from time import sleep
 from copy import deepcopy,copy
 from search import search, search_list
 from events import *
-#from Socket.SocketUI import *
+from Socket.SocketUI import *
 from Socket.Client import *
 from Socket.db import set_setting
 from Socket.funcssock import *
@@ -318,6 +318,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
     def Connect(self):
         self.User_C._Setting_C()
         provider_username_list.append(str(self.User_C.fileComboBox.text()))
+        self.User_C.SingButton.clicked.connect(lambda : self.Make_sock_Win(provider_username_list[0]))
+
+    def Make_sock_Win(self,provider_username):
+        self.sockWin = SocketMainWindow()
+        self.sockWin.show()
         #self.Us
 
     def NewDir(self):

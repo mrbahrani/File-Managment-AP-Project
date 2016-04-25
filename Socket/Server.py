@@ -10,6 +10,7 @@ port = 6888
 socket_obj.bind((host, port))
 socket_obj.listen(1)
 my_username = get_setting_value('user_name')
+last_request_directory_list = []
 while 1:
     main_server, address = socket_obj.accept()
     request = main_server.recv(1024)
@@ -44,6 +45,7 @@ while 1:
         pass
     elif request_type == '9':                       # Get file request scope
         print request_list[-1]
+        last_request_directory_list.append(dir_file_list(request_list[-1]))
         #clientListView(request_list[-1] ,Sockapp)
 
 
