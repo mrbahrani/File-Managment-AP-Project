@@ -17,8 +17,12 @@ selected_item = [""]
 
 
 class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
+    index = 0
+
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.window_index = MainWindow.index
+        MainWindow.prepare_indexes()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
         self.New_File = New_File()
         self.ui = Ui_MainWindow()
@@ -28,14 +32,20 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
-        
+
         self.memory_list = []
         self.list = list()
         self.list_ = list()
-        
+
         self.setAcceptDrops(True)
         self.ui.listView.setDragEnabled(True)
         self.ui.listView.setDragDropMode(QtGui.QAbstractItemView.InternalMove)
+
+    @classmethod
+    def prepare_indexes(self):
+        MainWindow.index += 1
+        history_list.append([["", ""]])
+        here.append([0])
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
@@ -57,14 +67,14 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             event.acceptProposedAction()
             self.list_ = self.list[0].split('/')
             # print self.list_ ,self.list
-                                                                                     
+
             self.copy_action_(self.list_[-1],(self.list[0])[2:])
 
-            self.paste_action_(history_list[here[0]][0], self.ui.listView)
-            
+            self.paste_action_(history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
+
         else:
-            self.ui.listView.dropEvent(event)    
- 
+            self.ui.listView.dropEvent(event)
+
 
 
     def setup(self):
@@ -88,8 +98,10 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
         self.ui.treeWidget.itemExpanded.connect(treeWidget_itemExpanded)
-        if history_list[here[0]][0] != "*":
-            self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
+        print history_list
+        print here
+        if history_list[self.window_index][here[self.window_index][0]][0] != "*":
+            self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit, self.window_index))
         self.ui.listView.itemClicked.connect(self.selected_saver)
 
         self.ui.pushButton.clicked.connect(self.up)
@@ -98,17 +110,17 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return:
             if self.ui.listView.currentItem():
-                list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit)
+                list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit)
 
     def contextMenuEvent(self , event):
         # print selected_item
         self.menu = QtGui.QMenu(self)
         if selected_item[0] != "" :
             open_actio = QtGui.QAction("Open",self)
-            open_actio.triggered.connect(lambda: list_Dclicked(history_list[here[0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit))
+            open_actio.triggered.connect(lambda: list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()),self.ui.listView,self.ui.lineEdit, self.window_index))
             self.menu.addAction(open_actio)
 
-            if isdir( str(history_list[here[0]][0]) + "\\" + str(selected_item[0]) ) :
+            if isdir( str(history_list[self.window_index][here[self.window_index][0]][0]) + "\\" + str(selected_item[0]) ) :
                 open_innew_actio = QtGui.QAction("Open in new window",self)
                 open_innew_actio.triggered.connect(self.copy)
                 self.menu.addAction(open_innew_actio)
@@ -116,6 +128,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
             copy_actio = QtGui.QAction("Copy",self)
             copy_actio.triggered.connect(self.copy)
             self.menu.addAction(copy_actio)
+
             cut_actio = QtGui.QAction("Cut",self)
             cut_actio.triggered.connect(self.cut)
             self.menu.addAction(cut_actio)
@@ -151,8 +164,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         self.ui.actionPaste.triggered.connect(self.paste)
         self.ui.actionDelete.triggered.connect(self.delete)
         # self.ui.pushButton_3.clicked.connect(self.forward)
-        self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui))
-        self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui))
+        self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui, self.window_index))
+        self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui, self.window_index))
         self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
 
     def selected_saver(self, item, selected_item_list=selected_item):
@@ -170,18 +183,18 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
     def treeWidget_itemClicked(self, itemList, selected_item):
         self.ui.lineEdit.setText(self.ui.treeWidget.currentItem().dir)
         self.ui.listView.clear()
-        add_here(self.ui.treeWidget.currentItem().dir)
+        add_here(self.ui.treeWidget.currentItem().dir, self.window_index)
         listView(self.ui.treeWidget.currentItem().dir, self.ui.listView)
 
 
     def up(self,h_list=history_list):
         try:
-            this_dir = history_list[here[0]][0]
+            this_dir = history_list[self.window_index][here[self.window_index][0]][0]
             list_dir = this_dir.split("\\")
             p_dir = ""
             for i in range(len(list_dir)-2):
                 p_dir = p_dir + list_dir[i] + "\\"
-            add_here(p_dir)
+            add_here(p_dir, self.window_index, self.window_index)
             self.ui.lineEdit.setText(p_dir)
             self.ui.listView.clear()
             listView(p_dir,self.ui.listView)
@@ -198,8 +211,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         :param action:QAction
         :param item:list
         """
-        copy_action(item[0], history_list[here[0]][0])
-        
+        copy_action(item[0], history_list[self.window_index][here[self.window_index][0]][0])
+
 
     def cut(self, action, item=selected_item):
         """
@@ -207,7 +220,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         :param action:QAction
         :param item:list
         """
-        cut_action(item[0], history_list[here[0]][0])
+        cut_action(item[0], history_list[self.window_index][here[self.window_index][0]][0])
 
     def paste(self, action):
         """
@@ -215,28 +228,28 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D):
         :param action:QAction
         """
         self.ui.listView.clear()                    # This line clears QListWidget
-        paste_action(history_list[here[0]][0], self.ui.listView)
+        paste_action(history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
     def delete(self, action, item=selected_item):
         self.ui.listView.clear()
-        delete_action(item[0], history_list[here[0]][0], self.ui.listView)
+        delete_action(item[0], history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
     def search(self, item):
-        add_here(history_list[here[0]][0])
-        if history_list[here[0]][0] != "*\\*":
-            result = search(str(item), history_list[here[0]][0])
+        add_here(history_list[self.window_index][here[self.window_index][0]][0], self.window_index)
+        if history_list[self.window_index][here[self.window_index][0]][0] != "*\\*":
+            result = search(str(item), history_list[self.window_index][here[self.window_index][0]][0])
         else:
-            result = search(str(item), history_list[here[0] - 1][0])
+            result = search(str(item), history_list[self.window_index][here[self.window_index][0] - 1][0])
         # print "WHOLE result"
         # print result
         if not result:
-            result = step_by_step_search(str(item), history_list[here[0]][0])
+            result = step_by_step_search(str(item), history_list[self.window_index][here[self.window_index][0]][0])
         # print "kojoloo result"
         # print result
         if result:
             self.ui.listView.clear()
             listView(result, self.ui.listView)
-            add_here("*\\*", history_list, here, "*")
+            add_here("*\\*", self.window_index,parent="*")
 
     def NewDir(self):
         self.New_Dir._NewDir(self)
