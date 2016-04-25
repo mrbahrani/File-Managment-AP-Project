@@ -16,7 +16,7 @@ import sys
 # add_here('\\')
 # add_here('E:\\Music\\')
 selected_item = [""]
-
+# Fick me
 
 class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
     def __init__(self):
