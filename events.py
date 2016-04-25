@@ -87,7 +87,9 @@ def paste_action(current_directory, list_widget, memory_list=memory):
             else:
                 file_object = File(memory_list[1])
                 file_object.cut(current_directory)
-        listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
+        if list_widget is not None:
+            #*****if state is new
+            listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
 
 
 def delete_action(item, current_directory, list_widget):
@@ -103,8 +105,8 @@ def delete_action(item, current_directory, list_widget):
         else:
             file_object = File(current_directory + "\\" + item)
             file_object.delete()
-
-    listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
+    if list_widget is not None:
+        listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
 
 
 def mEditAcUndo_triggered():
@@ -156,12 +158,12 @@ def list_Dclicked(*args):
         args[2].clear()
         # print curDir.fullAddress
         listView(curDir.fullAddress, args[2])
-        add_here(args[1], args[4])
+        add_here(args[1])
         args[3].setText(args[1])
     elif args[0] == "*\\*":
         args[2].clear()
         listView(args[1], args[2])
-        add_here(args[1], args[4])
+        add_here(args[1])
         args[3].setText(args[1])
 
     elif isdir(args[0] + "\\" + args[1]):
@@ -169,7 +171,7 @@ def list_Dclicked(*args):
         args[2].clear()
         # print curDir.fullAddress
         listView(curDir.fullAddress + "\\", args[2])
-        add_here(curDir.fullAddress, args[4])
+        add_here(curDir.fullAddress)
         args[3].setText(curDir.fullAddress)
     else:
         # print args[0] + "\\" +args[1]

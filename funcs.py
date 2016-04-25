@@ -33,6 +33,10 @@ def get_files(path_address):
     :param path_address:str
     :return list
     """
+    #*********New From last proj
+    if path_address == "*\\*":
+        return
+    #********
     includes = listdir(path_address)
     result = []
     for checker in includes:

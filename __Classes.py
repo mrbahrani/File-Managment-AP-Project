@@ -1,8 +1,10 @@
 from os import rename, access, remove, R_OK, F_OK, startfile, listdir , mkdir
+from os.path import isdir
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
 from shutil import rmtree, copy2, copytree
 from PyQt4 import QtCore, QtGui
+# from Socket.Client import *
 import sys
 
 
@@ -153,8 +155,8 @@ class Directory(object):
 
 
 class New_File(QtGui.QDialog):
-    def __init__(self, parent=None):
-        super(New_File, self).__init__(parent)
+    def __init__(self):
+        super(New_File, self).__init__()
 
         self.path = ''
         
@@ -243,8 +245,8 @@ class New_File(QtGui.QDialog):
         line = QtGui.QLineEdit()
         return line
 class New_Dir(QtGui.QDialog):
-    def __init__(self, parent=None):
-        super(New_Dir, self).__init__(parent)
+    def __init__(self):
+        super(New_Dir, self).__init__()
 
         self.path = ''
         
@@ -272,17 +274,14 @@ class New_Dir(QtGui.QDialog):
         self.setWindowTitle("Create New Dir")
         self.resize(200, 200)
 
-
            
     def create(self):
         Name = self.fileComboBox.text()
-        
         self.item_list = [str(Name)]
         item_list = self.item_list
-        # print self.item_list[0]
         if self.item_list[0]:
-            pass
-            #mkdir(self.item_list[-1] + '/' + self.item_list[0])
+            mkdir(self.path + '/' + self.item_list[0])
+
 
     def _NewDir(self ,app ):
         self.show()
@@ -297,9 +296,9 @@ class New_Dir(QtGui.QDialog):
         return line
 
 class User_D(QtGui.QDialog):
-    def __init__(self , parent=None):
+    def __init__(self):
 
-        super(User_D, self).__init__(parent)
+        super(User_D, self).__init__()
 
         self.path = ''
 
@@ -330,15 +329,175 @@ class User_D(QtGui.QDialog):
         mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
         self.setLayout(mainLayout)
 
-        #self.create()
+        self.create()
 
         self.setWindowTitle("SignUp")
         self.resize(200, 200)
 
 
+    def create(self):
+        User = self.fileComboBox.text()
+        Pass = self.textComboBox.text()
+
+        self.item_list = [str(User), str(Pass)]
+
+        #if self.item_list[0] and self.item_list[1]:
+         #   send_result("0|" + self.item_list[0] + "|" + self.item_list[1])
+
     def _User(self ,app , action ):
             self.SingButton.setText(action)
             self.show()
+
+    def createButton(self, text, member):
+        button = QtGui.QPushButton(text)
+        button.clicked.connect(member)
+        return button
+
+    def createLineEdit(self, text=""):
+        line = QtGui.QLineEdit()
+        return line
+
+class User_S(QtGui.QDialog):
+    def __init__(self):
+
+        super(User_S, self).__init__()
+
+        self.path = ''
+
+
+        self.quitButton = self.createButton("&Quit",self.close)
+        self.SingButton = self.createButton("&Ok", self.create)
+
+
+        self.fileComboBox = self.createLineEdit()
+        self.textComboBox = self.createLineEdit()
+        self.text1ComboBox = self.createLineEdit()
+
+
+        fileLabel = QtGui.QLabel("Username")
+        textLabel = QtGui.QLabel("Server ip")
+        text1Label = QtGui.QLabel("Server Port")
+
+
+        self.filesFoundLabel = QtGui.QLabel()
+        buttonsLayout = QtGui.QHBoxLayout()
+        buttonsLayout.addWidget(self.SingButton)
+        buttonsLayout.addWidget(self.quitButton)
+        mainLayout = QtGui.QGridLayout()
+        mainLayout.addWidget(fileLabel, 0, 0)
+        mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
+        mainLayout.addWidget(textLabel, 1, 0)
+        mainLayout.addWidget(self.textComboBox, 1, 1, 1, 2)
+        mainLayout.addWidget(text1Label, 2, 0)
+        mainLayout.addWidget(self.text1ComboBox, 2, 1, 1, 2)
+        mainLayout.addWidget(self.filesFoundLabel, 3, 0)
+        mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
+        self.setLayout(mainLayout)
+
+        #self.create()
+
+        self.setWindowTitle("Setting")
+        self.resize(200, 200)
+
+
+    def _Setting_(self):
+            self.show()
+
+    def createButton(self, text, member):
+        button = QtGui.QPushButton(text)
+        button.clicked.connect(member)
+        return button
+
+    def createLineEdit(self, text=""):
+        line = QtGui.QLineEdit()
+        return line
+
+
+class User_C(QtGui.QDialog):
+    def __init__(self):
+
+        super(User_C, self).__init__()
+
+        self.path = ''
+
+
+        self.quitButton = self.createButton("&Quit",self.close)
+        self.SingButton = self.createButton("&Ok", self.create)
+
+
+        self.fileComboBox = self.createLineEdit()
+
+        fileLabel = QtGui.QLabel("Username")
+
+
+        self.filesFoundLabel = QtGui.QLabel()
+        buttonsLayout = QtGui.QHBoxLayout()
+        buttonsLayout.addWidget(self.SingButton)
+        buttonsLayout.addWidget(self.quitButton)
+        mainLayout = QtGui.QGridLayout()
+        mainLayout.addWidget(fileLabel, 0, 0)
+        mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
+        mainLayout.addWidget(self.filesFoundLabel, 3, 0)
+        mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
+        self.setLayout(mainLayout)
+
+        #self.create()
+
+        self.setWindowTitle("Setting")
+        self.resize(200, 200)
+
+
+    def _Setting_C(self):
+            self.show()
+
+    def createButton(self, text, member):
+        button = QtGui.QPushButton(text)
+        button.clicked.connect(member)
+        return button
+
+    def createLineEdit(self, text=""):
+        line = QtGui.QLineEdit()
+        return line
+
+class Rename_(QtGui.QDialog):
+    def __init__(self):
+
+        super(Rename_, self).__init__()
+
+        self.path = ''
+
+
+        self.RenameButton = self.createButton("&done",self.create)
+
+
+        self.fileComboBox = self.createLineEdit()
+
+        fileLabel = QtGui.QLabel("Rename")
+
+
+        self.filesFoundLabel = QtGui.QLabel()
+        buttonsLayout = QtGui.QHBoxLayout()
+        buttonsLayout.addWidget(self.RenameButton)
+        mainLayout = QtGui.QGridLayout()
+        mainLayout.addWidget(fileLabel, 0, 0)
+        mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
+        mainLayout.addWidget(self.filesFoundLabel, 3, 0)
+        mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
+        self.setLayout(mainLayout)
+
+        self.create()
+
+        self.setWindowTitle("Setting")
+        self.resize(200, 200)
+
+    def create(self):
+
+        file_name = self.fileComboBox
+
+        self.item_list = [str(file_name)]
+
+    def rename_(self):
+        self.show()
 
     def createButton(self, text, member):
         button = QtGui.QPushButton(text)

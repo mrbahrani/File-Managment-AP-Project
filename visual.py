@@ -1,5 +1,5 @@
-from __Classes import *
-from DefaultUI import *
+#from __Classes import *
+#from DefaultUI import *
 from PyQt4 import QtGui
 from funcs import *
 from os.path import isdir

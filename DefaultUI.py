@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'defaultUI4.ui'
-#
+#1
 # Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -120,10 +120,16 @@ class Ui_MainWindow(object):
         self.actionTutorial.setObjectName(_fromUtf8("actionTutorial"))
         self.actionAbout = QtGui.QAction(MainWindow)
         self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
+        #self.actionSetting = QtGui.QAction(MainWindow)
+        #self.actionSetting.setObjectName(_fromUtf8("actionSetting"))
         self.actionLogin = QtGui.QAction(MainWindow)
         self.actionLogin.setObjectName(_fromUtf8("actionLogin"))
         self.actionSingUp = QtGui.QAction(MainWindow)
         self.actionSingUp.setObjectName(_fromUtf8("actionSingUp"))
+        self.actionSetting = QtGui.QAction(MainWindow)
+        self.actionSetting.setObjectName(_fromUtf8("actionSetting"))
+        self.actionConnect = QtGui.QAction(MainWindow)
+        self.actionConnect.setObjectName(_fromUtf8("actionConnect"))
         self.actionExtra_large_icons = QtGui.QAction(MainWindow)
         self.actionExtra_large_icons.setObjectName(_fromUtf8("actionExtra_large_icons"))
         self.actionExtra_large_icon = QtGui.QAction(MainWindow)
@@ -163,9 +169,11 @@ class Ui_MainWindow(object):
         self.menuHelp.addAction(self.actionAbout)
         self.menuUser.addAction(self.actionLogin)
         self.menuUser.addAction(self.actionSingUp)
+        self.menuUser.addSeparator()
+        self.menuUser.addAction(self.actionSetting)
+        self.menuUser.addAction(self.actionConnect)
         #self.menuVirtual.addAction(self.actionNew_directory_2)
         #self.menuVirtual.addAction(self.actionVirtual_drive)
-        #self.menuVirtual.addSeparator()
         #self.menuShell.addAction(self.actionOpen_shell)
         #self.menuShell.addAction(self.actionRestart_shell)
         self.menubar.addAction(self.menuFile.menuAction())
@@ -215,6 +223,8 @@ class Ui_MainWindow(object):
         self.actionAbout.setText(_translate("MainWindow", "About", None))
         self.actionLogin.setText(_translate("MainWindow", "Login", None))
         self.actionSingUp.setText(_translate("MainWindow", "SignUp", None))
+        self.actionSetting.setText(_translate("MainWindow", "Setting", None))
+        self.actionConnect.setText(_translate("MainWindow", "Connect", None))
         self.actionExtra_large_icons.setText(_translate("MainWindow", "Extra large icons", None))
         self.actionExtra_large_icon.setText(_translate("MainWindow", "Extra large icons", None))
         self.actionLarge_icons.setText(_translate("MainWindow", "Large icons", None))
