@@ -6,8 +6,12 @@ from os import listdir
 from db import  get_setting_value
 from Client import *
 
-def sock_drivers():
-    file_list_request(get_setting_value("username"),,""):
+provider_username_list = []
+
+
+def get_sock_drivers():
+    file_list_request(get_setting_value("username"),provider_username_list[0],"")
+
 
 def clientListView(final_string,listView):
     '''
@@ -60,7 +64,7 @@ def sock_list_Dclicked(*args):
     :param args:
     :return:
     """
-    lLock[args[4]].acquire()
+    # lLock[args[4]].acquire()
     if not (args[0]):
         curDir = Directory(args[1])
         args[2].clear()
@@ -88,7 +92,7 @@ def sock_list_Dclicked(*args):
         curFile =File(args[0] + "\\" +args[1])
         print curFile.fullPath,
         curFile.openf()
-    lLock[args[4]].release()
+    # lLock[args[4]].release()
     # print "***********"
     # print history_list
     # print "XXXXXXXXXXXXXXXXXXXXXXXXX"

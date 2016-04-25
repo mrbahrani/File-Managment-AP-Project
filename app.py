@@ -11,7 +11,10 @@ from time import sleep
 from copy import deepcopy,copy
 from search import search, search_list
 from events import *
-#from Socket.SocketUI import *
+from Socket.SocketUI import *
+from Socket.Client import *
+from Socket.db import set_setting
+from Socket.funcssock import *
 import sys
 from threading import Thread
 # add_here('\\')
@@ -40,15 +43,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.add_actions()
         self.setup()
         winList.append(self)
-        
+
         self.memory_list = []
 
-        #self.list = []
-        #self.list_ = []
-
-
-        self.list = list()
-        self.list_ = list()
+        self.list = []
+        self.list_ = []
 
         self.dragOver = False
         self.setAcceptDrops(True)
@@ -97,14 +96,14 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             event.acceptProposedAction()
             self.list_ = self.list[0].split('/')
             # print self.list_ ,self.list
-                                                                                     
+
             self.copy_action_(self.list_[-1],(self.list[0])[2:])
 
             self.paste_action_(history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
         else:
-            self.ui.listView.dropEvent(event)    
- 
+            self.ui.listView.dropEvent(event)
+
 
 
     def setup(self):
@@ -299,11 +298,33 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             add_here("*\\*", self.window_index,parent="*")
     def Setting(self):
         self.User_S._Setting_()
+        # user_name = str(self.User_S.fileComboBox.text())
+        # server_id = str()
+        # port_num =
+        # print "****"
+        # print self.User_S.fileComboBox.text()
+        # print server_id
+        # print port_num
+        self.User_S.SingButton.clicked.connect(lambda: self.add_setting_in_db(str(self.User_S.textComboBox.text()), str(self.User_S.text1ComboBox.text())))
+
+    def add_setting_in_db(self, server, port):
+        # print 'kir'
+        # print server
+        # print port
+        # set_setting('user_name', user_name)
+        set_setting('server_id', server)
+        set_setting('port_number', port)
 
 
     def Connect(self):
         self.User_C._Setting_C()
-        self.Us
+        provider_username_list.append(str(self.User_C.fileComboBox.text()))
+        self.User_C.SingButton.clicked.connect(lambda : self.Make_sock_Win(provider_username_list[0]))
+
+    def Make_sock_Win(self,provider_username):
+        self.sockWin = SocketMainWindow()
+        self.sockWin.show()
+        #self.Us
 
     def NewDir(self):
         self.New_Dir._NewDir(self)
@@ -342,7 +363,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
                     directory.copy(current_directory)
                 else:
                     file_object = File(self.memory_list[1])
-                    file_object.copy(current_directory)    
+                    file_object.copy(current_directory)
 
     def User(self , action):
         self.User_D._User(self ,action)
