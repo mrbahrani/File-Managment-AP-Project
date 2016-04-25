@@ -22,11 +22,11 @@ def connect():
         database_server_ip = get_setting_value('main_server_ip')
         database_server_port = get_setting_value('main_server_port')
         if not database_server_ip:
-            host = '192.168.85.69'                              # Server Ip address
+            host = '127.0.0.1'                              # Server Ip address
         else:
             host = database_server_ip
         if not database_server_port:
-            port = 6985                                         # Server port number
+            port = 6988                                         # Server port number
         else:
             port = database_server_port
         socket_obj.connect((host, port))
@@ -151,3 +151,4 @@ def rename_request(username,provider_username,file_path,new_name):
     send_result("8|"+username+"|"+provider_username+"|"+file_path+"|"+new_name )
 
 
+connect()

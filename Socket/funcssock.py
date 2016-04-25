@@ -5,6 +5,7 @@ from os.path import isdir, isfile
 from os import listdir
 from db import  get_setting_value
 from Client import *
+#from __Classes import *
 
 provider_username_list = []
 
@@ -57,9 +58,10 @@ def dir_file_list(final_string) :
     result.append(dirList)
     result.append(fileList)
     return result
+
 def sock_list_Dclicked(*args):
     """
-    :param args:0.current address,1.file name(+format),2.list widget
+    :param args:0.current address,1.file name(+format),2.list widget,3.line edit,4.window index
     :return:
     :param args:
     :return:

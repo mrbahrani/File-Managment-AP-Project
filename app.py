@@ -226,9 +226,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             this_dir = history_list[self.window_index][here[self.window_index][0]][0]
             list_dir = this_dir.split("\\")
             p_dir = ""
-            for i in range(len(list_dir)-2):
+            for i in range(len(list_dir)-1):
                 p_dir = p_dir + list_dir[i] + "\\"
-            add_here(p_dir, self.window_index, self.window_index)
+
+            p_dir = p_dir[0:len(p_dir)-1]
+            add_here(p_dir, self.window_index)
             self.ui.lineEdit.setText(p_dir)
             self.ui.listView.clear()
             listView(p_dir,self.ui.listView)

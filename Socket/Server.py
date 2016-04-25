@@ -4,13 +4,15 @@ from db import *
 import socket
 from funcssock import *
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = '0.0.0.0'                                   # Gets server ip from data base
+host = '127.0.0.1'                                   # Gets server ip from data base
 port = get_setting_value('server_port')                                 # Gets server port from data base
 port = 6888
 socket_obj.bind((host, port))
 socket_obj.listen(1)
 my_username = get_setting_value('user_name')
 last_request_directory_list = []
+last_request_directory_string_list=[]
+
 while 1:
     main_server, address = socket_obj.accept()
     request = main_server.recv(1024)
@@ -46,6 +48,7 @@ while 1:
     elif request_type == '9':                       # Get file request scope
         print request_list[-1]
         last_request_directory_list.append(dir_file_list(request_list[-1]))
+        last_request_directory_string_list.append(request_list[-1])
         #clientListView(request_list[-1] ,Sockapp)
 
 
@@ -61,3 +64,4 @@ while 1:
         main_server.sendall('0|')                           # If the request is not valid 0|
         main_server.close()
         break
+print 'tamom'

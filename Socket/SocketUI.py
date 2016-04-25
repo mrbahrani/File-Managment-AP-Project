@@ -13,7 +13,9 @@ from events import *
 import sys
 from db import *
 from Client import *
+from Server import *
 from funcssock import *
+#from threading import Thread
 
 
 selected_item = [""]
@@ -106,10 +108,12 @@ class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
 
 
     def setup(self):
+        #get_sock_drivers()
         self.ui.treeWidget.setHeaderLabels(["Directories"])
         model0 = QtGui.QFileSystemModel()
         model0.setRootPath("/")
         self.icon = QtGui.QIcon('icons/driver.ico')
+
         for driver in drivers():
             tree_widget_item = QtGui.QTreeWidgetItem(self.ui.treeWidget)
             tree_widget_item.setText(0, driver[0])
@@ -225,9 +229,11 @@ class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             this_dir = history_list[self.window_index][here[self.window_index][0]][0]
             list_dir = this_dir.split("\\")
             p_dir = ""
-            for i in range(len(list_dir)-2):
+            for i in range(len(list_dir)-1):
                 p_dir = p_dir + list_dir[i] + "\\"
-            add_here(p_dir, self.window_index, self.window_index)
+
+            p_dir = p_dir[0:len(p_dir)-1]
+            add_here(p_dir, self.window_index)
             self.ui.lineEdit.setText(p_dir)
             self.ui.listView.clear()
             listView(p_dir,self.ui.listView)
@@ -297,13 +303,20 @@ class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             add_here("*\\*", self.window_index,parent="*")
     def Setting(self):
         self.User_S._Setting_()
-        user_name = str(self.User_S.fileComboBox.text())
-        server_id = str(self.User_S.textComboBox.text())
-        port_num = str(self.User_S.text1ComboBox.text())
-        self.User_S.SingButton.clicked.connect(lambda: self.add_setting_in_db(user_name, server_id, port_num))
+        # user_name = str(self.User_S.fileComboBox.text())
+        # server_id = str()
+        # port_num =
+        # print "****"
+        # print self.User_S.fileComboBox.text()
+        # print server_id
+        # print port_num
+        self.User_S.SingButton.clicked.connect(lambda: self.add_setting_in_db(str(self.User_S.textComboBox.text()), str(self.User_S.text1ComboBox.text())))
 
-    def add_setting_in_db(self,user_name, server, port):
-        set_setting('user_name', user_name)
+    def add_setting_in_db(self, server, port):
+        # print 'kir'
+        # print server
+        # print port
+        # set_setting('user_name', user_name)
         set_setting('server_id', server)
         set_setting('port_number', port)
 
@@ -367,11 +380,14 @@ def newWindow(addressList):
     listView(history_list[newWin.window_index][0][0], newWin.ui.listView)
     newWin.show()
 
-# if __name__ == "__main__":
-#     app = QtGui.QApplication(sys.argv)
-#     Win = SocketMainWindow()
-#     windowList.append(Win)
-#     updator = Updator(windowList)
-#     updator.start()
-#     Win.start_show(app)
-#     updator.terminate()
+
+
+
+
+#if __name__ == "__main__":
+#    app = QtGui.QApplication(sys.argv)
+#    Win = MainWindow()
+#    upd = Thread(target=updator)
+#    upd.start()
+#    #newWindow(["D:\\ACM like", "D:\\"])
+#    Win.start_show(app)
