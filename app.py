@@ -282,7 +282,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.Rename.rename_()
 
     def done_rename_(self,action , item=selected_item):
-        done_rename(item[0], history_list[self.window_index][here[self.window_index][0]][0] + item[0])
+        done_rename(item[0], history_list[self.window_index][here[self.window_index][0]][0] + '\\' +  item[0])
 
     def search(self, item):
         add_here(history_list[self.window_index][here[self.window_index][0]][0], self.window_index)

@@ -95,6 +95,8 @@ def done_rename(file_name, current_directory):
     memory_list = []
     memory_ = []
     memory__ = []
+    memory1 = []
+    str = ''
     if file_name:
         if len(memory_list):
             memory_list = []
@@ -109,9 +111,19 @@ def done_rename(file_name, current_directory):
         if not isdir(memory_list[0]):
             if '.' in memory_[-1][-5:]:
                 memory__ = memory_[-1].split('.')
+                for i in range(len(memory_) - 1):
+                    str += memory_[i]
+                    str += '\\'
+                memory_[0] = str
+                print memory_
                 print memory_[0] + '\\' + memory_[-1], memory_[0] + '\\' + memory_list[-1] + '.' + memory__[-1], 123
                 renames(memory_[0] + '\\' + memory_[-1], memory_[0] + '\\' + memory_list[-1] + '.' + memory__[-1])
         else:
+            for i in range(len(memory_) - 1):
+                str += memory_[i]
+                str += '\\'
+            memory_[0] = str
+            print memory_
             print memory_[0] + '\\' , memory_[-1] + '\\' + memory_list[-1] , 321
             renames(memory_[0] + '\\' + memory_[-1], memory_[0] + '\\' + memory_list[-1])
     except FileNotExist:
