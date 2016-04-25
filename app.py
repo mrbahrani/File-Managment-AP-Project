@@ -175,7 +175,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             self.menu.addAction(delete_actio)
 
             rename_actio = QtGui.QAction("Rename",self)
-            rename_actio.triggered.connect(self.copy)
+            rename_actio.triggered.connect(self.rename)
             self.menu.addAction(rename_actio)
 
         self.menu.popup(QtGui.QCursor.pos())
@@ -201,11 +201,12 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui, self.window_index))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui, self.window_index))
         self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
+        self.Rename.RenameButton.clicked.connect(self.done_rename_)
 
     def selected_saver(self, item, selected_item_list=selected_item):
         """
         | This method saves text of selected item into the selected_item list
-         selected_saver(self, item[, selected_item_list=selected_item])
+         selected_saver(self, item[, selected_item_lis  t=selected_item])
          :param item:Object
          :param selected_item_list:list
         """
@@ -277,8 +278,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.ui.listView.clear()
         delete_action(item[0], history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
-    def rename(self ):
+    def rename(self):
         self.Rename.rename_()
+
+    def done_rename_(self,action , item=selected_item):
+        done_rename(item[0], history_list[self.window_index][here[self.window_index][0]][0] + item[0])
 
     def search(self, item):
         add_here(history_list[self.window_index][here[self.window_index][0]][0], self.window_index)

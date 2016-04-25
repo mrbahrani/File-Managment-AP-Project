@@ -91,6 +91,33 @@ def paste_action(current_directory, list_widget, memory_list=memory):
             listView((current_directory + "\\").replace("\\", "\\\\"), list_widget)
 
 
+def done_rename(file_name, current_directory):
+    memory_list = []
+    memory_ = []
+    memory__ = []
+    if file_name:
+        if len(memory_list):
+            memory_list = []
+        memory_list.append(current_directory)
+        if Rename_.item_list[0]:
+            memory_list.append(Rename_.item_list[0])
+            print memory_list
+    try:
+        if memory_list[0]:
+            memory_ = memory_list[0].split('\\')
+            print memory_ , memory_list
+        if not isdir(memory_list[0]):
+            if '.' in memory_[-1][-5:]:
+                memory__ = memory_[-1].split('.')
+                print memory_[0] + '\\' + memory_[-1], memory_[0] + '\\' + memory_list[-1] + '.' + memory__[-1], 123
+                renames(memory_[0] + '\\' + memory_[-1], memory_[0] + '\\' + memory_list[-1] + '.' + memory__[-1])
+        else:
+            print memory_[0] + '\\' , memory_[-1] + '\\' + memory_list[-1] , 321
+            renames(memory_[0] + '\\' + memory_[-1], memory_[0] + '\\' + memory_list[-1])
+    except FileNotExist:
+        print 'FNE'
+
+
 def delete_action(item, current_directory, list_widget):
     """
     |This void function delet all items in current_directory.
