@@ -12,6 +12,7 @@ List of functions:
 from __Classes import Directory
 from visual import listView
 history_list = []                           # History container
+winList = []
 here = []                                    # The index of current directory
 
 

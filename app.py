@@ -38,6 +38,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.ui.setupUi(self)
         self.add_actions()
         self.setup()
+        winList.append(self)
         
         self.memory_list = []
 
@@ -150,7 +151,9 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
 
             if isdir( str(history_list[self.window_index][here[self.window_index][0]][0]) + "\\" + str(selected_item[0]) ) :
                 open_innew_actio = QtGui.QAction("Open in new window",self)
-                open_innew_actio.triggered.connect(self.copy)
+                addressList = [history_list[self.window_index][here[self.window_index][0]][0]+str(self.ui.listView.currentItem().text()),
+                               history_list[self.window_index][here[self.window_index][0]][0]]
+                open_innew_actio.triggered.connect(lambda : newWindow(addressList))
                 self.menu.addAction(open_innew_actio)
 
             copy_actio = QtGui.QAction("Copy",self)
@@ -342,8 +345,14 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
 
     def User(self , action):
         self.User_D._User(self ,action)
-
+def newWindow(addressList):
+    newWin = MainWindow()
+    history_list[newWin.window_index]=[addressList]
+    newWin.ui.listView.clear()
+    listView(history_list[newWin.window_index][0][0], newWin.ui.listView)
+    newWin.show()
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     Win = MainWindow()
+    #newWindow(["D:\\ACM like", "D:\\"])
     Win.start_show(app)
