@@ -4,8 +4,9 @@ from db import *
 import socket
 from funcssock import *
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = get_setting_value('server_ip')                                   # Gets server ip from data base
+host = '0.0.0.0'                                   # Gets server ip from data base
 port = get_setting_value('server_port')                                 # Gets server port from data base
+port = 6888
 socket_obj.bind((host, port))
 socket_obj.listen(1)
 my_username = get_setting_value('user_name')

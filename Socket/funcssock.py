@@ -7,7 +7,8 @@ from db import  get_setting_value
 from Client import *
 
 def sock_drivers():
-    file_list_request(get_setting_value("username"),,""):
+    # file_list_request(get_setting_value("username"),,""):
+    pass
 
 def clientListView(final_string,listView):
     '''

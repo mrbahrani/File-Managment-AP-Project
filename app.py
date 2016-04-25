@@ -39,7 +39,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.add_actions()
         self.setup()
         winList.append(self)
-        
+
         self.memory_list = []
 
         #self.list = []
@@ -96,14 +96,14 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             event.acceptProposedAction()
             self.list_ = self.list[0].split('/')
             # print self.list_ ,self.list
-                                                                                     
+
             self.copy_action_(self.list_[-1],(self.list[0])[2:])
 
             self.paste_action_(history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
         else:
-            self.ui.listView.dropEvent(event)    
- 
+            self.ui.listView.dropEvent(event)
+
 
 
     def setup(self):
@@ -341,7 +341,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
                     directory.copy(current_directory)
                 else:
                     file_object = File(self.memory_list[1])
-                    file_object.copy(current_directory)    
+                    file_object.copy(current_directory)
 
     def User(self , action):
         self.User_D._User(self ,action)

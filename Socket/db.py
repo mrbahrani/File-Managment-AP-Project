@@ -6,7 +6,7 @@ def connect_db():
     | This function make a connection to the userDatabase database and returns that;
     :return :sqlite3 connection object
     """
-    return connect('data//userDatabase.db')
+    return connect('userDatabase.db')
 
 
 def create_settings_table():
