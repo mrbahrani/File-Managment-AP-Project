@@ -43,7 +43,7 @@ while 1:
         pass
     elif request_type == '9':                       # Get file request scope
         print request_list[-1]
-        clientListView(request_list[-1] ,Sockapp)
+        #clientListView(request_list[-1] ,Sockapp)
 
 
     elif request_type == '10':                      # Get search result scope

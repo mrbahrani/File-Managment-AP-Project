@@ -12,6 +12,9 @@ from copy import deepcopy,copy
 from search import search, search_list
 from events import *
 #from Socket.SocketUI import *
+from Socket.Client import *
+from Socket.db import set_setting
+from Socket.funcssock import *
 import sys
 # add_here('\\')
 # add_here('E:\\Music\\')
@@ -42,12 +45,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         
         self.memory_list = []
 
-        #self.list = []
-        #self.list_ = []
-
-
-        self.list = list()
-        self.list_ = list()
+        self.list = []
+        self.list_ = []
 
         self.dragOver = False
         self.setAcceptDrops(True)
@@ -298,11 +297,21 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             add_here("*\\*", self.window_index,parent="*")
     def Setting(self):
         self.User_S._Setting_()
+        user_name = str(self.User_S.fileComboBox.text())
+        server_id = str(self.User_S.textComboBox.text())
+        port_num = str(self.User_S.text1ComboBox.text())
+        self.User_S.SingButton.clicked.connect(lambda: self.add_setting_in_db(user_name, server_id, port_num))
+
+    def add_setting_in_db(self,user_name, server, port):
+        set_setting('user_name', user_name)
+        set_setting('server_id', server)
+        set_setting('port_number', port)
 
 
     def Connect(self):
         self.User_C._Setting_C()
-        self.Us
+        provider_username_list.append(str(self.User_C.fileComboBox.text()))
+        #self.Us
 
     def NewDir(self):
         self.New_Dir._NewDir(self)
