@@ -20,7 +20,7 @@ from funcssock import *
 
 selected_item = [""]
 username = get_setting_value("username")
-directory = ""
+#directory = ""
 
 class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
     index = 0
@@ -108,13 +108,18 @@ class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
 
 
     def setup(self):
-        #get_sock_drivers()
+        get_sock_drivers()
+        #send request for getting server computer drives
         self.ui.treeWidget.setHeaderLabels(["Directories"])
         model0 = QtGui.QFileSystemModel()
         model0.setRootPath("/")
         self.icon = QtGui.QIcon('icons/driver.ico')
-
-        for driver in drivers():
+        #cause sending and reciving requst may take some times ... this part is a infinit loop till the server respond
+        while True:
+            if len(last_request_directory_list) != 0:
+                break
+        drivers = last_request_directory_list[0]
+        for driver in drivers:
             tree_widget_item = QtGui.QTreeWidgetItem(self.ui.treeWidget)
             tree_widget_item.setText(0, driver[0])
             tree_widget_item.setIcon(0, self.icon)
@@ -122,18 +127,23 @@ class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             tree_widget_item.dir = driver[0]+":\\"
             tree_widget_item.isUsed =False
 
-            treeView(driver, tree_widget_item)
-        for driver in drivers():
+            sock_treeView(driver, tree_widget_item)
+
+        for driver in drivers:
             list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
             list_widget_item.setIcon(QtGui.QIcon('icons\\mycomputer.ico'))
             list_widget_item.setText(driver)
+
+        """
+        NOT READY YET
         self.ui.treeWidget.itemClicked.connect(self.treeWidget_itemClicked)
         self.ui.listView.itemClicked.connect(self.selected_saver)
         self.ui.treeWidget.itemExpanded.connect(treeWidget_itemExpanded)
+        """
         print history_list
         print here
-        if history_list[self.window_index][here[self.window_index][0]][0] != "*":
-            self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit, self.window_index))
+        #if history_list[self.window_index][here[self.window_index][0]][0] != "*": ??????????
+        self.ui.listView.doubleClicked.connect(lambda: list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit, self.window_index))
         self.ui.listView.itemClicked.connect(self.selected_saver)
 
         self.ui.pushButton.clicked.connect(self.up)
@@ -373,9 +383,10 @@ class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
 
     def User(self , action):
         self.User_D._User(self ,action)
-def newWindow(addressList):
+def newWindow(fulladdress):
     newWin = SocketMainWindow()
-    history_list[newWin.window_index]=[addressList]
+    #history_list[newWin.window_index]=[addressList]
+    directory.append(fulladdress)
     newWin.ui.listView.clear()
     listView(history_list[newWin.window_index][0][0], newWin.ui.listView)
     newWin.show()
