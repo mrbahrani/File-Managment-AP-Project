@@ -139,7 +139,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return:
             if self.ui.listView.currentItem():
-                list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit)
+                list_Dclicked(history_list[self.window_index][here[self.window_index][0]][0], str(self.ui.listView.currentItem().text()), self.ui.listView, self.ui.lineEdit,self.window_index)
 
     def contextMenuEvent(self , event):
         # print selected_item
