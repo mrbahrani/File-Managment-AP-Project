@@ -99,9 +99,8 @@ def order(provider):
     connection_obj = connect_db()
     with connection_obj:
         cursor = connection_obj.cursor()
-        execute = cursor.execute("SELECT ready_state FROM user WHERE user_name = " + provider)
-        state = execute.fetchall()
-        if state:
-            execute = cursor.execute("SELECT server_id, port FROM users WHERE user_name = " + provider)
-            return execute.fetchall()
-        return False
+        # execute = cursor.execute("SELECT ready_state FROM users WHERE user_name = " + provider)
+        # state = execute.fetchall()
+        # if state:
+        execute = cursor.execute("SELECT server_id, port FROM users WHERE user_name = " + provider)
+        return execute.fetchall()

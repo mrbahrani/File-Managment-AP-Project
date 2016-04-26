@@ -26,8 +26,10 @@ print "IN THE UI"
 print last_request_directory_list
 
 
+
 class RequestCheck(Thread):
     def __init__(self, list_widget):
+
         super(RequestCheck, self).__init__()
         self.last_request = []
         self.request = []
@@ -54,6 +56,7 @@ class SocketMainWindow(QtGui.QMainWindow, New_File, New_Dir , User_l, User_S):
     def __init__(self):
         super(SocketMainWindow, self).__init__()
         print 'IN uI'
+        print file_list_request(get_setting_value("user_name")[0], provider_username_list[0],"")
         print last_request_directory_list
         self.window_index = SocketMainWindow.index
         SocketMainWindow.prepare_indexes()

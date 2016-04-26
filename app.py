@@ -31,6 +31,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
         self.window_index = MainWindow.index
         MainWindow.prepare_indexes()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
+        self.sub_proccess = ''
         self.server_is_run = False
         self.New_File = New_File()
         self.ui = Ui_MainWindow()
@@ -243,7 +244,9 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
 
     def start_show(self, app):
         self.show()
-        sys.exit(app.exec_())
+        if sys.exit(app.exec_()):
+            if self.sub_proccess:
+                self.sub_proccess.kill()
 
     def copy(self, action, item=selected_item):
         """
@@ -266,7 +269,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
         print self.User_l.item_list , 123456
         if self.User_l.item_list[0] and self.User_l.item_list[1]:
             if not self.server_is_run:
-                Popen([sys.executable, 'Socket\\server.py'])
+                self.sub_proccess = Popen([sys.executable, 'Socket\\server.py'])
                 self.server_is_run = True
             print 'opened'
             set_setting("user_name", self.User_l.item_list[0])
@@ -277,15 +280,15 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
         print self.User_SU.item_list, 123456
         if self.User_SU.item_list[0] and self.User_SU.item_list[1]:
             if not self.server_is_run:
-                Popen([sys.executable, 'Socket\\server.py'])
+                self.sub_proccess = Popen([sys.executable, 'Socket\\server.py'])
                 self.server_is_run = True
             set_setting("user_name", self.User_SU.item_list[0])
             local_server = get_setting_value('server_id')[0]
             local_port = get_setting_value('port_number')[0]
-            print local_server
-            print local_port
+            # print local_server
+            # print local_port
             send_result("1|" + self.User_SU.item_list[0] + "|" + self.User_SU.item_list[1] + "|" + local_server + "|" + local_port + "|" + "1")
-            print 0
+            # print 0
 
     def paste(self, action):
         """
@@ -350,14 +353,14 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
     def Make_sock_Win(self, provider_username):
         provider_username_list.append(provider_username)
         if not provider_username:
-            print 'inja'
+            # print 'inja'
             return
         if not self.server_is_run:
                 Popen([sys.executable, 'Socket\\server.py'])
                 self.server_is_run = True
         self.sockWin = SocketMainWindow()
-        print 'The UI'
-        print self.sockWin.window_index
+        # print 'The UI'
+        # print self.sockWin.window_index
         self.sockWin.show()
         #self.Us
 
@@ -416,7 +419,7 @@ def newWindow(addressList):
 def updator():
     while True:
         sleep(0.5)
-        print 'kir'
+        # print 'kir'
         for window in winList:
             if history_list[window.window_index][here[window.window_index][0]][0]:
                 newFileList = get_files(history_list[window.window_index][here[window.window_index][0]][0])
