@@ -412,55 +412,53 @@ def newWindow(addressList):
     newWin.ui.listView.clear()
     listView(history_list[newWin.window_index][0][0], newWin.ui.listView)
     newWin.show()
-
-def updator():
-    while True:
-        sleep(0.5)
-        print 'kir'
-        for window in winList:
-            if history_list[window.window_index][here[window.window_index][0]][0]:
-                newFileList = get_files(history_list[window.window_index][here[window.window_index][0]][0])
-                newDirList = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
-                ctr = 0
-                num = window.ui.listView.count()
-                #print "ctr ", ctr, " num ", num
-                while (ctr < num):
-                    #print "ctr ", ctr, " num ", num
-                    print ctr
-                    if str(window.ui.listView.item(ctr).text()) not in newDirList + newFileList:
-                        window.ui.listView.takeItem(ctr)
-                        num -= 1
-                    else:
-                        ctr += 1
-                oldList = []
-                num = window.ui.listView.count()
-                for intItr in range(num):
-                    oldList.append(str(window.ui.listView.item(intItr).text()))
-                for itr in newDirList:
-                    if not (itr in oldList):
-                        item = QtGui.QListWidgetItem()
-                        item.setText(itr)
-                        icon = QtGui.QIcon("icons\\folder.ico")
-                        item.setIcon(icon)
-                        window.ui.listView.addItem(item)
-                for itr in newFileList:
-                    if not (itr in oldList):
-                        item = QtGui.QListWidgetItem()
-                        item.setText(itr)
-                        icon = QtGui.QIcon(file_icon(itr))
-                        item.setIcon(icon)
-                        window.ui.listView.addItem(item)
-
-            else:
-                newFileList = []
-                newDirList =[]
-
-
+class Updator(QtCore.QThread):
+    def run(self):
+        while True:
+            sleep(0.5)
+            print 'kir'
+            for window in winList:
+                if history_list[window.window_index][here[window.window_index][0]][0]:
+                    newFileList = get_files(history_list[window.window_index][here[window.window_index][0]][0])
+                    newDirList = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
+                    ctr = 0
+                    num = window.ui.listView.count()
+                    # print "ctr ", ctr, " num ", num
+                    while (ctr < num):
+                        # print "ctr ", ctr, " num ", num
+                        print ctr
+                        if str(window.ui.listView.item(ctr).text()) not in newDirList + newFileList:
+                            window.ui.listView.takeItem(ctr)
+                            num -= 1
+                        else:
+                            ctr += 1
+                    oldList = []
+                    num = window.ui.listView.count()
+                    for intItr in range(num):
+                        oldList.append(str(window.ui.listView.item(intItr).text()))
+                    for itr in newDirList:
+                        if not (itr in oldList):
+                            item = QtGui.QListWidgetItem()
+                            item.setText(itr)
+                            icon = QtGui.QIcon("icons\\folder.ico")
+                            item.setIcon(icon)
+                            window.ui.listView.addItem(item)
+                    for itr in newFileList:
+                        if not (itr in oldList):
+                            item = QtGui.QListWidgetItem()
+                            item.setText(itr)
+                            icon = QtGui.QIcon(file_icon(itr))
+                            item.setIcon(icon)
+                            window.ui.listView.addItem(item)
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     Win = MainWindow()
-    upd = Thread(target=updator)
-    upd.start()
+    #upd = Thread(target=updator)
+    #upd.start()
     #newWindow(["D:\\ACM like", "D:\\"])
+    upd =Updator()
+    upd.start()
     Win.start_show(app)
+    upd.terminate()
+    print "jfhkdfhjs"
