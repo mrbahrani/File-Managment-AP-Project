@@ -22,7 +22,7 @@ def connect():
         database_server_ip = get_setting_value('main_server_ip')
         database_server_port = get_setting_value('main_server_port')
         if not database_server_ip:
-            host = '192.168.85.69'                              # Server Ip address
+            host = '127.0.0.1'                              # Server Ip address
         else:
             host = database_server_ip
         if not database_server_port:
@@ -131,7 +131,7 @@ def file_list_request(username,provider_username,directory):
     send_result("3|"+username+"|"+provider_username+"|"+directory)
 
 
-def search_request(username,provider_username,path,word):
+def search_request(username, provider_username,path,word):
     send_result("4|"+username+"|"+provider_username+"|"+path+"|"+word )
 
 

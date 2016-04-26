@@ -9,7 +9,7 @@ List of included functions :
 """
 from sqlite3 import *
 
-# s = open('..\\data\\FileManager.db', 'r')
+
 def connect_db():
     """
     | This function make a connection to the FileManager database and returns that;
@@ -24,11 +24,10 @@ def create_users_table():
     create_users_table()
     """
     connection_obj = connect_db()
-    cursor = connection_obj.cursor()
-    connection_obj.commit()
-    cursor.execute('CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT,'
-                   'user_name TEXT,password TEXT,server_id TEXT,port UNSIGNED INTEGER,ready_state INTEGER)')
-    connection_obj.close()
+    with connection_obj:
+        cursor = connection_obj.cursor()
+        cursor.execute('CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT,'
+                       'user_name TEXT,password TEXT,server_id TEXT,port UNSIGNED INTEGER,ready_state INTEGER)')
 
 
 def add_new_user(user_name, password, server_id, port, ready_state):
@@ -41,11 +40,10 @@ def add_new_user(user_name, password, server_id, port, ready_state):
     :param ready_state:int
     """
     connection_obj = connect_db()
-    cursor = connection_obj.cursor()
-    query = ((user_name, password, server_id, port, ready_state),)
-    cursor.executemany("INSERT INTO users(user_name,password,server_id,port,ready_state)VALUES(?,?,?,?,?)", query)
-    connection_obj.commit()
-    connection_obj.close()
+    with connection_obj:
+        cursor = connection_obj.cursor()
+        query = ((user_name, password, server_id, port, ready_state),)
+        cursor.executemany("INSERT INTO users(user_name,password,server_id,port,ready_state)VALUES(?,?,?,?,?)", query)
 
 
 def validate_user(user_name, password):
@@ -61,8 +59,11 @@ def validate_user(user_name, password):
         cursor = connection_obj.cursor()
         execute = cursor.execute("SELECT password FROM users WHERE user_name = '" + user_name + "'")
         saved_password = execute.fetchall()
-        if saved_password[0] == password:
-            return True
+        try:
+            if saved_password[0] == password:
+                return True
+        except IndexError:
+            return False
         return False
 
 

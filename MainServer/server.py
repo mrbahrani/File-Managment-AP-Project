@@ -24,7 +24,7 @@ logged_in_users = []
 # print socket.gethostname()
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = '127.0.0.1'
-port = 6585
+port = 6985
 socket_obj.bind((host, port))
 socket_obj.listen(10)
 create_users_table()
@@ -37,20 +37,27 @@ while True:
     if request_type == '0':
         is_valid = validate_user(request_list[1], request_list[2])
         if not is_valid:
+            print 'not logged in'
             client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
             client_socket.close()
+            continue
         logged_in_users.append(request_list[1])                   # Added user name in logged_in_users list if is valid
+        print 'logged in'
         client_socket.close()
     elif request_type == '1':
         add_new_user(request_list[1], request_list[2], request_list[3], request_list[4], request_list[5])
+        print 'user added'
         client_socket.close()
+        continue
     elif request_list[1] in logged_in_users:
         if request_type == '2':
             change_ready_state(request_list[1], request_list[2])
             client_socket.close()
+            continue
         elif request_list[2] not in logged_in_users:
             client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
             client_socket.close()
+            continue
         elif request_type in ['3', '4', '5', '6', '7', '8']:
             request_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             request_server, request_port = order(request_list[2])
@@ -58,6 +65,7 @@ while True:
             request_socket.sendall(request)
             request_socket.close()
             client_socket.close()
+            continue
         elif request_type in ['9', '10', '11', '12', '13']:
             request_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             request_server, request_port = order(request_list[1])
@@ -65,6 +73,8 @@ while True:
             request_socket.sendall(request)
             request_socket.close()
             client_socket.close()
+            continue
     else:
         client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
         client_socket.close()
+        continue
