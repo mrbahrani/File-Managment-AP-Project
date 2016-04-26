@@ -3,6 +3,7 @@ import sys
 import os.path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from search import search
+from funcs import drivers
 from events import copy_action, cut_action, paste_action, delete_action
 from os.path import isdir, isfile
 from os import listdir
@@ -24,6 +25,9 @@ def connect():
         socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         database_server_ip = get_setting_value('main_server_ip')
         database_server_port = get_setting_value('main_server_port')
+        print "%%%%%%%%%%"
+        print database_server_port
+        print database_server_ip
         if not database_server_ip:
             host = '127.0.0.1'                              # Server Ip address
         else:
@@ -59,6 +63,8 @@ def send_files_list(path_str):
         # Adds all files names to the final_string variable
         final_string += "".join(['1' + element + "|" for element in listdir(path_str) if isfile(path_str + element)])
         return final_string
+    elif not path_str:
+        final_string = "".join(['0' + element + "|" for element in drivers()])
     return "0|"
 
 def client_copy_file(start_path, destination_path):

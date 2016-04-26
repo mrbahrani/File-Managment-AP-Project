@@ -280,7 +280,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
                 Popen([sys.executable, 'Socket\\server.py'])
                 self.server_is_run = True
             set_setting("user_name", self.User_SU.item_list[0])
-            send_result("1|" + self.User_SU.item_list[0] + "|" + self.User_SU.item_list[1] + "|" + '127.0.0.1' + "|" + "6985" + "|" + "1")
+            local_server = get_setting_value('server_id')[0]
+            local_port = get_setting_value('port_number')[0]
+            print local_server
+            print local_port
+            send_result("1|" + self.User_SU.item_list[0] + "|" + self.User_SU.item_list[1] + "|" + local_server + "|" + local_port + "|" + "1")
             print 0
 
     def paste(self, action):
@@ -341,16 +345,19 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
 
     def Connect(self):
         self.User_C._Setting_C()
-        provider_username_list.append(str(self.User_C.fileComboBox.text()))
-        self.User_C.SingButton.clicked.connect(lambda : self.Make_sock_Win(provider_username_list[0]))
+        self.User_C.SingButton.clicked.connect(lambda: self.Make_sock_Win(str(self.User_C.fileComboBox.text())))
 
-    def Make_sock_Win(self,provider_username):
+    def Make_sock_Win(self, provider_username):
+        provider_username_list.append(provider_username)
         if not provider_username:
+            print 'inja'
             return
         if not self.server_is_run:
                 Popen([sys.executable, 'Socket\\server.py'])
                 self.server_is_run = True
         self.sockWin = SocketMainWindow()
+        print 'The UI'
+        print self.sockWin.window_index
         self.sockWin.show()
         #self.Us
 
@@ -405,9 +412,11 @@ def newWindow(addressList):
     newWin.ui.listView.clear()
     listView(history_list[newWin.window_index][0][0], newWin.ui.listView)
     newWin.show()
+
 def updator():
     while True:
         sleep(0.5)
+        print 'kir'
         for window in winList:
             if history_list[window.window_index][here[window.window_index][0]][0]:
                 newFileList = get_files(history_list[window.window_index][here[window.window_index][0]][0])
@@ -417,16 +426,12 @@ def updator():
                 #print "ctr ", ctr, " num ", num
                 while (ctr < num):
                     #print "ctr ", ctr, " num ", num
-                    try:
-                        if str(window.ui.listView.item(ctr).text()) not in newDirList + newFileList:
-                            window.ui.listView.takeItem(ctr)
-                            num -= 1
-                        else:
-                            ctr += 1
-                    except UnicodeEncodeError:
-                        pass
-                    except AttributeError:
-                        pass
+                    print ctr
+                    if str(window.ui.listView.item(ctr).text()) not in newDirList + newFileList:
+                        window.ui.listView.takeItem(ctr)
+                        num -= 1
+                    else:
+                        ctr += 1
                 oldList = []
                 num = window.ui.listView.count()
                 for intItr in range(num):

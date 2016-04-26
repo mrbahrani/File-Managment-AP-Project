@@ -23,6 +23,11 @@ my_username = get_setting_value('user_name')
 while 1:
     main_server, address = socket_obj.accept()
     request = main_server.recv(1024)
+    print """
+    ********************************************
+    **************************
+    ******************
+    """
     print request
     request_list = request.split("|")
     request_type = request_list[0]

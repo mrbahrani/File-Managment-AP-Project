@@ -16,8 +16,11 @@ provider_username_list = []
 #directory which we are in right now (for each window) (directory [0] is for first window) (something like history list last element)
 directory = [""]
 
+
 def get_sock_drivers():
-    file_list_request(get_setting_value("username"),provider_username_list[0],"")
+    if not provider_username_list:
+        return
+    file_list_request(get_setting_value("user_name"), provider_username_list[0],"")
 
 
 def clientListView(final_string,listView):
@@ -46,10 +49,7 @@ def clientListView(final_string,listView):
         new.setText(fileItem)
         icon = QtGui.QIcon(file_icon(fileItem))
         new.setIcon(icon)
-    #result = []
-    #result.append(dirList)
-    #result.append(fileList)
-    #return result
+
 
 def dir_file_list(final_string) :
     #return a list which first element ([0]) is dirList and second element([1]) is fileList

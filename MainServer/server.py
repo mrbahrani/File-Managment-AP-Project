@@ -62,6 +62,10 @@ while True:
         elif request_type in ['3', '4', '5', '6', '7', '8']:
             request_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             request_server, request_port = order(request_list[2])
+            print "IN TEH MAIN SERVER"
+            print request_server
+            print request_port
+            print request
             request_socket.connect((request_server, request_port))
             request_socket.sendall(request)
             request_socket.close()

@@ -15,18 +15,46 @@ from db import *
 from Client import *
 #from Server import last_request_directory_string_list,last_request_directory_list
 from funcssock import *
-#from threading import Thread
+from threading import Thread
 
 
 selected_item = [""]
 username = get_setting_value("username")
 #directory = ""
+get_sock_drivers()
+print "IN THE UI"
+print last_request_directory_list
 
-class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l , User_S):
+
+class RequestCheck(Thread):
+    def __init__(self, list_widget):
+        super(RequestCheck, self).__init__()
+        self.last_request = []
+        self.request = []
+        self.list_widget = list_widget
+
+    def get_request(self):
+        while 1:
+            sleep(0.5)
+            if last_request_directory_list and last_request_directory_list != self.last_request:
+                self.last_request = self.request
+                self.request = last_request_directory_list
+                continue
+
+    def show_list(self):
+        # for element in self.last_request:
+    # clie  ntListView()
+        pass
+
+
+
+class SocketMainWindow(QtGui.QMainWindow, New_File, New_Dir , User_l, User_S):
     index = 0
 
     def __init__(self):
         super(SocketMainWindow, self).__init__()
+        print 'IN uI'
+        print last_request_directory_list
         self.window_index = SocketMainWindow.index
         SocketMainWindow.prepare_indexes()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
@@ -37,7 +65,7 @@ class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l , User_S):
         self.New_File = New_File()
         self.New_Dir = New_Dir()
         self.Rename = Rename_()
-        self.User_D = User_D()
+        self.User_D = User_l()
         self.User_S = User_S()
         self.User_C = User_C()
         self.ui.setupUi(self)
@@ -108,31 +136,35 @@ class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l , User_S):
 
 
     def setup(self):
-        get_sock_drivers()
+        # get_sock_drivers()
         #send request for getting server computer drives
         self.ui.treeWidget.setHeaderLabels(["Directories"])
         model0 = QtGui.QFileSystemModel()
         model0.setRootPath("/")
         self.icon = QtGui.QIcon('icons/driver.ico')
         #cause sending and reciving requst may take some times ... this part is a infinit loop till the server respond
-        while True:
-            if len(last_request_directory_list) != 0:
-                break
-        drivers = last_request_directory_list[0]
-        for driver in drivers:
-            tree_widget_item = QtGui.QTreeWidgetItem(self.ui.treeWidget)
-            tree_widget_item.setText(0, driver[0])
-            tree_widget_item.setIcon(0, self.icon)
-            tree_widget_item.setIcon(1, self.icon)
-            tree_widget_item.dir = driver[0]+":\\"
-            tree_widget_item.isUsed =False
+        # while True:
+        #     if len(last_request_directory_list) != 0:
+        #         break
+        # if last_request_directory_list:
+        #     drivers = last_request_directory_list[0]
+        # else:
+        #     drivers = ['c:', 'd']
+        # for driver in drivers:
+        #     print 'kir'
+        #     tree_widget_item = QtGui.QTreeWidgetItem(self.ui.treeWidget)
+        #     tree_widget_item.setText(0, driver)
+        #     tree_widget_item.setIcon(0, self.icon)
+        #     tree_widget_item.setIcon(1, self.icon)
+        #     tree_widget_item.dir = driver+":\\"
+        #     tree_widget_item.isUsed =False
+        #
+        #     sock_treeView(driver, tree_widget_item)
 
-            sock_treeView(driver, tree_widget_item)
-
-        for driver in drivers:
-            list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
-            list_widget_item.setIcon(QtGui.QIcon('icons\\mycomputer.ico'))
-            list_widget_item.setText(driver)
+        # for driver in drivers:
+        #     list_widget_item = QtGui.QListWidgetItem(self.ui.listView)
+        #     list_widget_item.setIcon(QtGui.QIcon('icons\\mycomputer.ico'))
+        #     list_widget_item.setText(driver)
 
         """
         NOT READY YET
@@ -392,13 +424,59 @@ def newWindow(fulladdress):
     newWin.show()
 
 
+def updator():
+    while True:
+        sleep(0.5)
+        for window in winList:
+            if history_list[window.window_index][here[window.window_index][0]][0]:
+                newFileList = get_files(history_list[window.window_index][here[window.window_index][0]][0])
+                newDirList = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
+                ctr = 0
+                num = window.ui.listView.count()
+                #print "ctr ", ctr, " num ", num
+                while (ctr < num):
+                    #print "ctr ", ctr, " num ", num
+                    try:
+                        if str(window.ui.listView.item(ctr).text()) not in newDirList + newFileList:
+                            window.ui.listView.takeItem(ctr)
+                            num -= 1
+                        else:
+                            ctr += 1
+                    except UnicodeEncodeError:
+                        pass
+                    except AttributeError:
+                        pass
+                oldList = []
+                num = window.ui.listView.count()
+                for intItr in range(num):
+                    oldList.append(str(window.ui.listView.item(intItr).text()))
+                for itr in newDirList:
+                    if not (itr in oldList):
+                        item = QtGui.QListWidgetItem()
+                        item.setText(itr)
+                        icon = QtGui.QIcon("icons\\folder.ico")
+                        item.setIcon(icon)
+                        window.ui.listView.addItem(item)
+                for itr in newFileList:
+                    if not (itr in oldList):
+                        item = QtGui.QListWidgetItem()
+                        item.setText(itr)
+                        icon = QtGui.QIcon(file_icon(itr))
+                        item.setIcon(icon)
+                        window.ui.listView.addItem(item)
+
+            else:
+                newFileList = []
+                newDirList =[]
 
 
 
-#if __name__ == "__main__":
-#    app = QtGui.QApplication(sys.argv)
-#    Win = MainWindow()
-#    upd = Thread(target=updator)
-#    upd.start()
-#    #newWindow(["D:\\ACM like", "D:\\"])
+
+
+if __name__ == "__main__":
+   app = QtGui.QApplication(sys.argv)
+   Win = SocketMainWindow()
+   upd = Thread(target=updator)
+   upd.start()
+   #newWindow(["D:\\ACM like", "D:\\"])
 #    Win.start_show(app)
