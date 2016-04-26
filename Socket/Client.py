@@ -26,7 +26,7 @@ def connect():
         else:
             host = database_server_ip
         if not database_server_port:
-            port = 6985                                         # Server port number
+            port = 6988                                         # Server port number
         else:
             port = database_server_port
         socket_obj.connect((host, port))

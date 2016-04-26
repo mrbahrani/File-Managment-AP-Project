@@ -5,9 +5,16 @@ from os.path import isdir, isfile
 from os import listdir
 from db import  get_setting_value
 from Client import *
+#from __Classes import *
+
+#this two lists keeping last request of file and dir list from server
+last_request_directory_list = []
+last_request_directory_string_list=[]
 
 provider_username_list = []
 
+#directory which we are in right now (for each window) (directory [0] is for first window) (something like history list last element)
+directory = [""]
 
 def get_sock_drivers():
     file_list_request(get_setting_value("username"),provider_username_list[0],"")
@@ -45,6 +52,7 @@ def clientListView(final_string,listView):
     #return result
 
 def dir_file_list(final_string) :
+    #return a list which first element ([0]) is dirList and second element([1]) is fileList
     initList = final_string.split("|")
     fileList = []
     dirList = []
@@ -57,9 +65,10 @@ def dir_file_list(final_string) :
     result.append(dirList)
     result.append(fileList)
     return result
+
 def sock_list_Dclicked(*args):
     """
-    :param args:0.current address,1.file name(+format),2.list widget
+    :param args:0.current address,1.file name(+format),2.list widget,3.line edit,4.window index
     :return:
     :param args:
     :return:
@@ -70,13 +79,15 @@ def sock_list_Dclicked(*args):
         args[2].clear()
         # print curDir.fullAddress
         print curDir.fullAddress
-        listView(curDir.fullAddress, args[2])
-        add_here(args[1], args[4])
+        clientListView(curDir.fullAddress, args[2])
+        #add_here(args[1], args[4])
+        directory[args[4]] += (args[1])
         args[3].setText(args[1])
     elif args[0] == "*\\*":
         args[2].clear()
-        listView(args[1], args[2])
-        add_here(args[1], args[4])
+        clientListView(args[1], args[2])
+        #add_here(args[1], args[4])
+        directory[args[4]] += (args[1])
         args[3].setText(args[1])
 
     elif isdir(args[0] + "\\" + args[1]):
@@ -84,8 +95,9 @@ def sock_list_Dclicked(*args):
         curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
         #print curDir.fullAddress
-        listView(curDir.fullAddress + "\\", args[2])
-        add_here(curDir.fullAddress, args[4])
+        clientListView(curDir.fullAddress + "\\", args[2])
+        #add_here(curDir.fullAddress, args[4])
+        directory[args[4]] += ('\\'+args[1])
         args[3].setText(curDir.fullAddress)
     else:
         print args[0] + "\\" +args[1],"that"
@@ -96,3 +108,25 @@ def sock_list_Dclicked(*args):
     # print "***********"
     # print history_list
     # print "XXXXXXXXXXXXXXXXXXXXXXXXX"
+
+def sock_treeView(fullPath,qwtIt):
+    #This function visualizes the tree view of the directories
+    try:
+        if not qwtIt.isUsed:
+            dirList= dir_file_list(fullPath)[0]
+            if bool(dirList):
+                for it in dirList:
+                    icon = QtGui.QIcon('icons/folder.ico')
+                    i = QtGui.QTreeWidgetItem()
+                    i.setText(0,it)
+                    i.setIcon(0,icon)
+                    i.dir = fullPath+it+"\\"
+                    i.isUsed = False
+                    qwtIt.addChild(i)
+
+    except WindowsError:
+        print("Accsess denied")
+    except Exception, e:
+        print("An unwanted exception occurred!!")
+        print e
+    qwtIt.isUsed = True

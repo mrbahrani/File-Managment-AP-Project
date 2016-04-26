@@ -16,6 +16,7 @@ from Socket.Client import *
 from Socket.db import set_setting
 from Socket.funcssock import *
 import sys
+from threading import Thread
 # add_here('\\')
 # add_here('E:\\Music\\')
 selected_item = [""]
@@ -174,7 +175,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             self.menu.addAction(delete_actio)
 
             rename_actio = QtGui.QAction("Rename",self)
-            rename_actio.triggered.connect(self.copy)
+            rename_actio.triggered.connect(self.rename)
             self.menu.addAction(rename_actio)
 
         self.menu.popup(QtGui.QCursor.pos())
@@ -200,11 +201,12 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui, self.window_index))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui, self.window_index))
         self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
+        self.Rename.RenameButton.clicked.connect(self.done_rename_)
 
     def selected_saver(self, item, selected_item_list=selected_item):
         """
         | This method saves text of selected item into the selected_item list
-         selected_saver(self, item[, selected_item_list=selected_item])
+         selected_saver(self, item[, selected_item_lis  t=selected_item])
          :param item:Object
          :param selected_item_list:list
         """
@@ -225,9 +227,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
             this_dir = history_list[self.window_index][here[self.window_index][0]][0]
             list_dir = this_dir.split("\\")
             p_dir = ""
-            for i in range(len(list_dir)-2):
+            for i in range(len(list_dir)-1):
                 p_dir = p_dir + list_dir[i] + "\\"
-            add_here(p_dir, self.window_index, self.window_index)
+
+            p_dir = p_dir[0:len(p_dir)-1]
+            add_here(p_dir, self.window_index)
             self.ui.lineEdit.setText(p_dir)
             self.ui.listView.clear()
             listView(p_dir,self.ui.listView)
@@ -274,8 +278,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.ui.listView.clear()
         delete_action(item[0], history_list[self.window_index][here[self.window_index][0]][0], self.ui.listView)
 
-    def rename(self ):
+    def rename(self):
         self.Rename.rename_()
+
+    def done_rename_(self,action , item=selected_item):
+        done_rename(item[0], history_list[self.window_index][here[self.window_index][0]][0] + '\\' +  item[0])
 
     def search(self, item):
         add_here(history_list[self.window_index][here[self.window_index][0]][0], self.window_index)
@@ -372,8 +379,57 @@ def newWindow(addressList):
     newWin.ui.listView.clear()
     listView(history_list[newWin.window_index][0][0], newWin.ui.listView)
     newWin.show()
+def updator():
+    while True:
+        sleep(0.5)
+        for window in winList:
+            if history_list[window.window_index][here[window.window_index][0]][0]:
+                newFileList = get_files(history_list[window.window_index][here[window.window_index][0]][0])
+                newDirList = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
+                ctr = 0
+                num = window.ui.listView.count()
+                #print "ctr ", ctr, " num ", num
+                while (ctr < num):
+                    #print "ctr ", ctr, " num ", num
+                    try:
+                        if str(window.ui.listView.item(ctr).text()) not in newDirList + newFileList:
+                            window.ui.listView.takeItem(ctr)
+                            num -= 1
+                        else:
+                            ctr += 1
+                    except UnicodeEncodeError:
+                        pass
+                    except AttributeError:
+                        pass
+                oldList = []
+                num = window.ui.listView.count()
+                for intItr in range(num):
+                    oldList.append(str(window.ui.listView.item(intItr).text()))
+                for itr in newDirList:
+                    if not (itr in oldList):
+                        item = QtGui.QListWidgetItem()
+                        item.setText(itr)
+                        icon = QtGui.QIcon("icons\\folder.ico")
+                        item.setIcon(icon)
+                        window.ui.listView.addItem(item)
+                for itr in newFileList:
+                    if not (itr in oldList):
+                        item = QtGui.QListWidgetItem()
+                        item.setText(itr)
+                        icon = QtGui.QIcon(file_icon(itr))
+                        item.setIcon(icon)
+                        window.ui.listView.addItem(item)
+
+            else:
+                newFileList = []
+                newDirList =[]
+
+
+
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     Win = MainWindow()
+    upd = Thread(target=updator)
+    upd.start()
     #newWindow(["D:\\ACM like", "D:\\"])
     Win.start_show(app)

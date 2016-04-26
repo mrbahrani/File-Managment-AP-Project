@@ -1,4 +1,4 @@
-from os import rename, access, remove, R_OK, F_OK, startfile, listdir , mkdir
+from os import rename, access, remove, R_OK, F_OK, startfile, listdir , mkdir ,renames
 from os.path import isdir
 from __ErrorHandler import error_show
 from __exceptions import FileNotExist,NoPermission
@@ -456,6 +456,7 @@ class User_C(QtGui.QDialog):
         return line
 
 class Rename_(QtGui.QDialog):
+    item_list = []
     def __init__(self):
 
         super(Rename_, self).__init__()
@@ -466,7 +467,7 @@ class Rename_(QtGui.QDialog):
         self.RenameButton = self.createButton("&done",self.create)
 
 
-        self.fileComboBox = self.createLineEdit()
+        self.fileLineEdit = QtGui.QLineEdit()
 
         fileLabel = QtGui.QLabel("Rename")
 
@@ -476,21 +477,21 @@ class Rename_(QtGui.QDialog):
         buttonsLayout.addWidget(self.RenameButton)
         mainLayout = QtGui.QGridLayout()
         mainLayout.addWidget(fileLabel, 0, 0)
-        mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
+        mainLayout.addWidget(self.fileLineEdit, 0, 1, 1, 2)
         mainLayout.addWidget(self.filesFoundLabel, 3, 0)
         mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
         self.setLayout(mainLayout)
 
         self.create()
 
-        self.setWindowTitle("Setting")
+        self.setWindowTitle("Rename")
         self.resize(200, 200)
 
     def create(self):
+        file_name = self.fileLineEdit.text()
+        Rename_.item_list = [str(file_name)]
+        self.fileLineEdit.clear()
 
-        file_name = self.fileComboBox
-
-        self.item_list = [str(file_name)]
 
     def rename_(self):
         self.show()
@@ -503,7 +504,6 @@ class Rename_(QtGui.QDialog):
     def createLineEdit(self, text=""):
         line = QtGui.QLineEdit()
         return line
-
 # if __name__ == '__main__':
 #
 #     import sys
