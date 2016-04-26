@@ -1,6 +1,9 @@
 import socket
-from events import *
+import sys
+import os.path
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from search import search
+from events import copy_action, cut_action, paste_action, delete_action
 from os.path import isdir, isfile
 from os import listdir
 from db import get_setting_value, create_settings_table
@@ -26,7 +29,7 @@ def connect():
         else:
             host = database_server_ip
         if not database_server_port:
-            port = 6988                                         # Server port number
+            port = 6985                                         # Server port number
         else:
             port = database_server_port
         socket_obj.connect((host, port))
@@ -123,6 +126,7 @@ def send_result(result_string):
     """
     connection_obj = connect()
     connection_obj.sendall(result_string)
+    print connection_obj.recv(1021)
     close_connection(connection_obj)
 
 

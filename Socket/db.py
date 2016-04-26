@@ -56,7 +56,10 @@ def set_setting(setting_name_string, setting_value_string):
             row_ids = cursor.execute('SELECT id FROM settings')
             row_ids = row_ids.fetchall()
             print row_ids
-            row_id = max([id_num[0] for id_num in row_ids]) + 1
+            try:
+                row_id = max([id_num[0] for id_num in row_ids]) + 1
+            except ValueError:
+                row_id = 0
             print 'kir'
             print setting_name_string
             print setting_value_string

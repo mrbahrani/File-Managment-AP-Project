@@ -58,9 +58,16 @@ def validate_user(user_name, password):
     with connection_obj:
         cursor = connection_obj.cursor()
         execute = cursor.execute("SELECT password FROM users WHERE user_name = '" + user_name + "'")
-        saved_password = execute.fetchall()
         try:
-            if saved_password[0] == password:
+            saved_password = str(execute.fetchall()[0][0])
+            print 'kir in db'
+            print saved_password
+        except IndexError:
+            print 'kir in db exception'
+            print execute.fetchall()
+            saved_password = ''
+        try:
+            if saved_password == password:
                 return True
         except IndexError:
             return False

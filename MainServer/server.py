@@ -38,6 +38,7 @@ while True:
         is_valid = validate_user(request_list[1], request_list[2])
         if not is_valid:
             print 'not logged in'
+            print request_list
             client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
             client_socket.close()
             continue

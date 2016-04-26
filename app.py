@@ -17,12 +17,13 @@ from Socket.db import set_setting
 from Socket.funcssock import *
 import sys
 from threading import Thread
+from subprocess import Popen
 # add_here('\\')
 # add_here('E:\\Music\\')
 selected_item = [""]
-# Fuck me
 
-class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
+
+class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S , User_C):
     index = 0
 
     def __init__(self):
@@ -30,13 +31,14 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.window_index = MainWindow.index
         MainWindow.prepare_indexes()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
-        #self.prepare_lists()
+        self.server_is_run = False
         self.New_File = New_File()
         self.ui = Ui_MainWindow()
         self.New_File = New_File()
         self.New_Dir = New_Dir()
         self.Rename = Rename_()
-        self.User_D = User_D()
+        self.User_l = User_l()
+        self.User_SU = User_SU()
         self.User_S = User_S()
         self.User_C = User_C()
         self.ui.setupUi(self)
@@ -188,7 +190,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.ui.actionCut.triggered.connect(self.cut)
         self.ui.actionNewFile.triggered.connect(self.NewFile)
         self.ui.actionNewDir.triggered.connect(self.NewDir)
-        self.ui.actionSingUp.triggered.connect(lambda : self.User("SingUp"))
+        self.ui.actionSingUp.triggered.connect(lambda : self.User_("SingUp"))
         self.ui.actionLogin.triggered.connect(lambda : self.User("Login"))
         #self.ui.actionLogin.triggered.connect(self.User)
         #self.ui.actionLogin.triggered.connect(self.User)
@@ -197,7 +199,8 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         # self.ui.pushButton_3.clicked.connect(self.forward)
         self.ui.actionSetting.triggered.connect(self.Setting)
         self.ui.actionConnect.triggered.connect(self.Connect)
-        self.User_D.SingButton.clicked.connect(self.send_result_)
+        self.User_l.SingButton.clicked.connect(self.send_result_)
+        self.User_SU.SingButton.clicked.connect(self.send_result__)
         self.ui.pushButton_2.clicked.connect(lambda: history_back(self.ui, self.window_index))
         self.ui.pushButton_3.clicked.connect(lambda: history_forward(self.ui, self.window_index))
         self.ui.lineEdit_2.returnPressed.connect(lambda: self.search(self.ui.lineEdit_2.text()))
@@ -260,11 +263,25 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         cut_action(item[0], history_list[self.window_index][here[self.window_index][0]][0])
 
     def send_result_(self):
-        print self.User_D.item_list , 123456
-        if self.User_D.item_list[0] and self.User_D.item_list[1]:
-            set_setting("user_name", self.User_D.item_list[0])
-            send_result("0|" + self.User_D.item_list[0] + "|" + self.User_D.item_list[1])
+        print self.User_l.item_list , 123456
+        if self.User_l.item_list[0] and self.User_l.item_list[1]:
+            if not self.server_is_run:
+                Popen([sys.executable, 'Socket\\server.py'])
+                self.server_is_run = True
+            print 'opened'
+            set_setting("user_name", self.User_l.item_list[0])
+            send_result("0|" + self.User_l.item_list[0] + "|" + self.User_l.item_list[1])
             print 1
+
+    def send_result__(self):
+        print self.User_SU.item_list, 123456
+        if self.User_SU.item_list[0] and self.User_SU.item_list[1]:
+            if not self.server_is_run:
+                Popen([sys.executable, 'Socket\\server.py'])
+                self.server_is_run = True
+            set_setting("user_name", self.User_SU.item_list[0])
+            send_result("1|" + self.User_SU.item_list[0] + "|" + self.User_SU.item_list[1] + "|" + '127.0.0.1' + "|" + "6985" + "|" + "1")
+            print 0
 
     def paste(self, action):
         """
@@ -328,6 +345,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
         self.User_C.SingButton.clicked.connect(lambda : self.Make_sock_Win(provider_username_list[0]))
 
     def Make_sock_Win(self,provider_username):
+        if not provider_username:
+            return
+        if not self.server_is_run:
+                Popen([sys.executable, 'Socket\\server.py'])
+                self.server_is_run = True
         self.sockWin = SocketMainWindow()
         self.sockWin.show()
         #self.Us
@@ -372,7 +394,11 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
                     file_object.copy(current_directory)
 
     def User(self , action):
-        self.User_D._User(self ,action)
+        self.User_l._User(self ,action)
+
+    def User_(self , action):
+        self.User_SU._User_(self ,action)
+
 def newWindow(addressList):
     newWin = MainWindow()
     history_list[newWin.window_index]=[addressList]

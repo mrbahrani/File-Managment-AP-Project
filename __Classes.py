@@ -295,10 +295,72 @@ class New_Dir(QtGui.QDialog):
         line = QtGui.QLineEdit()
         return line
 
-class User_D(QtGui.QDialog):
+class User_l(QtGui.QDialog):
     def __init__(self):
 
-        super(User_D, self).__init__()
+        super(User_l, self).__init__()
+
+        self.path = ''
+
+
+        self.quitButton = self.createButton("&Quit",self.close)
+        self.SingButton = self.createButton("&SingUp", self.create)
+
+
+        self.fileComboBox = self.createLineEdit()
+        self.textComboBox = self.createLineEdit()
+
+
+        fileLabel = QtGui.QLabel("Userame:")
+        textLabel = QtGui.QLabel("Password:")
+
+
+
+        self.filesFoundLabel = QtGui.QLabel()
+        buttonsLayout = QtGui.QHBoxLayout()
+        buttonsLayout.addWidget(self.SingButton)
+        buttonsLayout.addWidget(self.quitButton)
+        mainLayout = QtGui.QGridLayout()
+        mainLayout.addWidget(fileLabel, 0, 0)
+        mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
+        mainLayout.addWidget(textLabel, 1, 0)
+        mainLayout.addWidget(self.textComboBox, 1, 1, 1, 2)
+        mainLayout.addWidget(self.filesFoundLabel, 3, 0)
+        mainLayout.addLayout(buttonsLayout, 3, 0, 1, 3)
+        self.setLayout(mainLayout)
+
+        self.create()
+
+        self.setWindowTitle("Login")
+        self.resize(200, 200)
+
+
+    def create(self):
+        User = self.fileComboBox.text()
+        Pass = self.textComboBox.text()
+
+        self.item_list = [str(User), str(Pass)]
+
+        #if self.item_list[0] and self.item_list[1]:
+         #   send_result("0|" + self.item_list[0] + "|" + self.item_list[1])
+
+    def _User(self ,app , action ):
+            self.SingButton.setText(action)
+            self.show()
+
+    def createButton(self, text, member):
+        button = QtGui.QPushButton(text)
+        button.clicked.connect(member)
+        return button
+
+    def createLineEdit(self, text=""):
+        line = QtGui.QLineEdit()
+        return line
+
+class User_SU(QtGui.QDialog):
+    def __init__(self):
+
+        super(User_SU, self).__init__()
 
         self.path = ''
 
@@ -344,7 +406,7 @@ class User_D(QtGui.QDialog):
         #if self.item_list[0] and self.item_list[1]:
          #   send_result("0|" + self.item_list[0] + "|" + self.item_list[1])
 
-    def _User(self ,app , action ):
+    def _User_(self ,app , action ):
             self.SingButton.setText(action)
             self.show()
 

@@ -22,7 +22,7 @@ selected_item = [""]
 username = get_setting_value("username")
 #directory = ""
 
-class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_D , User_S):
+class SocketMainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l , User_S):
     index = 0
 
     def __init__(self):

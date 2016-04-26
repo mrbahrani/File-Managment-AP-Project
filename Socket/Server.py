@@ -1,15 +1,21 @@
 import socket
-from Client import *
-from db import *
+import sys
+# import os.path
+# sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from Socket.Client import *
+from Socket.db import *
 import socket
-from funcssock import *
+from Socket.funcssock import *
 
 #last_request_directory_list = []
 #last_request_directory_string_list=[]
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = '127.0.0.1'                                   # Gets server ip from data base
-port = get_setting_value('server_port')                                 # Gets server port from data base
-socket_obj.bind((host, port))
+host = get_setting_value('server_id')                                   # Gets server ip from data base
+port = get_setting_value('port_number')                                 # Gets server port from data base
+# port = 8585
+print host
+print socket
+socket_obj.bind((host[0], int(port[0])))
 socket_obj.listen(1)
 my_username = get_setting_value('user_name')
 
@@ -17,6 +23,7 @@ my_username = get_setting_value('user_name')
 while 1:
     main_server, address = socket_obj.accept()
     request = main_server.recv(1024)
+    print request
     request_list = request.split("|")
     request_type = request_list[0]
     if request_type == '3':                         # Send files list request scope
