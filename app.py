@@ -263,6 +263,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
         cut_action(item[0], history_list[self.window_index][here[self.window_index][0]][0])
 
     def send_result_(self):
+        #for login
         print self.User_l.item_list , 123456
         if self.User_l.item_list[0] and self.User_l.item_list[1]:
             if not self.server_is_run:
@@ -274,6 +275,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
             print 1
 
     def send_result__(self):
+        #for sing up
         print self.User_SU.item_list, 123456
         if self.User_SU.item_list[0] and self.User_SU.item_list[1]:
             if not self.server_is_run:
@@ -424,6 +426,7 @@ class Updator(QtCore.QThread):
             except Exception:
                 pass
             print 'kir'
+
             for window in winList:
                 if history_list[window.window_index][here[window.window_index][0]][0]:
                     newFileList = get_files(history_list[window.window_index][here[window.window_index][0]][0])
@@ -433,7 +436,7 @@ class Updator(QtCore.QThread):
                     # print "ctr ", ctr, " num ", num
                     while (ctr < num):
                         # print "ctr ", ctr, " num ", num
-                        print ctr
+                        #print ctr
                         if str(window.ui.listView.item(ctr).text()) not in newDirList + newFileList:
                             window.ui.listView.takeItem(ctr)
                             num -= 1

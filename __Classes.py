@@ -420,6 +420,7 @@ class User_SU(QtGui.QDialog):
         return line
 
 class User_S(QtGui.QDialog):
+    #setting
     def __init__(self):
 
         super(User_S, self).__init__()
@@ -472,6 +473,7 @@ class User_S(QtGui.QDialog):
         self.port = self.text1ComboBox.text()
 
 class User_C(QtGui.QDialog):
+    #connect
     def __init__(self):
 
         super(User_C, self).__init__()
