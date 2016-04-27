@@ -19,7 +19,7 @@ from threading import Thread
 
 
 selected_item = [""]
-username = get_setting_value("username")
+username = get_setting_value("user_name")
 #directory = ""
 get_sock_drivers()
 print "IN THE UI"
@@ -56,7 +56,7 @@ class SocketMainWindow(QtGui.QMainWindow, New_File, New_Dir , User_l, User_S):
     def __init__(self):
         super(SocketMainWindow, self).__init__()
         print 'IN uI'
-        print file_list_request(get_setting_value("user_name")[0], provider_username_list[0],"")
+        print file_list_request(get_setting_value("user_name"), provider_username_list[0],"")
         print last_request_directory_list
         self.window_index = SocketMainWindow.index
         SocketMainWindow.prepare_indexes()

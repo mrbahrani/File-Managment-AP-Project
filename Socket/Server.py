@@ -10,15 +10,19 @@ from Socket.funcssock import *
 #last_request_directory_list = []
 #last_request_directory_string_list=[]
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+create_settings_table()
 host = get_setting_value('server_id')                                   # Gets server ip from data base
 port = get_setting_value('port_number')                                 # Gets server port from data base
 # port = 8585
+print "-----"
 print host
 print socket
-socket_obj.bind((host[0], int(port[0])))
-socket_obj.listen(1)
-my_username = get_setting_value('user_name')
-
+# try:
+socket_obj.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+socket_obj.bind((host, int(port)))
+socket_obj.listen(10)
+my_username = str(get_setting_value('user_name')[0])
+print 'Socket server is running now in ' + host + ' and '+ port
 
 while 1:
     main_server, address = socket_obj.accept()
@@ -77,4 +81,10 @@ while 1:
         main_server.sendall('0|')                           # If the request is not valid 0|
         main_server.close()
         break
-print 'tamom'
+# except socket.error:
+#     print 'socket error'
+# except Exception as e:
+#     print 'client socket error'
+#     print e
+# finally:
+socket_obj.close()

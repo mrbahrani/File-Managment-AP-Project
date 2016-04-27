@@ -17,7 +17,7 @@ from Socket.db import set_setting
 from Socket.funcssock import *
 import sys
 from threading import Thread
-from subprocess import Popen
+from subprocess import Popen, PIPE, STDOUT
 # add_here('\\')
 # add_here('E:\\Music\\')
 selected_item = [""]
@@ -31,7 +31,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
         self.window_index = MainWindow.index
         MainWindow.prepare_indexes()
         self.setWindowIcon(QtGui.QIcon('icons\\mycomputer.ico'))
-        self.sub_proccess = ''
         self.server_is_run = False
         self.New_File = New_File()
         self.ui = Ui_MainWindow()
@@ -244,9 +243,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
 
     def start_show(self, app):
         self.show()
-        if sys.exit(app.exec_()):
-            if self.sub_proccess:
-                self.sub_proccess.kill()
+        sys.exit(app.exec_())
 
     def copy(self, action, item=selected_item):
         """
@@ -269,7 +266,7 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
         print self.User_l.item_list , 123456
         if self.User_l.item_list[0] and self.User_l.item_list[1]:
             if not self.server_is_run:
-                self.sub_proccess = Popen([sys.executable, 'Socket\\server.py'])
+                Popen('python ' + os.path.dirname(os.path.abspath(__file__)), shell=True, stdout=PIPE, stderr=STDOUT)
                 self.server_is_run = True
             print 'opened'
             set_setting("user_name", self.User_l.item_list[0])
@@ -280,11 +277,13 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
         print self.User_SU.item_list, 123456
         if self.User_SU.item_list[0] and self.User_SU.item_list[1]:
             if not self.server_is_run:
-                self.sub_proccess = Popen([sys.executable, 'Socket\\server.py'])
+                Popen('python ' + os.path.dirname(os.path.abspath(__file__)), shell=True, stdout=PIPE, stderr=STDOUT)
                 self.server_is_run = True
             set_setting("user_name", self.User_SU.item_list[0])
-            local_server = get_setting_value('server_id')[0]
-            local_port = get_setting_value('port_number')[0]
+            local_server = get_setting_value('server_id')
+            print local_server
+            local_port = get_setting_value('port_number')
+            print local_port
             # print local_server
             # print local_port
             send_result("1|" + self.User_SU.item_list[0] + "|" + self.User_SU.item_list[1] + "|" + local_server + "|" + local_port + "|" + "1")
@@ -420,6 +419,10 @@ class Updator(QtCore.QThread):
     def run(self):
         while True:
             sleep(0.5)
+            try:
+                Popen('python ' + os.path.dirname(os.path.abspath(__file__)), shell=True, stdout=PIPE, stderr=STDOUT)
+            except Exception:
+                pass
             print 'kir'
             for window in winList:
                 if history_list[window.window_index][here[window.window_index][0]][0]:

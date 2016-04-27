@@ -25,6 +25,7 @@ logged_in_users = []
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = '127.0.0.1'
 port = 6985
+# try:
 socket_obj.bind((host, port))
 socket_obj.listen(10)
 create_users_table()
@@ -61,17 +62,23 @@ while True:
             continue
         elif request_type in ['3', '4', '5', '6', '7', '8']:
             request_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            request_server, request_port = order(request_list[2])
+            print 'kiri'
+            print order(request_list[2])
+            order_result = order(request_list[2])[0]
+            request_server = order_result[0]
+            request_port = order_result[1]
             print "IN TEH MAIN SERVER"
             print request_server
             print request_port
             print request
-            request_socket.connect((request_server, request_port))
+            request_socket.connect((request_server, int(request_port)))
             request_socket.sendall(request)
             request_socket.close()
             client_socket.close()
             continue
         elif request_type in ['9', '10', '11', '12', '13']:
+            print 'send request'
+            print request
             request_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             request_server, request_port = order(request_list[1])
             request_socket.connect((request_server, request_port))
@@ -83,3 +90,7 @@ while True:
         client_socket.sendall('0|')                           # If the user name or password is incorrect return 0|
         client_socket.close()
         continue
+# except socket.error:
+#     print 'problem'
+# finally:
+socket_obj.close()

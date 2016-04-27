@@ -102,5 +102,7 @@ def order(provider):
         # execute = cursor.execute("SELECT ready_state FROM users WHERE user_name = " + provider)
         # state = execute.fetchall()
         # if state:
-        execute = cursor.execute("SELECT server_id, port FROM users WHERE user_name = " + provider)
-        return execute.fetchall()
+        execute = cursor.execute("SELECT server_id, port FROM users WHERE user_name = '" + provider + "'")
+        result = execute.fetchall()
+        print result
+        return result

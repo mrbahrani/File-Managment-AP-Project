@@ -30,10 +30,15 @@ def get_setting_value(setting_name):
     """
     connection_obj = connect_db()
     cursor = connection_obj.cursor()
+    print 'get setting value'
     execute = cursor.execute("SELECT setting_value FROM settings WHERE setting_name = '" + setting_name + "'")
+    execute2 = cursor.execute('SELECT * FROM settings')
+    print execute2.fetchall()
+    print 'end of get setting value'
     setting_value = execute.fetchall()
     connection_obj.close()
     try:
+        print setting_value
         return setting_value[0]
     except IndexError:
         return ""
