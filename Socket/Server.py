@@ -2,8 +2,8 @@ import socket
 import sys
 # import os.path
 # sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from Socket.Client import *
-from Socket.db import *
+from Client import *
+from db import *
 import socket
 from Socket.funcssock import *
 
@@ -15,7 +15,10 @@ port = get_setting_value('port_number')                                 # Gets s
 # port = 8585
 print host
 print socket
-socket_obj.bind((host[0], int(port[0])))
+#i think server must bind on local host all the times
+#socket_obj.bind((host[0], int(port[0])))
+socket_obj.bind(("127.0.0.1", int(port[0])))
+
 socket_obj.listen(1)
 my_username = get_setting_value('user_name')
 
