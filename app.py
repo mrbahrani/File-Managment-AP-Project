@@ -425,7 +425,7 @@ class Updator(QtCore.QThread):
                 Popen('python ' + os.path.dirname(os.path.abspath(__file__)), shell=True, stdout=PIPE, stderr=STDOUT)
             except Exception:
                 pass
-            print 'kir'
+            #print 'kir'
 
             for window in winList:
                 if history_list[window.window_index][here[window.window_index][0]][0]:

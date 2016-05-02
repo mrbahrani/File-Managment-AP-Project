@@ -28,6 +28,8 @@ def connect():
     print "%%%%%%%%%%"
     print database_server_port
     print database_server_ip
+    database_server_port=6985
+    database_server_ip = '169.254.17.121'
     if not database_server_ip:
         host = '127.0.0.1'                              # Server Ip address
     else:
