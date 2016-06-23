@@ -27,34 +27,44 @@ def add_here(directory_path, window_index,h_list=history_list, here_index=here, 
     :param h_list:list
     :param here_index:list
     """
+    print 'KIR PARENT'
+    print parent
     directory = Directory(directory_path)
     # try:
         # print h_list
     index = here_index[window_index][0]
     if parent is None:
-        for element_index in range(len(h_list) - 1, 0, -1):
+        for element_index in range(len(h_list[window_index]) - 1, 0, -1):
             print 'kiri'
-            print range(len(h_list) - 1)
+            # print range(len(h_list[window_index]) - 1)
             print h_list[window_index]
+            print h_list[window_index][element_index][1]
+            print directory.parent
+            print h_list[window_index][element_index][1] == directory.parent
             try:
                 if h_list[window_index][element_index][1] == directory.parent:
                     # print "---------------------------------"
                     # print h_list[element_index][1]
                     # print directory.parent
                     # print "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
-                    for element in range(len(h_list) - 1, element_index - 1, -1):
+                    for element in range(len(h_list[window_index]) - 1, element_index - 1, -1):
                         h_list[window_index].pop()
                     here_index[window_index].pop()
                     h_list[window_index].append([directory_path.replace('\\\\', '\\'), directory.parent])
                     here_index[window_index].append(len(h_list) - 1)
                     return
             except IndexError:
-                pass
+                print 'KIIIIIRRR'
+                print h_list[window_index][element_index][1]
+                print h_list[window_index]
         h_list[window_index].append([directory_path.replace('\\\\', '\\'), directory.parent])
     else:
         h_list[window_index].append([directory_path.replace('\\\\', '\\'), "*"])
     here_index[window_index].pop()
     here_index[window_index].append(index + 1)
+    print 'ADD HERE KIR'
+    print h_list[window_index]
+    # print h_list[window_index]
 
     # except Exception as e:
     #     print directory_path
@@ -86,6 +96,7 @@ def history_back(ui, window_index, index=here, history=history_list):
             else:
                 listView("", ui.listView)
                 ui.lineEdit.setText("")
+        print index
     except IndexError:
         return 'index error'
 

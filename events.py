@@ -153,6 +153,7 @@ def list_Dclicked(*args):
     :return:
     """
     lLock[args[4]].acquire()
+    print args
     if not (args[0]):
         curDir = Directory(args[1])
         args[2].clear()
@@ -168,7 +169,8 @@ def list_Dclicked(*args):
         args[3].setText(args[1])
 
     elif isdir(args[0] + "\\" + args[1]):
-        print args[0] + "\\" + args[1],"this"
+        # print args[0] + "\\" + args[1],"this"
+
         curDir = Directory(args[0] + "\\" +args[1])
         args[2].clear()
         #print curDir.fullAddress
@@ -177,6 +179,10 @@ def list_Dclicked(*args):
         args[3].setText(curDir.fullAddress)
     else:
         print args[0] + "\\" +args[1],"that"
+        print 'KIR IN DCLICK'
+        print args
+        print history_list
+        print here
         curFile =File(args[0] + "\\" +args[1])
         print curFile.fullPath,
         curFile.openf()

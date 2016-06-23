@@ -27,6 +27,7 @@ class File(object):
         :param self : Object
         """
         if not access(self.fullPath, F_OK):
+            print self.fullPath
             raise FileNotExist
 
     def __reachable(self):
@@ -369,12 +370,12 @@ class User_S(QtGui.QDialog):
         self.SingButton = self.createButton("&Ok", self.create)
 
 
-        self.fileComboBox = self.createLineEdit()
+        # self.fileComboBox = self.createLineEdit()
         self.textComboBox = self.createLineEdit()
         self.text1ComboBox = self.createLineEdit()
 
 
-        fileLabel = QtGui.QLabel("Username")
+        # fileLabel = QtGui.QLabel("Username")
         textLabel = QtGui.QLabel("Server ip")
         text1Label = QtGui.QLabel("Server Port")
 
@@ -384,8 +385,8 @@ class User_S(QtGui.QDialog):
         buttonsLayout.addWidget(self.SingButton)
         buttonsLayout.addWidget(self.quitButton)
         mainLayout = QtGui.QGridLayout()
-        mainLayout.addWidget(fileLabel, 0, 0)
-        mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
+        # mainLayout.addWidget(fileLabel, 0, 0)
+        # mainLayout.addWidget(self.fileComboBox, 0, 1, 1, 2)
         mainLayout.addWidget(textLabel, 1, 0)
         mainLayout.addWidget(self.textComboBox, 1, 1, 1, 2)
         mainLayout.addWidget(text1Label, 2, 0)

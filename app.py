@@ -237,6 +237,7 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
             set_setting("user_name", self.User_D.item_list[0])
             send_result("0|" + self.User_D.item_list[0] + "|" + self.User_D.item_list[1])
             print 1
+
     def cut(self, action, item=selected_item):
         """
         | This method calls cut_action function for selected item
@@ -283,14 +284,22 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_D,User_S):
             listView(result, self.ui.listView)
             add_here("*\\*", self.window_index)
 
-
     def Setting(self):
+        """
+        | setting action
+        | settings names: server_ip , server_port
+        """
+        print 'kir'
         self.User_S._Setting_()
+        self.User_S.SingButton.clicked.connect(lambda: self.setting_ok)
 
+    def setting_ok(self):
+        set_setting('server_ip', self.User_S.text1ComboBox.text())
+        set_setting('server_port', self.User_S.text1ComboBox.text())
 
     def Connect(self):
         self.User_C._Setting_C()
-        self.Us
+
 
 
     def NewDir(self):
@@ -362,10 +371,14 @@ class Updator(QtCore.QThread):
                     newListF = get_files(history_list[window.window_index][here[window.window_index][0]][0])
                 ctr = window.ui.listView.count()
                 for itr in range(ctr):
-                    try:
-                        oldList += [str(window.ui.listView.item(itr).text())]
-                    except UnicodeEncodeError as e:
-                        print "UNICODE ERROR"
+                    # try:
+                        # print str(window.ui.listView.item(itr).text())
+                    print itr
+                    oldList += [u' '.join(str(window.ui.listView.item(itr).text()))]
+                    # except UnicodeEncodeError as e:
+                        # print window.ui.listView.item
+                        # print str(window.ui.listView.item(itr).text())
+                        # print "UNICODE ERROR"
             # *********************************
                 if newListF is None:
                     return
@@ -400,11 +413,14 @@ class Updator(QtCore.QThread):
                 holder = 0
                 while holder <num_of_items:
                     if window.ui.listView.item(holder):
-                        if str(window.ui.listView.item(holder).text()) in ommitList:
-                            window.ui.listView.takeItem(holder)
-                            num_of_items -=1
-                        else:
-                            holder +=1
+                        try:
+                            if str(window.ui.listView.item(holder).text()) in ommitList:
+                                window.ui.listView.takeItem(holder)
+                                num_of_items -=1
+                            else:
+                                holder +=1
+                        except UnicodeEncodeError:
+                            pass
             # *********************************
                 oldList = []
                 lLock[window.window_index].release()
@@ -435,7 +451,7 @@ if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     Win = MainWindow()
     windowList.append(Win)
-    updator = Updator(windowList)
-    updator.start()
+    # updator = Updator(windowList)
+    # updator.start()
     Win.start_show(app)
-    updator.terminate()
+    # updator.terminate()
