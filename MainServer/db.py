@@ -7,15 +7,21 @@ List of included functions :
 4.add_new_directory
 5.get_directory_childrens
 """
-from sqlite3 import *
+import MySQLdb as m
+from _config import DBHOST, DBNAME, DBPASS, DBUSER
 
 
-def connect_db():
-    """
-    | This function make a connection to the FileManager database and returns that;
-    :return :sqlite3 connection object
-    """
-    return connect('FileManager.db')
+class MySql:
+    instance = None
+    @staticmethod
+    def connection():
+        if MySql.instance is None:
+            class_instance = MySql()
+            MySql.instance = class_instance._connection
+        return MySql.instance
+
+    def __init__(self):
+        self._connection = m.Connection(DBHOST, DBUSER, DBPASS, DBNAME)
 
 
 def create_users_table():
@@ -23,11 +29,13 @@ def create_users_table():
     | This void function creates users table if it not exists.
     create_users_table()
     """
-    connection_obj = connect_db()
-    with connection_obj:
-        cursor = connection_obj.cursor()
-        cursor.execute('CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT,'
-                       'user_name TEXT,password TEXT,server_id TEXT,port UNSIGNED INTEGER,ready_state INTEGER)')
+    connection_obj = MySql.connection()
+    cursor = connection_obj.cursor()
+    cursor.execute('CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTO_INCREMENT,'
+                   'user_name VARCHAR(255),password VARCHAR(255),server_id VARCHAR(255),port INT,'
+                   'ready_state INT)')
+    connection_obj.commit()
+    connection_obj.close()
 
 
 def add_new_user(user_name, password, server_id, port, ready_state):
@@ -39,11 +47,11 @@ def add_new_user(user_name, password, server_id, port, ready_state):
     :param port:id
     :param ready_state:int
     """
-    connection_obj = connect_db()
-    with connection_obj:
-        cursor = connection_obj.cursor()
-        query = ((user_name, password, server_id, port, ready_state),)
-        cursor.executemany("INSERT INTO users(user_name,password,server_id,port,ready_state)VALUES(?,?,?,?,?)", query)
+    connection_obj = MySql.connection()
+    cursor = connection_obj.cursor()
+    query = (user_name, password, server_id, str(port), str(ready_state))
+    cursor.executemany("INSERT INTO users(user_name,password,server_id,port,ready_state)VALUES(%s,%s,%s,%s,%s)", query)
+    connection_obj.commit()
 
 
 def validate_user(user_name, password):
@@ -54,24 +62,16 @@ def validate_user(user_name, password):
     :param password:str
     :return boolean
     """
-    connection_obj = connect_db()
+    connection_obj = MySql.connection()
     with connection_obj:
         cursor = connection_obj.cursor()
-        execute = cursor.execute("SELECT password FROM users WHERE user_name = '" + user_name + "'")
+        cursor.execute("SELECT password FROM users WHERE user_name = %s", (user_name,))
+        saved_password = cursor.fetchone()
         try:
-            saved_password = str(execute.fetchall()[0][0])
-            print 'kir in db'
-            print saved_password
-        except IndexError:
-            print 'kir in db exception'
-            print execute.fetchall()
-            saved_password = ''
-        try:
-            if saved_password == password:
+            if saved_password[0] == password:
                 return True
-        except IndexError:
+        finally:
             return False
-        return False
 
 
 def change_ready_state(user_name, new_state):
@@ -81,11 +81,11 @@ def change_ready_state(user_name, new_state):
     :param user_name:str
     :param new_state:int
     """
-    connection_obj = connect_db()
+    connection_obj = MySql.connection()
     with connection_obj:
         cursor = connection_obj.cursor()
-        query = ((new_state, user_name), )
-        execute = cursor.executemany("UPDATE users SET ready_state = ? WHERE user_name = ?", query)
+        query = (new_state, user_name)
+        cursor.executemany("UPDATE users SET ready_state = %s WHERE user_name = %s", query)
         connection_obj.commit()
 
 
@@ -96,13 +96,12 @@ def order(provider):
     :param provider
     :return tuple|boolean
     """
-    connection_obj = connect_db()
+    connection_obj = MySql.connection()
     with connection_obj:
         cursor = connection_obj.cursor()
-        # execute = cursor.execute("SELECT ready_state FROM users WHERE user_name = " + provider)
-        # state = execute.fetchall()
-        # if state:
-        execute = cursor.execute("SELECT server_id, port FROM users WHERE user_name = '" + provider + "'")
-        result = execute.fetchall()
-        print result
-        return result
+        cursor.execute("SELECT ready_state FROM user WHERE user_name = %s ", (provider,))
+        state = cursor.fetchone()
+        if state:
+            execute = cursor.execute("SELECT server_id, port FROM users WHERE user_name = %s", (provider,))
+            return execute.fetchall()
+        return False
