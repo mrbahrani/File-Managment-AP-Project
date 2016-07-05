@@ -19,24 +19,15 @@ print host
 print socket
 
 # try:
-socket_obj.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 socket_obj.bind((host, int(port)))
-socket_obj.listen(10)
+socket_obj.listen(1)
 my_username = str(get_setting_value('user_name')[0])
 print 'Socket server is running now in ' + host + ' and '+ port
-#i think server must bind on local host all the times
-#socket_obj.bind((host[0], int(port[0])))
-socket_obj.bind(("127.0.0.1", int(port[0])))
 
-
-while 1:
+while True:
+    print "running"
     main_server, address = socket_obj.accept()
     request = main_server.recv(1024)
-    print """
-    ********************************************
-    **************************
-    ******************
-    """
     print request
     request_list = request.split("|")
     request_type = request_list[0]

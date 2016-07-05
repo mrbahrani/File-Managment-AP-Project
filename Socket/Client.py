@@ -16,6 +16,7 @@ list = []
 newpath = []
 create_settings_table()
 
+
 def connect():
     """
     | This function creates a connection to the 192.168.85.69 ip and 6985 port and then returns the connection object
@@ -28,7 +29,7 @@ def connect():
     print "%%%%%%%%%%"
     print database_server_port
     print database_server_ip
-    database_server_port=6985
+    database_server_port = 6985
     database_server_ip = '169.254.17.121'
     if not database_server_ip:
         host = '127.0.0.1'                              # Server Ip address
@@ -38,7 +39,7 @@ def connect():
         port = 6985                                         # Server port number
     else:
         port = database_server_port
-    socket_obj.connect((host, port))
+    socket_obj.connect(("Mohammadreza", 6985))
     return socket_obj
     # except socket.error:
     #     print 'pander'

@@ -11,17 +11,18 @@ import MySQLdb as m
 from _config import DBHOST, DBNAME, DBPASS, DBUSER
 
 
-class MySql:
-    instance = None
-    @staticmethod
-    def connection():
-        if MySql.instance is None:
-            class_instance = MySql()
-            MySql.instance = class_instance._connection
-        return MySql.instance
-
-    def __init__(self):
-        self._connection = m.Connection(DBHOST, DBUSER, DBPASS, DBNAME)
+def get_connection():
+    """
+    | This function returns a connection object with _config file information.
+    :return: connection object
+    """
+    connection = m.Connect(DBHOST, DBUSER, DBPASS, DBNAME)
+    connection.set_character_set('utf8')
+    cursor = connection.cursor()
+    cursor.execute('SET NAMES utf8;')
+    cursor.execute('SET CHARACTER SET utf8;')
+    cursor.execute('SET character_set_connection=utf8;')
+    return connection
 
 
 def create_users_table():
@@ -29,7 +30,7 @@ def create_users_table():
     | This void function creates users table if it not exists.
     create_users_table()
     """
-    connection_obj = MySql.connection()
+    connection_obj = get_connection()
     cursor = connection_obj.cursor()
     cursor.execute('CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTO_INCREMENT,'
                    'user_name VARCHAR(255),password VARCHAR(255),server_id VARCHAR(255),port INT,'
@@ -47,10 +48,12 @@ def add_new_user(user_name, password, server_id, port, ready_state):
     :param port:id
     :param ready_state:int
     """
-    connection_obj = MySql.connection()
+    connection_obj = get_connection()
     cursor = connection_obj.cursor()
     query = (user_name, password, server_id, str(port), str(ready_state))
-    cursor.executemany("INSERT INTO users(user_name,password,server_id,port,ready_state)VALUES(%s,%s,%s,%s,%s)", query)
+    print "kir"
+    print "INSERT INTO users(user_name,password,server_id,port,ready_state)VALUES(%s,%s,%s,%s,%s)"%query
+    cursor.execute("INSERT INTO users(user_name,password,server_id,port,ready_state)VALUES(%s,%s,%s,%s,%s)", query)
     connection_obj.commit()
 
 
@@ -62,15 +65,18 @@ def validate_user(user_name, password):
     :param password:str
     :return boolean
     """
-    connection_obj = MySql.connection()
+    connection_obj = get_connection()
     with connection_obj:
         cursor = connection_obj.cursor()
         cursor.execute("SELECT password FROM users WHERE user_name = %s", (user_name,))
         saved_password = cursor.fetchone()
+        print saved_password[0] == password
+        print password
+        print 'kk'
         try:
-            if saved_password[0] == password:
+            if saved_password[0] == str(password):
                 return True
-        finally:
+        except IndexError:
             return False
 
 
@@ -81,7 +87,7 @@ def change_ready_state(user_name, new_state):
     :param user_name:str
     :param new_state:int
     """
-    connection_obj = MySql.connection()
+    connection_obj = get_connection()
     with connection_obj:
         cursor = connection_obj.cursor()
         query = (new_state, user_name)
@@ -96,7 +102,7 @@ def order(provider):
     :param provider
     :return tuple|boolean
     """
-    connection_obj = MySql.connection()
+    connection_obj = get_connection()
     with connection_obj:
         cursor = connection_obj.cursor()
         cursor.execute("SELECT ready_state FROM user WHERE user_name = %s ", (provider,))

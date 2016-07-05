@@ -2,8 +2,18 @@ import MySQLdb as m
 from _config import DBHOST, DBNAME, DBPASS, DBUSER
 
 
-def connection():
-    return m.Connection(DBHOST, DBUSER, DBPASS, DBNAME)
+def get_connection():
+    """
+    | This function returns a connection object with _config file information.
+    :return: connection object
+    """
+    connection = m.Connect(DBHOST, DBUSER, DBPASS, DBNAME)
+    connection.set_character_set('utf8')
+    cursor = connection.cursor()
+    cursor.execute('SET NAMES utf8;')
+    cursor.execute('SET CHARACTER SET utf8;')
+    cursor.execute('SET character_set_connection=utf8;')
+    return connection
 
 
 def create_settings_table():
@@ -11,7 +21,7 @@ def create_settings_table():
     | This void function creates users table if it not exists.
     create_users_table()
     """
-    connection_obj = connection()
+    connection_obj = get_connection()
     cursor = connection_obj.cursor()
     connection_obj.commit()
     cursor.execute('CREATE TABLE IF NOT EXISTS settings(id INT PRIMARY KEY AUTO_INCREMENT,' +
@@ -25,7 +35,7 @@ def get_setting_value(setting_name):
     :param setting_name str
     :return str
     """
-    connection_obj = connection()
+    connection_obj = get_connection()
     cursor = connection_obj.cursor()
     cursor.execute("SELECT setting_value FROM settings WHERE setting_name = %s", (setting_name,))
     setting_value = cursor.fetchone()
@@ -45,7 +55,7 @@ def set_setting(setting_name_string, setting_value_string):
     :param setting_name_string :str
     :param setting_value_string :str
     """
-    connection_obj = connection()
+    connection_obj = get_connection()
     cursor = connection_obj.cursor()
     if get_setting_value(setting_name_string):
         cursor.execute("UPDATE settings SET setting_value = %s WHERE setting_name = %s", (setting_value_string,

@@ -27,17 +27,22 @@ socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 host = socket.gethostname()
 port = 6985
 # try:
+print host, " ", type(host)
 socket_obj.bind((host, port))
 socket_obj.listen(10)
 create_users_table()
+socket_obj.listen(10)
 while True:
+    print
     client_socket, address = socket_obj.accept()
+    print address
     request = client_socket.recv(1024)
     request_list = request.split("|")
     request_type = request_list[0]
     print request, request_list, request_type
     if request_type == '0':
-        is_valid = validate_user(request_list[1], request_list[2])
+        is_valid = validate_user(request_list[1], str(request_list[2]))
+        print is_valid
         if not is_valid:
             print 'not logged in'
             print request_list
@@ -53,6 +58,7 @@ while True:
         client_socket.close()
         continue
     elif request_list[1] in logged_in_users:
+        print "Oh maybe maybe "
         if request_type == '2':
             change_ready_state(request_list[1], request_list[2])
             client_socket.close()

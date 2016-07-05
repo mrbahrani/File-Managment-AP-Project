@@ -22,8 +22,9 @@ from subprocess import Popen, PIPE, STDOUT
 # add_here('E:\\Music\\')
 selected_item = [""]
 
+Popen([sys.executable, 'Socket\\server.py'])
 
-class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S , User_C):
+class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_l, User_SU, User_S, User_C):
     index = 0
 
     def __init__(self):
@@ -276,11 +277,10 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
 
     def send_result__(self):
         #for sing up
+        print "MAN IN JAM "
         print self.User_SU.item_list, 123456
         if self.User_SU.item_list[0] and self.User_SU.item_list[1]:
-            if not self.server_is_run:
-                Popen('python ' + os.path.dirname(os.path.abspath(__file__)), shell=True, stdout=PIPE, stderr=STDOUT)
-                self.server_is_run = True
+
             set_setting("user_name", self.User_SU.item_list[0])
             local_server = get_setting_value('server_id')
             print local_server
@@ -356,9 +356,6 @@ class MainWindow(QtGui.QMainWindow, New_File,New_Dir ,User_l, User_SU , User_S ,
         if not provider_username:
             # print 'inja'
             return
-        if not self.server_is_run:
-                Popen([sys.executable, 'Socket\\server.py'])
-                self.server_is_run = True
         self.sockWin = SocketMainWindow()
         # print 'The UI'
         # print self.sockWin.window_index
