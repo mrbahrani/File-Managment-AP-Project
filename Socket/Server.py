@@ -20,7 +20,7 @@ print socket
 
 # try:
 socket_obj.bind((host, int(port)))
-socket_obj.listen(1)
+socket_obj.listen(10)
 my_username = str(get_setting_value('user_name')[0])
 print 'Socket server is running now in ' + host + ' and '+ port
 
@@ -28,6 +28,7 @@ while True:
     print "running"
     main_server, address = socket_obj.accept()
     request = main_server.recv(1024)
+    print "kir kir kir kir az hame rang "
     print request
     request_list = request.split("|")
     request_type = request_list[0]

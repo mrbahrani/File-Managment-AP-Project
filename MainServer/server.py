@@ -2,7 +2,7 @@
 This file is the Main Server file.
 The rules of sending strings:
 1. Each parts of requests must splits with | character without any white space before or after that.
-2. Login request starts with 0 . The pattern is like : 0|user_name|password
+2. Login request starts with 0 . The pattern is like : 0|user_name|password|server_id|port number|
 3. SignUp request starts with 1. The pattern is like : 1|user_name|password|server_id|port number|ready_state
 4. Changing state request starts with 2. The pattern hs like : 2|user_name|new_state
 5. Getting file list from another user request starts with 3 .
@@ -50,6 +50,8 @@ while True:
             client_socket.close()
             continue
         logged_in_users.append(request_list[1])                   # Added user name in logged_in_users list if is valid
+        print request_list
+        change_user_connection_info(request_list[1], request_list[3], request_list[4])
         print 'logged in'
         client_socket.close()
     elif request_type == '1':
@@ -57,8 +59,9 @@ while True:
         print 'user added'
         client_socket.close()
         continue
-    elif request_list[1] in logged_in_users:
+    elif request_list[2] in logged_in_users:
         print "Oh maybe maybe "
+        print request_type
         if request_type == '2':
             change_ready_state(request_list[1], request_list[2])
             client_socket.close()
@@ -68,16 +71,18 @@ while True:
             client_socket.close()
             continue
         elif request_type in ['3', '4', '5', '6', '7', '8']:
+            print "--00-"
             request_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             print 'kiri'
             print order(request_list[2])
-            order_result = order(request_list[2])[0]
+            order_result = order(request_list[2])
             request_server = order_result[0]
             request_port = order_result[1]
             print "IN TEH MAIN SERVER"
             print request_server
             print request_port
             print request
+            print (request_server, int(request_port))
             request_socket.connect((request_server, int(request_port)))
             request_socket.sendall(request)
             request_socket.close()

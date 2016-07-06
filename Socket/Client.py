@@ -70,6 +70,7 @@ def send_files_list(path_str):
         final_string = "".join(['0' + element + "|" for element in drivers()])
     return "0|"
 
+
 def client_copy_file(start_path, destination_path):
     """
     | This function copies a file or directory from start_path to the destination_path and finally returns

@@ -267,12 +267,13 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_l, User_SU, User_S, U
         #for login
         print self.User_l.item_list , 123456
         if self.User_l.item_list[0] and self.User_l.item_list[1]:
-            if not self.server_is_run:
-                Popen('python ' + os.path.dirname(os.path.abspath(__file__)), shell=True, stdout=PIPE, stderr=STDOUT)
-                self.server_is_run = True
             print 'opened'
+            print self.User_l.item_list[0]
             set_setting("user_name", self.User_l.item_list[0])
-            send_result("0|" + self.User_l.item_list[0] + "|" + self.User_l.item_list[1])
+            send_str = "0|" + self.User_l.item_list[0] + "|" + self.User_l.item_list[1] + "|"
+            send_str += get_setting_value("server_id") + "|" + get_setting_value("port_number")
+            print send_str
+            send_result(send_str)
             print 1
 
     def send_result__(self):

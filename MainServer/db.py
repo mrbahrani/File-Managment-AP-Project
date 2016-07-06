@@ -70,7 +70,7 @@ def validate_user(user_name, password):
         cursor = connection_obj.cursor()
         cursor.execute("SELECT password FROM users WHERE user_name = %s", (user_name,))
         saved_password = cursor.fetchone()
-        print saved_password[0] == password
+        print saved_password
         print password
         print 'kk'
         try:
@@ -105,9 +105,18 @@ def order(provider):
     connection_obj = get_connection()
     with connection_obj:
         cursor = connection_obj.cursor()
-        cursor.execute("SELECT ready_state FROM user WHERE user_name = %s ", (provider,))
+        cursor.execute("SELECT ready_state FROM users WHERE user_name = %s ", (provider,))
         state = cursor.fetchone()
         if state:
-            execute = cursor.execute("SELECT server_id, port FROM users WHERE user_name = %s", (provider,))
-            return execute.fetchall()
+            cursor.execute("SELECT server_id, port FROM users WHERE user_name = %s", (provider,))
+            return cursor.fetchone()
         return False
+
+
+def change_user_connection_info(user_name, server_ip, port):
+    connection_obj = get_connection()
+    with connection_obj:
+        cursor = connection_obj.cursor()
+        cursor.execute("UPDATE users SET server_id = %s,port=%s WHERE user_name = %s", (server_ip, port, user_name))
+        connection_obj.commit()
+        return True
