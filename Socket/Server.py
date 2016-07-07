@@ -25,7 +25,10 @@ print socket
 # try:
 socket_obj.bind((host, int(port)))
 socket_obj.listen(10)
-my_username = str(get_setting_value('user_name')[0])
+try:
+    my_username = str(get_setting_value('user_name')[0])
+except IndexError:
+    my_username = ""
 print 'Socket server is running now in ' + host + ' and '+ port
 
 while True:
