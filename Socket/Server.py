@@ -16,7 +16,7 @@ if not host:
     host = "127.0.0.1"
 port = get_setting_value('port_number')                                 # Gets server port from data base
 if not port:
-    port = 5876
+    port = "5876"
 # port = 8585
 print "-----"
 print host
@@ -29,7 +29,7 @@ try:
     my_username = str(get_setting_value('user_name')[0])
 except IndexError:
     my_username = ""
-print 'Socket server is running now in ' + host + ' and '+ port
+print 'Socket server is running now in ' + host + ' and ' + port
 
 while True:
     print "running"
