@@ -12,7 +12,11 @@ from Socket.funcssock import *
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 create_settings_table()
 host = get_setting_value('server_id')                                   # Gets server ip from data base
+if not host:
+    host = "127.0.0.1"
 port = get_setting_value('port_number')                                 # Gets server port from data base
+if not port:
+    port = 5876
 # port = 8585
 print "-----"
 print host
