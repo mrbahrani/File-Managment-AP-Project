@@ -93,7 +93,7 @@ while True:
             print 'send request'
             print request
             request_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            request_server, request_port = order(request_list[1])
+            request_server, request_port = order(request_list[2])
             request_socket.connect((request_server, request_port))
             request_socket.sendall(request)
             request_socket.close()

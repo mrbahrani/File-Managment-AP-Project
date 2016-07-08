@@ -64,11 +64,15 @@ def dir_file_list(request_string, files_list=last_request_files_list, dir_list=l
     """
     request_list = request_string.split("|")[3:]
     for item in request_list:
+        if not item:
+            continue
         if item[0] == "0":
             dir_list.append(item[1:])
         elif item[0] == "1":
             files_list.append(item[1:])
-
+    print "Vasat daram"
+    print last_request_directory_list
+    print last_request_files_list
 
 def sock_list_Dclicked(*args):
     """

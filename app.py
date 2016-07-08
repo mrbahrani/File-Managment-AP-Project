@@ -22,7 +22,7 @@ from subprocess import Popen, PIPE, STDOUT
 # add_here('E:\\Music\\')
 selected_item = [""]
 
-Popen([sys.executable, 'Socket\\server.py'])
+Popen([sys.executable, os.path.dirname(os.path.realpath(__file__)) + '\\Socket\\server.py'])
 
 class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_l, User_SU, User_S, User_C):
     index = 0
