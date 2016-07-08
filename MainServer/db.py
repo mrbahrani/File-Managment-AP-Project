@@ -50,6 +50,8 @@ def add_new_user(user_name, password, server_id, port, ready_state):
     """
     connection_obj = get_connection()
     cursor = connection_obj.cursor()
+    if cursor.execute("SELECT id FROM users WHERE user_name = %s", (user_name,)):
+        return "1|"
     query = (user_name, password, server_id, str(port), str(ready_state))
     print "kir"
     print "INSERT INTO users(user_name,password,server_id,port,ready_state)VALUES(%s,%s,%s,%s,%s)"%query

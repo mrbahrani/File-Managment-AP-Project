@@ -23,8 +23,8 @@ from db import *
 logged_in_users = []
 # print socket.gethostname()
 socket_obj = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#host = '127.0.0.1'
-host = socket.gethostname()
+host = '127.0.0.1'
+# host = socket.gethostname()
 port = 6985
 # try:
 print host, " ", type(host)
@@ -40,6 +40,7 @@ while True:
     request_list = request.split("|")
     request_type = request_list[0]
     print request, request_list, request_type
+    print logged_in_users
     if request_type == '0':
         is_valid = validate_user(request_list[1], str(request_list[2]))
         print is_valid
