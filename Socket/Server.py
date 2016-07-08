@@ -38,10 +38,11 @@ while True:
     print "kir kir kir kir az hame rang "
     print request
     request_list = request.split("|")
+    print request_list
     request_type = request_list[0]
     if request_type == '3':                         # Send files list request scope
         result = send_files_list(request_list[-1])
-        send_result('9|' + my_username + "|" + request_list[2] + "|" + result)
+        send_result('9|' + request_list[1] + "|" + request_list[1] + "|" + result)
         main_server.close()
         break
     elif request_type == '4':                       # search request scope

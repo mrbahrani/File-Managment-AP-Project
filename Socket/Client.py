@@ -58,16 +58,18 @@ def send_files_list(path_str):
     | This function returns a string of all files and directories included in path directory.
     | All directories names start with '0' and all files names start with '1';
     | If the path is not a directory, returns '0|'
-    :param path :str
+    :param path_str :str
     """
+    if not path_str:
+        return "".join(['0' + element + "|" for element in drivers()])
+
     if isdir(path_str):
         # Adds all directories names to the final_string variable
         final_string = "".join(['0' + element + "|" for element in listdir(path_str) if isdir(path_str + element)])
         # Adds all files names to the final_string variable
         final_string += "".join(['1' + element + "|" for element in listdir(path_str) if isfile(path_str + element)])
         return final_string
-    elif not path_str:
-        final_string = "".join(['0' + element + "|" for element in drivers()])
+
     return "0|"
 
 
