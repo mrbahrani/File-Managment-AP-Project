@@ -69,8 +69,7 @@ while True:
         pass
     elif request_type == '9':                       # Get file request scope
         print request_list[-1]
-        last_request_directory_list.append(dir_file_list(request_list[-1]))
-        last_request_directory_string_list.append(request_list[-1])
+        dir_file_list(request)
         #clientListView(request_list[-1] ,Sockapp)
 
 

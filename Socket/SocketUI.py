@@ -429,11 +429,15 @@ def newWindow(fulladdress):
 
 def updator():
     while True:
+        print "koja koja?"
         sleep(0.5)
         for window in winList:
             if history_list[window.window_index][here[window.window_index][0]][0]:
-                newFileList = get_files(history_list[window.window_index][here[window.window_index][0]][0])
-                newDirList = get_directories(history_list[window.window_index][here[window.window_index][0]][0])
+                newFileList = last_request_files_list
+                newDirList = last_request_directory_list
+                print "why why why"
+                print newFileList
+                print newDirList
                 ctr = 0
                 num = window.ui.listView.count()
                 #print "ctr ", ctr, " num ", num

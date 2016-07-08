@@ -9,7 +9,7 @@ from Client import *
 
 #this two lists keeping last request of file and dir list from server
 last_request_directory_list = []
-last_request_directory_string_list=[]
+last_request_files_list = []
 
 provider_username_list = []
 
@@ -52,20 +52,23 @@ def clientListView(final_string,listView):
         new.setIcon(icon)
 
 
-def dir_file_list(final_string) :
-    #return a list which first element ([0]) is dirList and second element([1]) is fileList
-    initList = final_string.split("|")
-    fileList = []
-    dirList = []
-    for item in initList:
-        if item[1]:
-            fileList += [item[1:]]
-        else:
-            dirList += [item[1:]]
-    result = []
-    result.append(dirList)
-    result.append(fileList)
-    return result
+def dir_file_list(request_string, files_list=last_request_files_list, dir_list=last_request_directory_list):
+    """
+    | This function gets request_string and then appends all directories to last_request_directory_list and all files to
+    | last_request_files_list.
+    | Attention: Do not fill files_list and dir_list parameters.
+    :param request_string: str
+    :param files_list: list
+    :param dir_list: list
+    :return void
+    """
+    request_list = request_string.split("|")[3:]
+    for item in request_list:
+        if item[0] == "0":
+            dir_list.append(item[1:])
+        elif item[0] == "1":
+            files_list.append(item[1:])
+
 
 def sock_list_Dclicked(*args):
     """
