@@ -358,10 +358,13 @@ class MainWindow(QtGui.QMainWindow, New_File, New_Dir,User_l, User_SU, User_S, U
             # print 'inja'
             return
         self.sockWin = SocketMainWindow()
-        # print 'The UI'
-        # print self.sockWin.window_index
-        self.sockWin.show()
-        #self.Us
+        napp = QtGui.QApplication(sys.argv)
+        Win = SocketMainWindow()
+        upd = SUpdator(self.sockWin)
+        upd.start()
+        # self.sockWin.show()
+        Win.start_show(napp)
+        upd.terminate()
 
     def NewDir(self):
         self.New_Dir._NewDir(self)
@@ -414,6 +417,7 @@ def newWindow(addressList):
     newWin.ui.listView.clear()
     listView(history_list[newWin.window_index][0][0], newWin.ui.listView)
     newWin.show()
+
 
 class Updator(QtCore.QThread):
     def run(self):

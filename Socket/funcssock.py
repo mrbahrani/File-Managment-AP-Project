@@ -23,7 +23,6 @@ def get_sock_drivers():
     file_list_request(get_setting_value("user_name"), provider_username_list[0],"")
 
 
-
 def clientListView(final_string,listView):
     '''
     initList = final_string.split("|")
@@ -74,6 +73,7 @@ def dir_file_list(request_string, files_list=last_request_files_list, dir_list=l
     print last_request_directory_list
     print last_request_files_list
 
+
 def sock_list_Dclicked(*args):
     """
     :param args:0.current address,1.file name(+format),2.list widget,3.line edit,4.window index
@@ -117,6 +117,7 @@ def sock_list_Dclicked(*args):
     # print history_list
     # print "XXXXXXXXXXXXXXXXXXXXXXXXX"
 
+
 def sock_treeView(fullPath,qwtIt):
     #This function visualizes the tree view of the directories
     try:
@@ -138,3 +139,35 @@ def sock_treeView(fullPath,qwtIt):
         print("An unwanted exception occurred!!")
         print e
     qwtIt.isUsed = True
+
+
+def socket_list_view(list_view):
+    """
+    This function visualizes the list view of the directories
+    :param full_path:str
+    :param list_view:obj
+    """
+    try:
+            # print 4
+
+        # print "*****"
+        # print dir_list
+        dir_list = last_request_directory_list
+        files_list = last_request_files_list
+        if dir_list:
+            for it in dir_list:
+                item = QtGui.QListWidgetItem(list_view)
+                item.setText(it)
+                icon = QtGui.QIcon('icons/folder.ico')
+                item.setIcon(icon)
+
+        if files_list:
+            for file_name in files_list:
+                item = QtGui.QListWidgetItem(list_view)
+                item.setText(file_name)
+                icon = QtGui.QIcon(file_icon(file_name))
+                item.setIcon(icon)
+
+    except WindowsError:
+        print("Access denied")
+

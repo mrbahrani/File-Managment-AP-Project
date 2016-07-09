@@ -102,6 +102,4 @@ def listView(full_path, list_view):
 
     except WindowsError:
         print("Access denied")
-    # except Exception as e:
-    #     print("An unwanted exception ocurred!!")
-    #     print e
+
